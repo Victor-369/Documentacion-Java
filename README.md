@@ -3,162 +3,111 @@
 Repositorio de documentación, apuntes, ejemplos y guías sobre **Java**, creado con el objetivo de recopilar y organizar diferentes conceptos relacionados con el desarrollo en este lenguaje.
 
 > 🚧 **Proyecto en desarrollo**
-> 
+>
 > Esta documentación se encuentra actualmente **en pleno proceso de desarrollo y ampliación**. Se irán incorporando progresivamente nuevos temas, conceptos, ejemplos y buenas prácticas relacionados con Java.
-> 
+>
 > El contenido actual es solo una parte de la documentación que se pretende reunir en este repositorio.
 
 ---
 
-## 📖 Contenido
+## 📑 Índice
+
+- [Contenido disponible](#-contenido-disponible)
+- [Documentación en desarrollo](#-documentación-en-desarrollo)
+- [Objetivos del proyecto](#-objetivos-del-proyecto)
+- [Estructura actual](#️-estructura-actual)
+- [Ejemplo](#-ejemplo)
+- [Tecnologías y herramientas](#️-tecnologías-y-herramientas)
+- [Cómo utilizar este repositorio](#-cómo-utilizar-este-repositorio)
+- [¿Por dónde empezar?](#-por-dónde-empezar)
+- [Contribuciones](#-contribuciones)
+- [Estado del proyecto](#-estado-del-proyecto)
+- [Licencia](#-licencia)
+
+---
+
+## 📖 Contenido disponible
 
 Actualmente, el repositorio cuenta con documentación sobre diferentes conceptos de Java y herramientas relacionadas con su desarrollo.
 
-### 🧩 Programación orientada a objetos
+### 🧩 Programación orientada a objetos y colecciones
 
-- Clases abstractas vs. interfaces
-- Interfaces vs. clases abstractas
-- Colecciones
-- Comparable vs. Comparator
-
-En esta sección se recopilan conceptos fundamentales de la programación orientada a objetos en Java, así como diferentes mecanismos proporcionados por el lenguaje para trabajar con clases, interfaces y colecciones.
+| Documento | Qué encontrarás |
+| --- | --- |
+| [Abstract Class vs Interface](./Abstract%20Class%20vs%20Interface.md) | Chuleta comparativa: constructores, estado, modificadores de acceso, herencia, métodos `final`, polimorfismo y acoplamiento. Incluye cuándo usar cada una, cómo combinarlas y errores frecuentes. |
+| [Colecciones](./Colecciones.md) | Resumen del *Java Collections Framework*: jerarquía de interfaces, `List`, `Set`, `Map`, `Queue` y `Deque`, colecciones inmutables, *Sequenced Collections* (Java 21), la clase `Collections`, genéricos, Stream API y colecciones concurrentes. |
+| [Comparable vs Comparator](./Comparable%20vs%20Comparator.md) | Guía de estudio para programadores junior (Java 21 o superior), con ejemplos compilados y ejecutados, errores típicos, ejercicios y autoevaluación. |
 
 ### ⚠️ Excepciones y gestión de errores
 
-- Excepciones checked y unchecked
-    
-- Manejo eficaz de errores en Java
-    
-
-Esta sección trata sobre la gestión de excepciones y errores en aplicaciones Java, incluyendo las diferencias entre excepciones comprobadas y no comprobadas y algunas estrategias para gestionar los errores correctamente.
+| Documento | Qué encontrarás |
+| --- | --- |
+| [Excepciones checked y unchecked](./Excepciones%20checked%20y%20unchecked.md) | Diferencias entre excepciones comprobadas y no comprobadas, ejemplos con `throws` y `try-catch`, excepciones personalizadas y cuándo usar cada tipo. |
+| [Manejo eficaz de errores en Java: estrategias y buenas prácticas](./Manejo%20Eficaz%20de%20Errores%20en%20Java%3A%20Estrategias%20y%20Buenas%20Practicas.md) | Resumen de un artículo sobre buenas prácticas, técnicas de manejo (`try-catch-finally`, *multi-catch*, `try-with-resources`), diseño de excepciones personalizadas y registro de errores. |
 
 ### 🧪 Testing y pruebas automatizadas
 
-- JUnit - Visión general e introducción para principiantes
-    
-- JUnit - Aprende a escribir pruebas paso a paso
-    
-- AssertJ - Guía para empezar desde cero
-    
-- Test-Driven Development (TDD)
-    
-
-La documentación de testing recoge conceptos relacionados con las pruebas automatizadas en Java, incluyendo JUnit, AssertJ y la metodología de desarrollo dirigido por pruebas (TDD).
+| Documento | Qué encontrarás |
+| --- | --- |
+| [JUnit: visión general e introducción para principiantes](./JUnit%20-%20Vision%20general%20e%20introduccion%20para%20principiantes.md) | Traducción al castellano de la página oficial de JUnit 6.1.3, más un complemento para principiantes: puesta en marcha con Maven y Gradle, anotaciones, aserciones, errores frecuentes y glosario. |
+| [JUnit: aprende a escribir pruebas paso a paso](./JUnit%20-%20Aprende%20a%20escribir%20pruebas%20paso%20a%20paso.md) | Guía práctica: primera prueba, ciclo de vida, aserciones, excepciones, pruebas parametrizadas, anidadas, repetidas y dinámicas, etiquetas, *timeouts* y buenas prácticas. |
+| [AssertJ: guía para empezar desde cero](./AssertJ%20-%20Guia%20para%20empezar%20desde%20cero.md) | Aserciones fluidas con `assertThat(...)`: tipos de dato, colecciones, excepciones, mensajes de error, *soft assertions*, comparación recursiva y estilo BDD. |
+| [Test-Driven Development (TDD)](./Test-Driven%20Development%20%28TDD%29.md) | Guía paso a paso del ciclo Rojo → Verde → Refactor, con dos ejemplos completos (factorial y validador de contraseñas), buenas prácticas, errores típicos y ejercicios. |
 
 ### 📝 Logging y registro de información
 
-- Log4J - Gestión de registros
-    
-- Log4J - Guía
-    
-
-Documentación relacionada con el registro de información de las aplicaciones Java y el uso de herramientas de logging.
+| Documento | Qué encontrarás |
+| --- | --- |
+| [Log4J: gestión de registros](./Log4J%20-%20Gestion%20de%20Registros.md) | Resumen conceptual: niveles de *logging* y cuándo usar cada uno, configuración, *appenders* y *layouts*. |
+| [Log4J: guía](./Log4J%20-%20Guia.md) | Guía práctica de Log4j 2: instalación con Maven y Gradle, `log4j2.xml`, mensajes parametrizados, escritura en ficheros (`RollingFile`), `ThreadContext`, integración con SLF4J y problemas frecuentes. |
 
 ### 🔧 Herramientas y buenas prácticas
 
-- Conventional Commits
-    
-
-Los **Conventional Commits** permiten establecer una estructura común para los mensajes de commit, facilitando la lectura del historial del proyecto y la automatización de determinados procesos.
+| Documento | Qué encontrarás |
+| --- | --- |
+| [Conventional Commits](./Conventional%20Commits.md) | Convención para escribir mensajes de *commit* claros: formato, tipos habituales (`feat`, `fix`, `docs`…), ejemplos, buenas prácticas y flujo básico. |
 
 ---
 
 ## 🚧 Documentación en desarrollo
 
-Este repositorio está pensado para **crecer progresivamente**.
+Este repositorio está pensado para **crecer progresivamente**. Actualmente solo se han añadido algunos temas de Java, pero el objetivo es continuar ampliando la documentación con nuevos contenidos, ejemplos y explicaciones.
 
-Actualmente solo se han añadido algunos temas de Java, pero el objetivo es continuar ampliando la documentación con nuevos contenidos, ejemplos y explicaciones.
+**Estado de los temas previstos:**
 
-Algunos de los temas que se irán incorporando pueden estar relacionados con:
-
-- Fundamentos de Java
-    
-- Variables y tipos de datos
-    
-- Operadores
-    
-- Estructuras de control
-    
-- Arrays
-    
-- Métodos
-    
-- Programación orientada a objetos
-    
-- Herencia
-    
-- Encapsulación
-    
-- Polimorfismo
-    
-- Clases abstractas
-    
-- Interfaces
-    
-- Enumeraciones (`enum`)
-    
-- Records
-    
-- Genéricos
-    
-- Colecciones
-    
-- Excepciones
-    
-- Streams
-    
-- Expresiones lambda
-    
-- `Optional`
-    
-- Programación funcional
-    
-- Entrada y salida de datos
-    
-- Ficheros
-    
-- Fechas y horas
-    
-- Concurrencia y _multithreading_
-    
-- Hilos
-    
-- Sincronización
-    
-- Testing
-    
-- JUnit
-    
-- Mockito
-    
-- AssertJ
-    
-- TDD
-    
-- Logging
-    
-- Maven
-    
-- Gradle
-    
-- JDBC
-    
-- Bases de datos
-    
-- Buenas prácticas
-    
-- Patrones de diseño
-    
-- Principios SOLID
-    
-- Arquitectura de aplicaciones
-    
-- Spring
-    
-- Spring Boot
-    
-- Y otros conceptos relacionados con el ecosistema Java
-    
+- [x] Clases abstractas e interfaces
+- [x] Colecciones
+- [x] `Comparable` y `Comparator`
+- [x] Excepciones
+- [x] Testing con JUnit
+- [x] AssertJ
+- [x] TDD
+- [x] Logging con Log4j
+- [x] Conventional Commits
+- [ ] Fundamentos de Java
+- [ ] Variables y tipos de datos
+- [ ] Operadores
+- [ ] Estructuras de control
+- [ ] Arrays
+- [ ] Métodos
+- [ ] Herencia, encapsulación y polimorfismo
+- [ ] Enumeraciones (`enum`)
+- [ ] Records
+- [ ] Genéricos
+- [ ] Streams y expresiones lambda
+- [ ] `Optional`
+- [ ] Programación funcional
+- [ ] Entrada y salida de datos y ficheros
+- [ ] Fechas y horas
+- [ ] Concurrencia, hilos y sincronización
+- [ ] Mockito
+- [ ] Maven y Gradle
+- [ ] JDBC y bases de datos
+- [ ] Patrones de diseño
+- [ ] Principios SOLID
+- [ ] Arquitectura de aplicaciones
+- [ ] Spring y Spring Boot
+- [ ] Otros conceptos relacionados con el ecosistema Java
 
 > 💡 **La lista anterior es orientativa y se irá ampliando a medida que avance el proyecto.**
 
@@ -169,21 +118,13 @@ Algunos de los temas que se irán incorporando pueden estar relacionados con:
 Los principales objetivos de este repositorio son:
 
 - 📚 Crear una documentación amplia sobre Java.
-    
 - 🧠 Facilitar el aprendizaje del lenguaje.
-    
 - 🔎 Servir como referencia para consultar conceptos concretos.
-    
 - 💻 Incluir ejemplos prácticos siempre que sea posible.
-    
 - 🧪 Documentar herramientas utilizadas habitualmente en proyectos Java.
-    
 - ✅ Recopilar buenas prácticas de desarrollo.
-    
 - 📈 Ampliar progresivamente los contenidos.
-    
 - 🗂️ Mantener la información organizada y fácilmente accesible.
-    
 
 La intención es que el repositorio pueda servir tanto para **aprender Java desde cero** como para **consultar conceptos concretos durante el desarrollo de proyectos**.
 
@@ -193,8 +134,6 @@ La intención es que el repositorio pueda servir tanto para **aprender Java desd
 
 La estructura del repositorio se irá modificando a medida que se incorporen nuevos contenidos.
 
-Actualmente incluye documentos relacionados con:
-
 ```text
 Documentacion-Java/
 ├── Abstract Class vs Interface.md
@@ -203,7 +142,6 @@ Documentacion-Java/
 ├── Comparable vs Comparator.md
 ├── Conventional Commits.md
 ├── Excepciones checked y unchecked.md
-├── Interface vs Abstract Class.md
 ├── JUnit - Aprende a escribir pruebas paso a paso.md
 ├── JUnit - Vision general e introduccion para principiantes.md
 ├── LICENSE
@@ -238,7 +176,25 @@ class CalculadoraTest {
 }
 ```
 
-La documentación del repositorio incluye material más detallado sobre JUnit, testing y otras herramientas relacionadas con el desarrollo en Java.
+Y la misma comprobación con la sintaxis fluida de AssertJ:
+
+```java
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.Test;
+
+class CalculadoraAssertJTest {
+
+    @Test
+    void sumarDosNumeros() {
+        int resultado = 2 + 3;
+
+        assertThat(resultado).isEqualTo(5);
+    }
+}
+```
+
+La documentación del repositorio incluye material más detallado sobre [JUnit](./JUnit%20-%20Aprende%20a%20escribir%20pruebas%20paso%20a%20paso.md), [AssertJ](./AssertJ%20-%20Guia%20para%20empezar%20desde%20cero.md) y [TDD](./Test-Driven%20Development%20%28TDD%29.md).
 
 ---
 
@@ -246,24 +202,13 @@ La documentación del repositorio incluye material más detallado sobre JUnit, t
 
 Actualmente, el repositorio contiene documentación relacionada con:
 
-- ☕ Java
-    
+- ☕ Java (colecciones, excepciones, clases abstractas e interfaces, ordenación)
 - 🧪 JUnit
-    
 - 🔍 AssertJ
-    
-- 📝 Log4J
-    
 - 🔄 Test-Driven Development (TDD)
-    
-- 🌿 Git
-    
-- 📦 Maven
-    
-- 🏗️ Gradle
-    
-- 📝 Conventional Commits
-    
+- 📝 Log4j 2
+- 🌿 Git (convención de *commits* con Conventional Commits)
+- 📦 Maven y 🏗️ Gradle (configuración de dependencias dentro de las guías de JUnit, AssertJ, TDD y Log4j)
 
 Esta lista también se irá ampliando a medida que se incorporen nuevos temas.
 
@@ -285,7 +230,14 @@ Después puedes abrir los archivos `.md` con cualquier editor compatible con Mar
 
 Si estás comenzando a aprender Java, puedes utilizar esta documentación como material de consulta e ir avanzando progresivamente.
 
-No es necesario seguir un orden concreto, ya que cada documento está pensado para poder consultarse de manera independiente.
+No es necesario seguir un orden concreto, ya que cada documento está pensado para poder consultarse de manera independiente. Aun así, si no sabes por dónde empezar, esta ruta puede servirte de orientación:
+
+1. [Abstract Class vs Interface](./Abstract%20Class%20vs%20Interface.md) y [Colecciones](./Colecciones.md): base del lenguaje.
+2. [Comparable vs Comparator](./Comparable%20vs%20Comparator.md): ordenación de objetos.
+3. [Excepciones checked y unchecked](./Excepciones%20checked%20y%20unchecked.md) y [Manejo eficaz de errores](./Manejo%20Eficaz%20de%20Errores%20en%20Java%3A%20Estrategias%20y%20Buenas%20Practicas.md): gestión de errores.
+4. [JUnit](./JUnit%20-%20Vision%20general%20e%20introduccion%20para%20principiantes.md), [AssertJ](./AssertJ%20-%20Guia%20para%20empezar%20desde%20cero.md) y [TDD](./Test-Driven%20Development%20%28TDD%29.md): pruebas automatizadas.
+5. [Log4J](./Log4J%20-%20Guia.md): registro de información.
+6. [Conventional Commits](./Conventional%20Commits.md): buenas prácticas con Git.
 
 A medida que se incorporen nuevos temas, se irá organizando la documentación para facilitar un recorrido de aprendizaje más estructurado.
 
@@ -295,24 +247,18 @@ A medida que se incorporen nuevos temas, se irá organizando la documentación p
 
 Las contribuciones y sugerencias son bienvenidas.
 
-Si encuentras un error, detectas información que pueda mejorarse o quieres proponer algún tema relacionado con Java, puedes contribuir al proyecto mediante un _Pull Request_ o plantear una propuesta.
+Si encuentras un error, detectas información que pueda mejorarse o quieres proponer algún tema relacionado con Java, puedes contribuir al proyecto mediante un *Pull Request* o plantear una propuesta en las [issues](https://github.com/Victor-369/Documentacion-Java/issues).
 
 ### Proceso recomendado
 
-1. Haz un _fork_ del repositorio.
-    
+1. Haz un *fork* del repositorio.
 2. Crea una nueva rama para tus cambios.
-    
 3. Realiza las modificaciones.
-    
 4. Comprueba que la documentación sea clara y correcta.
-    
-5. Realiza un _commit_ descriptivo.
-    
-6. Abre un _Pull Request_.
-    
+5. Realiza un *commit* descriptivo.
+6. Abre un *Pull Request*.
 
-Para los mensajes de _commit_ se recomienda utilizar **Conventional Commits**.
+Para los mensajes de *commit* se recomienda utilizar [Conventional Commits](./Conventional%20Commits.md).
 
 ---
 
@@ -332,15 +278,13 @@ Se están añadiendo nuevos temas y contenidos relacionados con Java de forma pr
 
 Este proyecto se distribuye bajo la licencia **MIT**.
 
-Consulta el archivo LICENSE para obtener más información sobre los términos de la licencia.
+Consulta el archivo [LICENSE](./LICENSE) para obtener más información sobre los términos de la licencia.
 
 ---
 
 ## 🔗 Repositorio
 
-Puedes acceder al repositorio desde GitHub:
-
-**Victor-369/Documentacion-Java**
+Puedes acceder al repositorio desde GitHub: [**Victor-369/Documentacion-Java**](https://github.com/Victor-369/Documentacion-Java)
 
 ---
 
