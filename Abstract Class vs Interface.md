@@ -1,1544 +1,985 @@
-Java: Abstract Class vs Interface — Chuleta
+# Java: Abstract Class vs Interface — Chuleta
 
-🧠 Idea principal
+## 📑 Índice
 
+1. [Idea principal](#-idea-principal)
+2. [Abstract Class](#-abstract-class)
+3. [Interface](#-interface)
+4. [Comparación rápida](#️-comparación-rápida)
+5. [extends vs implements](#-extends-vs-implements)
+6. [Herencia](#-herencia)
+7. [Estado y variables](#-estado-y-variables)
+8. [Constructores](#️-constructores)
+9. [Modificadores de acceso](#-modificadores-de-acceso)
+10. [Métodos final](#-métodos-final)
+11. [Polimorfismo](#-polimorfismo)
+12. [¿Cuándo usar cada uno?](#-cuándo-usar-cada-uno)
+13. [Acoplamiento](#-acoplamiento)
+14. [Combinar ambas](#-combinar-ambas)
+15. [Errores frecuentes](#️-errores-frecuentes)
+16. [Reglas mentales](#-reglas-mentales)
+17. [Chuleta ultra rápida](#-chuleta-ultra-rápida)
+18. [Resumen final](#-resumen-final)
 
+---
 
-Tanto las abstract class como las interface sirven para conseguir abstracción y definir una estructura que otras clases deben seguir.
+## 🧠 Idea principal
 
-
+Tanto las `abstract class` como las `interface` sirven para conseguir **abstracción** y definir una estructura que otras clases deben seguir.
 
 La diferencia fundamental:
 
+| | Abstract Class | Interface |
+| --- | --- | --- |
+| **Qué define** | Base común | Contrato / comportamiento |
+| **Qué comparte** | Estado + código | Lo que una clase debe hacer |
+| **Pregunta clave** | ¿Qué **es**? | ¿Qué **puede hacer**? |
+| **Relación** | "ES UN" | "IMPLEMENTA / PUEDE HACER" |
 
+```text
+ABSTRACT CLASS                          INTERFACE
+      ↓                                     ↓
+ Base común                         Contrato / comportamiento
+      ↓                                     ↓
+Comparte estado + código        Define lo que una clase debe hacer
+      ↓                                     ↓
+   "ES UN"                       "IMPLEMENTA / PUEDE HACER"
+```
 
-ABSTRACT CLASS
+---
 
-&nbsp;   ↓
+## 🟣 Abstract Class
 
-Base común
-
-&nbsp;   ↓
-
-Comparte estado + código
-
-&nbsp;   ↓
-
-"ES UN"
-
-
-
-INTERFACE
-
-&nbsp;   ↓
-
-Contrato / comportamiento
-
-&nbsp;   ↓
-
-Define lo que una clase debe hacer
-
-&nbsp;   ↓
-
-"IMPLEMENTA / PUEDE HACER"
-
-
-
-🟣 Abstract Class
-
-
-
-Una abstract class es una clase que no puede instanciarse directamente.
-
-
-
-Se utiliza como clase base para otras clases.
-
-
+Una `abstract class` es una clase que **no puede instanciarse directamente**. Se utiliza como **clase base** para otras clases.
 
 Puede contener:
 
+- Métodos abstractos
+- Métodos normales (con implementación)
+- Atributos de instancia
+- Constructores
+- Métodos `private`, `protected` y `public`
+- Métodos `static`
+- Métodos `final`
 
+**Ejemplo:**
 
-métodos abstractos
-
-
-
-métodos normales
-
-
-
-atributos de instancia
-
-
-
-constructores
-
-
-
-métodos private
-
-
-
-métodos protected
-
-
-
-métodos public
-
-
-
-métodos static
-
-
-
-métodos final
-
-
-
-Ejemplo:
-
-
-
+```java
 abstract class Shape {
 
+    // Método abstracto
+    abstract double area();
 
-
-&nbsp;   // Método abstracto
-
-&nbsp;   abstract double area();
-
-
-
-&nbsp;   // Método concreto
-
-&nbsp;   void display() {
-
-&nbsp;       System.out.println("This is a shape");
-
-&nbsp;   }
-
+    // Método concreto
+    void display() {
+        System.out.println("This is a shape");
+    }
 }
+```
 
+Una clase hija utiliza `extends`:
 
-
-
-
-Una clase hija utiliza extends:
-
-
-
+```java
 class Circle extends Shape {
 
+    int radius = 5;
 
-
-&nbsp;   int radius = 5;
-
-
-
-&nbsp;   @Override
-
-&nbsp;   double area() {
-
-&nbsp;       return 3.14 \* radius \* radius;
-
-&nbsp;   }
-
+    @Override
+    double area() {
+        return 3.14 * radius * radius;
+    }
 }
-
-
-
-
+```
 
 Podemos utilizar una referencia del tipo abstracto:
 
-
-
+```java
 Shape shape = new Circle();
 
-
-
 shape.display();
-
 System.out.println(shape.area());
+```
 
+Esto permite usar **polimorfismo**:
 
-
-
-
-Esto permite utilizar polimorfismo:
-
-
-
+```text
 Shape
-
-&nbsp; ↑
-
+  ↑
 Circle
+```
 
+---
 
+## 🔵 Interface
 
-🔵 Interface
+Una `interface` define un **contrato** que las clases que la implementan deben cumplir.
 
+**Ejemplo:**
 
-
-Una interface define un contrato que las clases que la implementan deben cumplir.
-
-
-
-Ejemplo:
-
-
-
+```java
 interface Drawable {
 
-
-
-&nbsp;   void draw();
-
+    void draw();
 }
+```
 
+Una clase implementa la interfaz mediante `implements`:
 
-
-
-
-Una clase implementa la interfaz mediante implements:
-
-
-
+```java
 class Rectangle implements Drawable {
 
-
-
-&nbsp;   @Override
-
-&nbsp;   public void draw() {
-
-&nbsp;       System.out.println("Drawing Rectangle");
-
-&nbsp;   }
-
+    @Override
+    public void draw() {
+        System.out.println("Drawing Rectangle");
+    }
 }
-
-
-
-
+```
 
 Podemos utilizar una referencia de tipo interfaz:
 
-
-
+```java
 Drawable d = new Rectangle();
 
-
-
 d.draw();
+```
 
+Esto también permite **polimorfismo**:
 
-
-
-
-Esto también permite polimorfismo:
-
-
-
+```text
 Drawable
-
-&nbsp;   ↑
-
+   ↑
 Rectangle
+```
 
+### Características
 
+- Define un contrato.
+- Una clase puede implementar **varias** interfaces.
+- No se puede hacer `new` de una interfaz.
+- Puede declarar métodos abstractos.
+- Puede tener métodos `default` y `static` (desde Java 8).
+- Puede tener métodos `private` (desde Java 9).
+- Puede declarar constantes.
+- No está pensada para compartir estado de instancia.
 
-📌 Métodos en una Interface
+### 📌 Métodos en una Interface
 
+En el modelo tradicional, los métodos declarados en una interfaz son abstractos. Pero las interfaces modernas también pueden tener:
 
+- `abstract`
+- `default`
+- `static`
+- `private`
 
-En el modelo tradicional, los métodos declarados en una interfaz son abstractos.
-
-
-
-Pero las interfaces modernas también pueden tener:
-
-
-
-abstract
-
-default
-
-static
-
-private
-
-
-
-
-
-Por ejemplo:
-
-
-
+```java
 interface Example {
 
+    // Abstracto
+    void method1();
 
+    // Implementación por defecto
+    default void method2() {
+        System.out.println("Default");
+    }
 
-&nbsp;   // Abstracto
+    // Método estático
+    static void method3() {
+        System.out.println("Static");
+    }
+}
+```
 
-&nbsp;   void method1();
+> Los métodos `private` en interfaces son posibles desde **Java 9**.
 
+### Una clase puede implementar varias interfaces
 
-
-&nbsp;   // Implementación por defecto
-
-&nbsp;   default void method2() {
-
-&nbsp;       System.out.println("Default");
-
-&nbsp;   }
-
-
-
-&nbsp;   // Método estático
-
-&nbsp;   static void method3() {
-
-&nbsp;       System.out.println("Static");
-
-&nbsp;   }
-
+```java
+interface Printable {
+    void print();
 }
 
+interface Scannable {
+    void scan();
+}
 
+class Printer implements Printable, Scannable {
 
+    @Override
+    public void print() {
+        System.out.println("Printing...");
+    }
 
+    @Override
+    public void scan() {
+        System.out.println("Scanning...");
+    }
+}
+```
 
-Los métodos private también son posibles desde Java 9.
+---
 
+## ⚔️ Comparación rápida
 
+| Característica | Abstract Class | Interface |
+| --- | :---: | :---: |
+| Define un contrato | ✅ | ✅ |
+| Instanciable directamente | ❌ | ❌ |
+| Métodos abstractos | ✅ | ✅ |
+| Métodos implementados | ✅ | ✅ `default`, `static`, `private` |
+| Variables de instancia | ✅ | ❌ |
+| Constantes | ✅ | ✅ |
+| Constructor | ✅ | ❌ |
+| Estado de instancia | ✅ | ❌ |
+| Métodos `private` | ✅ | ✅ desde Java 9 |
+| Métodos `protected` | ✅ | ❌ |
+| Métodos `public` | ✅ | ✅ |
+| Métodos `final` | ✅ | ❌ |
+| Métodos `static` | ✅ | ✅ |
+| Compartir implementación | ✅ | Limitado |
+| Herencia múltiple | ❌ | ✅ mediante interfaces |
+| Palabra clave | `extends` | `implements` |
+| Propósito principal | Base común | Contrato / comportamiento |
+| Concepto | "es un" | "puede hacer" |
+| Acoplamiento | Mayor | Menor |
 
-⚔️ Comparación rápida
+---
 
-Característica	Abstract Class	Interface
+## 🔑 extends vs implements
 
-Instanciable directamente	❌	❌
+### Abstract Class
 
-Métodos abstractos	✅	✅
+Una clase **extiende** otra clase:
 
-Métodos implementados	✅	default, static, private
-
-Variables de instancia	✅	❌
-
-Constantes	✅	✅
-
-Constructor	✅	❌
-
-Estado de instancia	✅	❌
-
-Métodos private	✅	✅ desde Java 9
-
-Métodos protected	✅	❌
-
-Métodos public	✅	✅
-
-Métodos final	✅	❌
-
-Métodos static	✅	✅
-
-Herencia múltiple	❌	✅ mediante interfaces
-
-Palabra clave	extends	implements
-
-Propósito principal	Base común	Contrato / comportamiento
-
-Acoplamiento	Mayor	Menor
-
-🔑 extends vs implements
-
-Abstract Class
-
-
-
-Una clase extiende otra clase:
-
-
-
+```java
 class Circle extends Shape {
 
 }
+```
 
-
-
+```text
 Circle
-
-&nbsp;  ↓ extends
-
+  ↓ extends
 Shape
+```
 
+### Interface
 
+Una clase **implementa** una interfaz:
 
-Interface
-
-
-
-Una clase implementa una interfaz:
-
-
-
+```java
 class Rectangle implements Drawable {
 
 }
+```
 
-
-
+```text
 Rectangle
-
-&nbsp;   ↓ implements
-
+  ↓ implements
 Drawable
+```
 
+Una interfaz puede **extender** otra interfaz:
 
-
-Una interfaz puede extender otra interfaz
-
+```java
 interface AdvancedDrawable extends Drawable {
 
 }
+```
 
+### Resumen
 
-
-
-
-Resumen:
-
-
-
+```text
 class     → extends    → class
-
 class     → implements → interface
-
 interface → extends    → interface
+```
 
+---
 
+## 🧬 Herencia
 
-🧬 Herencia
+### Abstract Class: una sola clase padre
 
-Abstract Class: una sola clase padre
+Java **no permite**:
 
-
-
-Java no permite:
-
-
-
+```java
 class MyClass extends ClassA, ClassB { // ❌
 
 }
+```
 
+Una clase solo puede extender **una** clase:
 
-
-
-
-Una clase solo puede extender una clase.
-
-
-
+```java
 class MyClass extends ClassA {
 
 }
+```
 
-
-
-Interface: múltiples interfaces
-
-
+### Interface: múltiples interfaces
 
 Una clase puede implementar varias interfaces:
 
-
-
+```java
 class MyClass implements InterfaceA, InterfaceB, InterfaceC {
 
 }
-
-
-
-
+```
 
 Esto permite combinar diferentes comportamientos:
 
+```text
+         ┌→ Flyable
+Bird ────┼→ Swimmable
+         └→ Runnable
+```
 
+---
 
-&nbsp;             ┌→ Flyable
+## 📦 Estado y variables
 
-Bird ─────────┼→ Swimmable
+### Abstract Class
 
-&nbsp;             └→ Runnable
+Puede mantener **estado**:
 
-
-
-📦 Estado y variables
-
-Abstract Class
-
-
-
-Puede mantener estado:
-
-
-
+```java
 abstract class Employee {
 
+    protected String name;
+    protected double salary;
 
-
-&nbsp;   protected String name;
-
-&nbsp;   protected double salary;
-
-
-
-&nbsp;   public Employee(String name, double salary) {
-
-&nbsp;       this.name = name;
-
-&nbsp;       this.salary = salary;
-
-&nbsp;   }
-
+    public Employee(String name, double salary) {
+        this.name = name;
+        this.salary = salary;
+    }
 }
-
-
-
-
+```
 
 Cada objeto puede tener sus propios valores:
 
-
-
+```text
 Employee
+ ├── name
+ └── salary
+```
 
-&nbsp;├── name
-
-&nbsp;└── salary
-
-
-
-Interface
-
-
+### Interface
 
 Las variables declaradas en una interfaz son, por defecto:
 
+- `public`
+- `static`
+- `final`
 
+Por tanto, funcionan como **constantes**:
 
-public
-
-static
-
-final
-
-
-
-
-
-Por tanto, funcionan como constantes:
-
-
-
+```java
 interface Constants {
 
-
-
-&nbsp;   int MAX\_USERS = 100;
-
+    int MAX_USERS = 100;
 }
-
-
-
-
+```
 
 Equivale conceptualmente a:
 
+```java
+public static final int MAX_USERS = 100;
+```
 
+No sirven para mantener el estado individual de cada objeto.
 
-public static final int MAX\_USERS = 100;
+---
 
+## 🏗️ Constructores
 
-
-
-
-No sirven para mantener estado individual de cada objeto.
-
-
-
-🏗️ Constructores
-
-Abstract Class
-
-
+### Abstract Class
 
 Puede tener constructores:
 
-
-
+```java
 abstract class Animal {
 
+    protected String name;
 
-
-&nbsp;   protected String name;
-
-
-
-&nbsp;   public Animal(String name) {
-
-&nbsp;       this.name = name;
-
-&nbsp;   }
-
+    public Animal(String name) {
+        this.name = name;
+    }
 }
+```
 
+La clase hija llama al constructor mediante `super()`:
 
-
-
-
-La clase hija puede llamar al constructor mediante super():
-
-
-
+```java
 class Dog extends Animal {
 
-
-
-&nbsp;   public Dog(String name) {
-
-&nbsp;       super(name);
-
-&nbsp;   }
-
+    public Dog(String name) {
+        super(name);
+    }
 }
+```
 
+### Interface
 
+Una interfaz **no tiene constructores**:
 
-Interface
-
-
-
-Una interfaz no tiene constructores:
-
-
-
+```java
 interface Animal {
-
-&nbsp;   // ❌ No constructor
-
+    // ❌ No constructor
 }
-
-
-
-
+```
 
 Una interfaz no representa directamente un objeto que haya que inicializar.
 
+---
 
+## 🔒 Modificadores de acceso
 
-🔒 Modificadores de acceso
-
-Abstract Class
-
-
+### Abstract Class
 
 Sus métodos pueden tener diferentes niveles de acceso:
 
-
-
+```java
 abstract class Example {
 
+    private void method1() {
+    }
 
+    protected void method2() {
+    }
 
-&nbsp;   private void method1() {
-
-&nbsp;   }
-
-
-
-&nbsp;   protected void method2() {
-
-&nbsp;   }
-
-
-
-&nbsp;   public void method3() {
-
-&nbsp;   }
-
+    public void method3() {
+    }
 }
+```
 
+### Interface
 
+Los métodos abstractos de una interfaz son `public` por defecto:
 
-Interface
-
-
-
-Los métodos abstractos de una interfaz son public por defecto.
-
-
-
+```java
 interface Example {
 
-
-
-&nbsp;   void execute();
-
+    void execute();
 }
-
-
-
-
+```
 
 Es equivalente a:
 
-
-
+```java
 interface Example {
 
-
-
-&nbsp;   public abstract void execute();
-
+    public abstract void execute();
 }
+```
 
+Las interfaces modernas también permiten métodos `private`.
 
+---
 
+## 🛑 Métodos final
 
+### Abstract Class
 
-Las interfaces modernas también permiten métodos private.
+Puede tener métodos `final`:
 
-
-
-🛑 Métodos final
-
-Abstract Class
-
-
-
-Puede tener métodos final:
-
-
-
+```java
 abstract class Animal {
 
-
-
-&nbsp;   final void breathe() {
-
-&nbsp;       System.out.println("Breathing...");
-
-&nbsp;   }
-
+    final void breathe() {
+        System.out.println("Breathing...");
+    }
 }
+```
 
+Una subclase **no puede sobrescribirlo**:
 
-
-
-
-Una subclase no puede sobrescribirlo:
-
-
-
+```java
 class Dog extends Animal {
 
-
-
-&nbsp;   // ❌ No se puede sobrescribir breathe()
-
+    // ❌ No se puede sobrescribir breathe()
 }
+```
 
+### Interface
 
+Los métodos de una interfaz **no pueden declararse `final`**:
 
-Interface
-
-
-
-Los métodos de una interfaz no pueden declararse final.
-
-
-
+```java
 interface Example {
 
-
-
-&nbsp;   // ❌ No válido
-
-&nbsp;   final void method();
-
+    // ❌ No válido
+    final void method();
 }
+```
 
+---
 
-
-🔄 Polimorfismo
-
-
+## 🔄 Polimorfismo
 
 Ambos mecanismos permiten polimorfismo.
 
+### Abstract Class
 
-
-Abstract Class
-
+```java
 abstract class Animal {
 
-
-
-&nbsp;   abstract void sound();
-
+    abstract void sound();
 }
-
-
 
 class Dog extends Animal {
 
-
-
-&nbsp;   @Override
-
-&nbsp;   void sound() {
-
-&nbsp;       System.out.println("Woof");
-
-&nbsp;   }
-
+    @Override
+    void sound() {
+        System.out.println("Woof");
+    }
 }
-
-
-
-
+```
 
 Uso:
 
-
-
+```java
 Animal animal = new Dog();
 
-
-
 animal.sound();
+```
 
+### Interface
 
-
-Interface
-
+```java
 interface Animal {
 
-
-
-&nbsp;   void sound();
-
+    void sound();
 }
-
-
 
 class Dog implements Animal {
 
-
-
-&nbsp;   @Override
-
-&nbsp;   public void sound() {
-
-&nbsp;       System.out.println("Woof");
-
-&nbsp;   }
-
+    @Override
+    public void sound() {
+        System.out.println("Woof");
+    }
 }
-
-
-
-
+```
 
 Uso:
 
-
-
+```java
 Animal animal = new Dog();
 
-
-
 animal.sound();
-
-
-
-
+```
 
 En ambos casos:
 
+```text
+Referencia → Animal
+Objeto real → Dog
+```
 
+---
 
-Referencia
+## 🎯 ¿Cuándo usar cada uno?
 
-&nbsp;   ↓
+### Usa `abstract class` cuando...
 
-Animal
+Las clases están **estrechamente relacionadas** y quieres compartir:
 
-&nbsp;   ↓
+- Código
+- Estado
+- Atributos
+- Constructores
+- Comportamiento
 
-Objeto real
+Pregunta mental: **¿qué es este objeto?**
 
-&nbsp;   ↓
+```text
+Dog   → Animal
+Cat   → Animal
 
-Dog
+Car   → Vehicle
+Truck → Vehicle
+```
 
+**Ejemplo:**
 
+```text
+          Vehicle
+             ↑
+     ┌───────┼───────┐
+     ↓       ↓       ↓
+    Car    Truck    Bus
+```
 
-🎯 ¿Cuándo usar cada uno?
+Todos son vehículos y probablemente comparten características:
 
-Usa abstract class cuando...
-
-
-
-Las clases están estrechamente relacionadas y quieres compartir:
-
-
-
-código
-
-
-
-estado
-
-
-
-atributos
-
-
-
-constructores
-
-
-
-comportamiento
-
-
-
-Ejemplo:
-
-
-
-&nbsp;            Vehicle
-
-&nbsp;               ↑
-
-&nbsp;       ┌───────┼───────┐
-
-&nbsp;       ↓       ↓       ↓
-
-&nbsp;      Car    Truck   Bus
-
-
-
-
-
-Todos son vehículos y probablemente comparten características.
-
-
-
+```java
 abstract class Vehicle {
 
+    protected String brand;
 
+    public Vehicle(String brand) {
+        this.brand = brand;
+    }
 
-&nbsp;   protected String brand;
+    public void stop() {
+        System.out.println("Stopping...");
+    }
 
-
-
-&nbsp;   public Vehicle(String brand) {
-
-&nbsp;       this.brand = brand;
-
-&nbsp;   }
-
-
-
-&nbsp;   public void stop() {
-
-&nbsp;       System.out.println("Stopping...");
-
-&nbsp;   }
-
-
-
-&nbsp;   abstract void start();
-
+    abstract void start();
 }
+```
 
+```java
+class Car extends Vehicle {
 
+    public Car(String brand) {
+        super(brand);
+    }
 
-🎯 Usa interface cuando...
+    @Override
+    void start() {
+        System.out.println("Car starting...");
+    }
+}
+```
 
+### Usa `interface` cuando...
 
+Quieres definir un **comportamiento o contrato** que pueden compartir clases que no necesariamente están relacionadas por herencia.
 
-Quieres definir un comportamiento o contrato que pueden compartir clases que no necesariamente están relacionadas por herencia.
+Pregunta mental: **¿qué puede hacer este objeto?**
 
-
-
-Ejemplo:
-
-
-
-Bird ───────→ Flyable
-
+```text
+Bird     ───→ Flyable
 Airplane ───→ Flyable
+Drone    ───→ Flyable
+```
 
-Drone ──────→ Flyable
+Los tres pueden volar, pero no pertenecen a la misma jerarquía de clases:
 
-
-
-
-
-Los tres pueden volar, pero no necesariamente pertenecen a la misma jerarquía de clases.
-
-
-
+```java
 interface Flyable {
 
-
-
-&nbsp;   void fly();
-
+    void fly();
 }
-
-
-
-
-
-Después:
-
-
 
 class Bird implements Flyable {
 
-
-
-&nbsp;   @Override
-
-&nbsp;   public void fly() {
-
-&nbsp;       System.out.println("Bird flying");
-
-&nbsp;   }
-
+    @Override
+    public void fly() {
+        System.out.println("Bird flying");
+    }
 }
-
-
 
 class Airplane implements Flyable {
 
-
-
-&nbsp;   @Override
-
-&nbsp;   public void fly() {
-
-&nbsp;       System.out.println("Airplane flying");
-
-&nbsp;   }
-
+    @Override
+    public void fly() {
+        System.out.println("Airplane flying");
+    }
 }
+```
 
+Más ejemplos de capacidades:
 
+```text
+Bird      → Flyable
+Car       → Drivable
+Document  → Printable
+Payment   → Payable
+```
 
-🔗 Acoplamiento
+---
 
+## 🔗 Acoplamiento
 
+Una diferencia importante es el **acoplamiento**.
 
-Una diferencia importante señalada por GeeksforGeeks es el acoplamiento.
+### Abstract Class
 
+Normalmente produce una relación **más fuerte** entre la clase base y sus subclases:
 
-
-Abstract Class
-
-
-
-Normalmente produce una relación más fuerte entre la clase base y sus subclases.
-
-
-
+```text
 Employee
-
-&nbsp;   ↑
-
+   ↑
 Developer
+```
 
+`Developer` depende de la estructura de `Employee`.
 
+### Interface
 
+Favorece un acoplamiento **más débil**:
 
-
-Developer depende de la estructura de Employee.
-
-
-
-Interface
-
-
-
-Favorece un acoplamiento más débil.
-
-
-
+```text
 Developer ───→ Payable
-
 Customer  ───→ Payable
-
 Invoice   ───→ Payable
+```
 
+Las clases solo necesitan cumplir el contrato de `Payable`. Esto facilita cambiar las implementaciones sin cambiar el código que depende de la interfaz.
 
+---
 
+## 🧩 Combinar ambas
 
+No hay que elegir exclusivamente una u otra. Una clase puede **heredar de una clase abstracta** y, además, **implementar una o varias interfaces**.
 
-Las clases solo necesitan cumplir el contrato de Payable.
+### Ejemplo 1: Employee + Payable
 
-
-
-Esto facilita cambiar las implementaciones sin cambiar el código que depende de la interfaz.
-
-
-
-🧩 Ejemplo combinando ambas
-
-
-
-Una situación habitual es utilizar las dos:
-
-
-
+```java
 interface Payable {
 
-
-
-&nbsp;   void pay();
-
+    void pay();
 }
-
-
 
 abstract class Employee {
 
+    protected String name;
 
+    public Employee(String name) {
+        this.name = name;
+    }
 
-&nbsp;   protected String name;
+    public void work() {
+        System.out.println(name + " is working");
+    }
 
-
-
-&nbsp;   public Employee(String name) {
-
-&nbsp;       this.name = name;
-
-&nbsp;   }
-
-
-
-&nbsp;   public void work() {
-
-&nbsp;       System.out.println(name + " is working");
-
-&nbsp;   }
-
-
-
-&nbsp;   public abstract void calculateSalary();
-
+    public abstract void calculateSalary();
 }
-
-
 
 class Developer extends Employee implements Payable {
 
+    public Developer(String name) {
+        super(name);
+    }
 
+    @Override
+    public void calculateSalary() {
+        System.out.println("Calculating salary...");
+    }
 
-&nbsp;   public Developer(String name) {
-
-&nbsp;       super(name);
-
-&nbsp;   }
-
-
-
-&nbsp;   @Override
-
-&nbsp;   public void calculateSalary() {
-
-&nbsp;       System.out.println("Calculating salary...");
-
-&nbsp;   }
-
-
-
-&nbsp;   @Override
-
-&nbsp;   public void pay() {
-
-&nbsp;       System.out.println("Paying developer...");
-
-&nbsp;   }
-
+    @Override
+    public void pay() {
+        System.out.println("Paying developer...");
+    }
 }
-
-
-
-
+```
 
 Conceptualmente:
 
-
-
-&nbsp;             Employee
-
-&nbsp;                ↑
-
-&nbsp;            Developer
-
-&nbsp;                │
-
-&nbsp;                ↓
-
-&nbsp;             Payable
-
-
-
-
-
-Developer:
-
-
-
-es un Employee
-
-
-
-hereda estado de Employee
-
-
-
-hereda comportamiento de Employee
-
-
-
-debe implementar calculateSalary()
-
-
-
-cumple el contrato Payable
-
-
-
-🧠 Regla mental
-
-Abstract Class
-
-¿Las clases están relacionadas?
-
-
-
-&nbsp;       ↓ Sí
-
-
-
-¿Quiero compartir estado/código?
-
-
-
-&nbsp;       ↓ Sí
-
-
-
-&nbsp;  ABSTRACT CLASS
-
-
-
-
-
-Piensa:
-
-
-
-"Es un..."
-
-
-
-Ejemplos:
-
-
-
-Dog → Animal
-
-Car → Vehicle
-
-Developer → Employee
-
-
-
-Interface
-
-¿Quiero definir un comportamiento?
-
-
-
-&nbsp;       ↓ Sí
-
-
-
-¿Pueden tenerlo clases diferentes?
-
-
-
-&nbsp;       ↓ Sí
-
-
-
-&nbsp;     INTERFACE
-
-
-
-
-
-Piensa:
-
-
-
-"Puede hacer..."
-
-
-
-Ejemplos:
-
-
-
-Bird → Flyable
-
-Printer → Printable
-
-Employee → Payable
-
-Car → Drivable
-
-
-
-⚡ Chuleta ultra rápida
-
-┌─────────────────────────────────────────┐
-
-│          ABSTRACT CLASS                 │
-
-├─────────────────────────────────────────┤
-
-│ Base común                              │
-
-│ Comparte código                         │
-
-│ Comparte estado                         │
-
-│ Puede tener constructor                 │
-
-│ Puede tener atributos                   │
-
-│ Puede tener métodos abstractos          │
-
-│ Puede tener métodos normales            │
-
-│ Una clase padre como máximo             │
-
-│ extends                                 │
-
-└─────────────────────────────────────────┘
-
-
-
-┌─────────────────────────────────────────┐
-
-│              INTERFACE                  │
-
-├─────────────────────────────────────────┤
-
-│ Contrato / comportamiento               │
-
-│ No mantiene estado de instancia        │
-
-│ No tiene constructor                    │
-
-│ Variables = constantes                  │
-
-│ Puede tener abstract/default/static      │
-
-│ Puede tener private desde Java 9        │
-
-│ Varias interfaces por clase             │
-
-│ implements                              │
-
-└─────────────────────────────────────────┘
-
-
-
-🚀 Resumen en 10 segundos
-
-ABSTRACT CLASS
-
-&nbsp;   ↓
-
-"¿QUÉ ES?"
-
-&nbsp;   ↓
-
-Base común
-
-&nbsp;   ↓
-
-Comparte estado + implementación
-
-&nbsp;   ↓
-
-extends
-
-
-
-INTERFACE
-
-&nbsp;   ↓
-
-"¿QUÉ PUEDE HACER?"
-
-&nbsp;   ↓
-
-Contrato / comportamiento
-
-&nbsp;   ↓
-
-Menor acoplamiento
-
-&nbsp;   ↓
-
-implements
-
-
-
-🎯 Regla definitiva
-
-
-
-Abstract class = identidad + estado + comportamiento compartido.
-
-
-
-Interface = contrato + capacidad + comportamiento común definido por contrato.
-
-
-
-Ejemplo definitivo
-
-&nbsp;                   Animal
-
-&nbsp;                      ↑
-
-&nbsp;                    Bird
-
-&nbsp;                      │
-
-&nbsp;                      ├────→ Flyable
-
-&nbsp;                      │
-
-&nbsp;                      └────→ Swimmable
-
-
-
+```text
+     Employee
+        ↑
+    Developer ─────→ Payable
+```
+
+`Developer`:
+
+- Es un `Employee`.
+- Hereda estado y comportamiento de `Employee`.
+- Debe implementar `calculateSalary()`.
+- Cumple el contrato `Payable`.
+- Puede tener comportamiento específico propio.
+
+### Ejemplo 2: Animal + Flyable + Swimmable
+
+```text
+          Animal
+             ↑
+            Bird
+             │
+             ├────→ Flyable
+             │
+             └────→ Swimmable
+```
+
+```java
 abstract class Animal {
 
-&nbsp;   protected String name;
+    protected String name;
 
-
-
-&nbsp;   public Animal(String name) {
-
-&nbsp;       this.name = name;
-
-&nbsp;   }
-
+    public Animal(String name) {
+        this.name = name;
+    }
 }
-
-
 
 interface Flyable {
-
-&nbsp;   void fly();
-
+    void fly();
 }
-
-
 
 interface Swimmable {
-
-&nbsp;   void swim();
-
+    void swim();
 }
-
-
 
 class Bird extends Animal implements Flyable, Swimmable {
 
+    public Bird(String name) {
+        super(name);
+    }
 
+    @Override
+    public void fly() {
+        System.out.println("Flying");
+    }
 
-&nbsp;   public Bird(String name) {
+    @Override
+    public void swim() {
+        System.out.println("Swimming");
+    }
+}
+```
 
-&nbsp;       super(name);
+`Bird`:
 
-&nbsp;   }
+- Es un `Animal` → `extends`
+- Puede volar → `implements Flyable`
+- Puede nadar → `implements Swimmable`
 
+---
 
+## ⚠️ Errores frecuentes
 
-&nbsp;   @Override
+| Error | Por qué falla |
+| --- | --- |
+| Confundir `extends` con `implements` | Se hereda de una clase con `extends` y se cumple una interfaz con `implements`. |
+| `class A extends B, C` | Java solo permite heredar de **una** clase. |
+| `new` sobre una clase abstracta o una interfaz | Ninguna de las dos es instanciable directamente. |
+| Declarar un método `final` en una interfaz | No es válido en interfaces. |
+| Esperar estado de instancia en una interfaz | Sus variables son siempre constantes (`public static final`). |
+| Buscar un constructor en una interfaz | Las interfaces no tienen constructores. |
+| Pensar "interfaz = solo métodos abstractos" | En Java moderno también existen `default`, `static` y `private`. |
 
-&nbsp;   public void fly() {
+Ejemplo de la confusión más habitual:
 
-&nbsp;       System.out.println("Flying");
-
-&nbsp;   }
-
-
-
-&nbsp;   @Override
-
-&nbsp;   public void swim() {
-
-&nbsp;       System.out.println("Swimming");
-
-&nbsp;   }
-
+```java
+// Heredar de una clase
+class Dog extends Animal {
 }
 
+// Implementar una interfaz
+class Dog implements Runnable {
+}
+```
 
+---
 
+## 🧠 Reglas mentales
 
+### Abstract Class
 
-Memoriza únicamente esto:
+```text
+¿Las clases están relacionadas?
+        ↓ Sí
+¿Quiero compartir estado/código?
+        ↓ Sí
+   ABSTRACT CLASS
+```
 
+Piensa: **"Es un..."**
 
+```text
+Dog       → Animal
+Car       → Vehicle
+Developer → Employee
+```
 
+### Interface
+
+```text
+¿Quiero definir un comportamiento?
+        ↓ Sí
+¿Pueden tenerlo clases diferentes?
+        ↓ Sí
+      INTERFACE
+```
+
+Piensa: **"Puede hacer..."**
+
+```text
+Bird     → Flyable
+Printer  → Printable
+Employee → Payable
+Car      → Drivable
+```
+
+### Regla práctica
+
+```text
+¿Quiero definir una capacidad?
+        ↓
+    interface
+
+¿Quiero compartir estado o código entre clases relacionadas?
+        ↓
+  abstract class
+```
+
+---
+
+## ⚡ Chuleta ultra rápida
+
+```text
+┌─────────────────────────────────────────┐
+│          ABSTRACT CLASS                 │
+├─────────────────────────────────────────┤
+│ Base común                              │
+│ Comparte código                         │
+│ Comparte estado                         │
+│ Puede tener constructor                 │
+│ Puede tener atributos                   │
+│ Puede tener métodos abstractos          │
+│ Puede tener métodos normales            │
+│ Una clase padre como máximo             │
+│ extends                                 │
+└─────────────────────────────────────────┘
+
+┌─────────────────────────────────────────┐
+│              INTERFACE                  │
+├─────────────────────────────────────────┤
+│ Contrato / comportamiento               │
+│ No mantiene estado de instancia         │
+│ No tiene constructor                    │
+│ Variables = constantes                  │
+│ Puede tener abstract/default/static     │
+│ Puede tener private desde Java 9        │
+│ Varias interfaces por clase             │
+│ implements                              │
+└─────────────────────────────────────────┘
+```
+
+---
+
+## 🚀 Resumen final
+
+### En 10 segundos
+
+```text
+ABSTRACT CLASS                         INTERFACE
+  = clase base                           = contrato
+  = herencia                             = capacidad
+  = "es un"                              = "puede hacer"
+  = comparte estado/código               = menor acoplamiento
+  = solo una clase padre                 = permite múltiples interfaces
+  = extends                              = implements
+```
+
+### 🎯 Regla definitiva
+
+- **Abstract class** = identidad + estado + comportamiento compartido.
+- **Interface** = contrato + capacidad + comportamiento común definido por contrato.
+
+### Memoriza únicamente esto
+
+```text
 extends    → heredar una clase
-
 implements → cumplir una interfaz
 
-
-
 abstract class → "es un"
-
 interface      → "puede hacer"
+```
 
+---
 
+> **Nota:** la interfaz se presenta principalmente como un contrato cuyos métodos abstractos deben implementar las clases, pero en Java moderno también existen métodos `default`, `static` y `private`. Por eso la distinción no debe reducirse a "interfaz = solo métodos abstractos".
 
-
-
-Nota: GeeksforGeeks presenta la interfaz principalmente como un contrato cuyos métodos abstractos deben implementar las clases, pero en Java moderno también existen métodos default, static y private; por eso la distinción no debe reducirse simplemente a "interfaz = solo métodos abstractos". {"fallbackMarkdown":"(GeeksforGeeks
-
-)","reference":{"matched\_text":"","prefix":null,"start\_idx":13918,"end\_idx":13937,"safe\_urls":\["https://www.geeksforgeeks.org/java/difference-between-abstract-class-and-interface-in-java/","https://www.geeksforgeeks.org/java/difference-between-abstract-class-and-interface-in-java/?utm\_source=chatgpt.com"],"refs":\[],"alt":"(GeeksforGeeks
-
-)","prompt\_text":null,"type":"grouped\_webpages","fallback\_items":null,"status":"done","error":null,"style":null,"items":\[{"title":"Difference Between Abstract Class and Interface in Java - GeeksforGeeks","url":"https://www.geeksforgeeks.org/java/difference-between-abstract-class-and-interface-in-java/?utm\_source=chatgpt.com","attribution":"GeeksforGeeks","pub\_date":1778889600,"snippet":"","attribution\_segments":null,"supporting\_websites":\[],"refs":\[{"turn\_index":1,"ref\_type":"search","ref\_index":0}],"hue":null,"attributions":null}]},"showLoginRequiredCard":false}
-
-:::{"fallbackMarkdown":"","reference":{"matched\_text":" ","prefix":null,"start\_idx":13941,"end\_idx":13941,"safe\_urls":\[],"refs":\[],"alt":"","prompt\_text":null,"type":"sources\_footnote","sources":\[{"title":"Difference Between Abstract Class and Interface in Java - GeeksforGeeks","url":"https://www.geeksforgeeks.org/java/difference-between-abstract-class-and-interface-in-java/?utm\_source=chatgpt.com","attribution":"GeeksforGeeks"}],"has\_images":false},"showLoginRequiredCard":false}
-
+📖 **Referencia:** [Difference Between Abstract Class and Interface in Java — GeeksforGeeks](https://www.geeksforgeeks.org/java/difference-between-abstract-class-and-interface-in-java/)
