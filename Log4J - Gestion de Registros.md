@@ -21,13 +21,13 @@ Log4J permite clasificar los mensajes según su importancia, por ejemplo:
 - `FATAL`: errores graves que pueden impedir el funcionamiento de la aplicación.
 
 ## ¿Cuándo usar cada nivel?
-### Desarrolo
+### Desarrollo
 - `TRACE`: cuando se necesita un nivel de detalle muy elevado, normalmente para analizar problemas específicos durante el desarrollo o la depuración.
 - `DEBUG`: para información útil durante la depuración de la aplicación, como valores de variables, flujo de ejecución o detalles internos.
 ### Desarrolo
 - `INFO`: para registrar eventos normales y relevantes del funcionamiento de la aplicación, como el inicio de un servicio, una operación completada o una conexión establecida.
 - `DEBUG`: para información útil durante la depuración de la aplicación, como valores de variables, flujo de ejecución o detalles internos.
-### PRoducción
+### Producción
 - `INFO`: para registrar eventos normales y relevantes del funcionamiento de la aplicación, como el inicio de un servicio, una operación completada o una conexión establecida.
 - `WARN`: cuando ocurre una situación inesperada o potencialmente problemática, pero la aplicación puede continuar funcionando.
 - `ERROR`: cuando se produce un error que impide completar correctamente una operación concreta, aunque la aplicación pueda seguir funcionando.
