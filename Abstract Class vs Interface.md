@@ -1,4 +1,4 @@
-# Java: Abstract Class vs Interface — Chuleta
+# Java: Abstract Class vs Interface
 
 ## 📑 Índice
 

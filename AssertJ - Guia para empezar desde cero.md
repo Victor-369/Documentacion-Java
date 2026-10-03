@@ -268,16 +268,16 @@ Las colecciones son donde AssertJ más brilla. Estos son los conceptos clave.
 
 ### 8.1. Comprobar el contenido: la familia `contains`
 
-| Aserción | Qué verifica |
-| --- | --- |
-| `contains` | Contiene los valores dados, **en cualquier orden** (puede tener más). |
-| `containsOnly` | Contiene **solo** esos valores, en cualquier orden e ignorando duplicados. |
-| `containsExactly` | Contiene **exactamente** esos valores y **en ese orden**. |
-| `containsExactlyInAnyOrder` | Contiene exactamente esos valores, **en cualquier orden**. |
-| `containsSequence` | Contiene esa secuencia, en orden y **sin valores intermedios**. |
-| `containsSubsequence` | Contiene esa subsecuencia en orden, **pudiendo haber valores intermedios**. |
-| `containsOnlyOnce` | Contiene los valores dados **una sola vez**. |
-| `containsAnyOf` | Contiene **al menos uno** de los valores dados (como un "o"). |
+| Aserción                    | Qué verifica                                                                |
+| --------------------------- | --------------------------------------------------------------------------- |
+| `contains`                  | Contiene los valores dados, **en cualquier orden** (puede tener más).       |
+| `containsOnly`              | Contiene **solo** esos valores, en cualquier orden e ignorando duplicados.  |
+| `containsExactly`           | Contiene **exactamente** esos valores y **en ese orden**.                   |
+| `containsExactlyInAnyOrder` | Contiene exactamente esos valores, **en cualquier orden**.                  |
+| `containsSequence`          | Contiene esa secuencia, en orden y **sin valores intermedios**.             |
+| `containsSubsequence`       | Contiene esa subsecuencia en orden, **pudiendo haber valores intermedios**. |
+| `containsOnlyOnce`          | Contiene los valores dados **una sola vez**.                                |
+| `containsAnyOf`             | Contiene **al menos uno** de los valores dados (como un "o").               |
 
 Ejemplo:
 
