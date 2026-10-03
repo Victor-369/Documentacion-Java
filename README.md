@@ -34,38 +34,38 @@ Actualmente, el repositorio cuenta con documentación sobre diferentes conceptos
 
 | Documento | Qué encontrarás |
 | --- | --- |
-| [Abstract Class vs Interface](./Abstract%20Class%20vs%20Interface.md) | Chuleta comparativa: constructores, estado, modificadores de acceso, herencia, métodos `final`, polimorfismo y acoplamiento. Incluye cuándo usar cada una, cómo combinarlas y errores frecuentes. |
-| [Colecciones](./Colecciones.md) | Resumen del *Java Collections Framework*: jerarquía de interfaces, `List`, `Set`, `Map`, `Queue` y `Deque`, colecciones inmutables, *Sequenced Collections* (Java 21), la clase `Collections`, genéricos, Stream API y colecciones concurrentes. |
-| [Comparable vs Comparator](./Comparable%20vs%20Comparator.md) | Guía de estudio para programadores junior (Java 21 o superior), con ejemplos compilados y ejecutados, errores típicos, ejercicios y autoevaluación. |
+| [Abstract Class vs Interface](https://github.com/Victor-369/Documentacion-Java/blob/main/Abstract%20Class%20vs%20Interface.md) | Chuleta comparativa: constructores, estado, modificadores de acceso, herencia, métodos `final`, polimorfismo y acoplamiento. Incluye cuándo usar cada una, cómo combinarlas, errores frecuentes, reglas mentales y una chuleta ultra rápida. |
+| [Colecciones](https://github.com/Victor-369/Documentacion-Java/blob/main/Colecciones.md) | Resumen del *Java Collections Framework*: jerarquía de interfaces, `List`, `Set`, `Map`, `Queue` y `Deque`, colecciones inmutables, *Sequenced Collections* (Java 21), la clase `Collections`, genéricos, Stream API y colecciones concurrentes. |
+| [Comparable vs Comparator](https://github.com/Victor-369/Documentacion-Java/blob/main/Comparable%20vs%20Comparator.md) | Guía de estudio para programadores junior (Java 21 o superior), con ejemplos compilados y ejecutados, errores típicos, ejercicios y autoevaluación. |
 
 ### ⚠️ Excepciones y gestión de errores
 
 | Documento | Qué encontrarás |
 | --- | --- |
-| [Excepciones checked y unchecked](./Excepciones%20checked%20y%20unchecked.md) | Diferencias entre excepciones comprobadas y no comprobadas, ejemplos con `throws` y `try-catch`, excepciones personalizadas y cuándo usar cada tipo. |
-| [Manejo eficaz de errores en Java: estrategias y buenas prácticas](./Manejo%20Eficaz%20de%20Errores%20en%20Java%3A%20Estrategias%20y%20Buenas%20Practicas.md) | Resumen de un artículo sobre buenas prácticas, técnicas de manejo (`try-catch-finally`, *multi-catch*, `try-with-resources`), diseño de excepciones personalizadas y registro de errores. |
+| [Excepciones checked y unchecked](https://github.com/Victor-369/Documentacion-Java/blob/main/Excepciones%20checked%20y%20unchecked.md) | Diferencias entre excepciones comprobadas y no comprobadas, ejemplos con `throws` y `try-catch`, excepciones personalizadas y cuándo usar cada tipo. |
+| [Manejo eficaz de errores en Java: estrategias y buenas prácticas](https://github.com/Victor-369/Documentacion-Java/blob/main/Manejo%20Eficaz%20de%20Errores%20en%20Java%3A%20Estrategias%20y%20Buenas%20Practicas.md) | Resumen de un artículo sobre buenas prácticas, técnicas de manejo (`try-catch-finally`, *multi-catch*, `try-with-resources`), diseño de excepciones personalizadas y registro de errores. |
 
 ### 🧪 Testing y pruebas automatizadas
 
 | Documento | Qué encontrarás |
 | --- | --- |
-| [JUnit: visión general e introducción para principiantes](./JUnit%20-%20Vision%20general%20e%20introduccion%20para%20principiantes.md) | Traducción al castellano de la página oficial de JUnit 6.1.3, más un complemento para principiantes: puesta en marcha con Maven y Gradle, anotaciones, aserciones, errores frecuentes y glosario. |
-| [JUnit: aprende a escribir pruebas paso a paso](./JUnit%20-%20Aprende%20a%20escribir%20pruebas%20paso%20a%20paso.md) | Guía práctica: primera prueba, ciclo de vida, aserciones, excepciones, pruebas parametrizadas, anidadas, repetidas y dinámicas, etiquetas, *timeouts* y buenas prácticas. |
-| [AssertJ: guía para empezar desde cero](./AssertJ%20-%20Guia%20para%20empezar%20desde%20cero.md) | Aserciones fluidas con `assertThat(...)`: tipos de dato, colecciones, excepciones, mensajes de error, *soft assertions*, comparación recursiva y estilo BDD. |
-| [Test-Driven Development (TDD)](./Test-Driven%20Development%20%28TDD%29.md) | Guía paso a paso del ciclo Rojo → Verde → Refactor, con dos ejemplos completos (factorial y validador de contraseñas), buenas prácticas, errores típicos y ejercicios. |
+| [JUnit: visión general e introducción para principiantes](https://github.com/Victor-369/Documentacion-Java/blob/main/JUnit%20-%20Vision%20general%20e%20introduccion%20para%20principiantes.md) | Traducción al castellano de la página oficial de JUnit 6.1.3, más un complemento para principiantes: puesta en marcha con Maven y Gradle, anotaciones, aserciones, errores frecuentes y glosario. |
+| [JUnit: aprende a escribir pruebas paso a paso](https://github.com/Victor-369/Documentacion-Java/blob/main/JUnit%20-%20Aprende%20a%20escribir%20pruebas%20paso%20a%20paso.md) | Guía práctica: primera prueba, ciclo de vida, aserciones, excepciones, pruebas parametrizadas, anidadas, repetidas y dinámicas, etiquetas, *timeouts* y buenas prácticas. |
+| [AssertJ: guía para empezar desde cero](https://github.com/Victor-369/Documentacion-Java/blob/main/AssertJ%20-%20Guia%20para%20empezar%20desde%20cero.md) | Aserciones fluidas con `assertThat(...)`: tipos de dato, colecciones, excepciones, mensajes de error, *soft assertions*, comparación recursiva y estilo BDD. |
+| [Test-Driven Development (TDD)](https://github.com/Victor-369/Documentacion-Java/blob/main/Test-Driven%20Development%20%28TDD%29.md) | Guía paso a paso del ciclo Rojo → Verde → Refactor, con dos ejemplos completos (factorial y validador de contraseñas), buenas prácticas, errores típicos y ejercicios. |
 
 ### 📝 Logging y registro de información
 
 | Documento | Qué encontrarás |
 | --- | --- |
-| [Log4J: gestión de registros](./Log4J%20-%20Gestion%20de%20Registros.md) | Resumen conceptual: niveles de *logging* y cuándo usar cada uno, configuración, *appenders* y *layouts*. |
-| [Log4J: guía](./Log4J%20-%20Guia.md) | Guía práctica de Log4j 2: instalación con Maven y Gradle, `log4j2.xml`, mensajes parametrizados, escritura en ficheros (`RollingFile`), `ThreadContext`, integración con SLF4J y problemas frecuentes. |
+| [Log4J: gestión de registros](https://github.com/Victor-369/Documentacion-Java/blob/main/Log4J%20-%20Gestion%20de%20Registros.md) | Resumen conceptual: niveles de *logging* y cuándo usar cada uno, configuración, *appenders* y *layouts*. |
+| [Log4J: guía](https://github.com/Victor-369/Documentacion-Java/blob/main/Log4J%20-%20Guia.md) | Guía práctica de Log4j 2: instalación con Maven y Gradle, `log4j2.xml`, mensajes parametrizados, escritura en ficheros (`RollingFile`), `ThreadContext`, integración con SLF4J y problemas frecuentes. |
 
 ### 🔧 Herramientas y buenas prácticas
 
 | Documento | Qué encontrarás |
 | --- | --- |
-| [Conventional Commits](./Conventional%20Commits.md) | Convención para escribir mensajes de *commit* claros: formato, tipos habituales (`feat`, `fix`, `docs`…), ejemplos, buenas prácticas y flujo básico. |
+| [Conventional Commits](https://github.com/Victor-369/Documentacion-Java/blob/main/Conventional%20Commits.md) | Convención para escribir mensajes de *commit* claros: formato, tipos habituales (`feat`, `fix`, `docs`…), ejemplos, buenas prácticas y flujo básico. |
 
 ---
 
@@ -134,8 +134,9 @@ La intención es que el repositorio pueda servir tanto para **aprender Java desd
 
 La estructura del repositorio se irá modificando a medida que se incorporen nuevos contenidos.
 
-```text
+```
 Documentacion-Java/
+├── .gitignore
 ├── Abstract Class vs Interface.md
 ├── AssertJ - Guia para empezar desde cero.md
 ├── Colecciones.md
@@ -194,7 +195,7 @@ class CalculadoraAssertJTest {
 }
 ```
 
-La documentación del repositorio incluye material más detallado sobre [JUnit](./JUnit%20-%20Aprende%20a%20escribir%20pruebas%20paso%20a%20paso.md), [AssertJ](./AssertJ%20-%20Guia%20para%20empezar%20desde%20cero.md) y [TDD](./Test-Driven%20Development%20%28TDD%29.md).
+La documentación del repositorio incluye material más detallado sobre [JUnit](https://github.com/Victor-369/Documentacion-Java/blob/main/JUnit%20-%20Aprende%20a%20escribir%20pruebas%20paso%20a%20paso.md), [AssertJ](https://github.com/Victor-369/Documentacion-Java/blob/main/AssertJ%20-%20Guia%20para%20empezar%20desde%20cero.md) y [TDD](https://github.com/Victor-369/Documentacion-Java/blob/main/Test-Driven%20Development%20%28TDD%29.md).
 
 ---
 
@@ -232,12 +233,12 @@ Si estás comenzando a aprender Java, puedes utilizar esta documentación como m
 
 No es necesario seguir un orden concreto, ya que cada documento está pensado para poder consultarse de manera independiente. Aun así, si no sabes por dónde empezar, esta ruta puede servirte de orientación:
 
-1. [Abstract Class vs Interface](./Abstract%20Class%20vs%20Interface.md) y [Colecciones](./Colecciones.md): base del lenguaje.
-2. [Comparable vs Comparator](./Comparable%20vs%20Comparator.md): ordenación de objetos.
-3. [Excepciones checked y unchecked](./Excepciones%20checked%20y%20unchecked.md) y [Manejo eficaz de errores](./Manejo%20Eficaz%20de%20Errores%20en%20Java%3A%20Estrategias%20y%20Buenas%20Practicas.md): gestión de errores.
-4. [JUnit](./JUnit%20-%20Vision%20general%20e%20introduccion%20para%20principiantes.md), [AssertJ](./AssertJ%20-%20Guia%20para%20empezar%20desde%20cero.md) y [TDD](./Test-Driven%20Development%20%28TDD%29.md): pruebas automatizadas.
-5. [Log4J](./Log4J%20-%20Guia.md): registro de información.
-6. [Conventional Commits](./Conventional%20Commits.md): buenas prácticas con Git.
+1. [Abstract Class vs Interface](https://github.com/Victor-369/Documentacion-Java/blob/main/Abstract%20Class%20vs%20Interface.md) y [Colecciones](https://github.com/Victor-369/Documentacion-Java/blob/main/Colecciones.md): base del lenguaje.
+2. [Comparable vs Comparator](https://github.com/Victor-369/Documentacion-Java/blob/main/Comparable%20vs%20Comparator.md): ordenación de objetos.
+3. [Excepciones checked y unchecked](https://github.com/Victor-369/Documentacion-Java/blob/main/Excepciones%20checked%20y%20unchecked.md) y [Manejo eficaz de errores](https://github.com/Victor-369/Documentacion-Java/blob/main/Manejo%20Eficaz%20de%20Errores%20en%20Java%3A%20Estrategias%20y%20Buenas%20Practicas.md): gestión de errores.
+4. [JUnit](https://github.com/Victor-369/Documentacion-Java/blob/main/JUnit%20-%20Vision%20general%20e%20introduccion%20para%20principiantes.md), [AssertJ](https://github.com/Victor-369/Documentacion-Java/blob/main/AssertJ%20-%20Guia%20para%20empezar%20desde%20cero.md) y [TDD](https://github.com/Victor-369/Documentacion-Java/blob/main/Test-Driven%20Development%20%28TDD%29.md): pruebas automatizadas.
+5. [Log4J](https://github.com/Victor-369/Documentacion-Java/blob/main/Log4J%20-%20Guia.md): registro de información.
+6. [Conventional Commits](https://github.com/Victor-369/Documentacion-Java/blob/main/Conventional%20Commits.md): buenas prácticas con Git.
 
 A medida que se incorporen nuevos temas, se irá organizando la documentación para facilitar un recorrido de aprendizaje más estructurado.
 
@@ -258,7 +259,7 @@ Si encuentras un error, detectas información que pueda mejorarse o quieres prop
 5. Realiza un *commit* descriptivo.
 6. Abre un *Pull Request*.
 
-Para los mensajes de *commit* se recomienda utilizar [Conventional Commits](./Conventional%20Commits.md).
+Para los mensajes de *commit* se recomienda utilizar [Conventional Commits](https://github.com/Victor-369/Documentacion-Java/blob/main/Conventional%20Commits.md).
 
 ---
 
@@ -278,7 +279,7 @@ Se están añadiendo nuevos temas y contenidos relacionados con Java de forma pr
 
 Este proyecto se distribuye bajo la licencia **MIT**.
 
-Consulta el archivo [LICENSE](./LICENSE) para obtener más información sobre los términos de la licencia.
+Consulta el archivo [LICENSE](https://github.com/Victor-369/Documentacion-Java/blob/main/LICENSE) para obtener más información sobre los términos de la licencia.
 
 ---
 
