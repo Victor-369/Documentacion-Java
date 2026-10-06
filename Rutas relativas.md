@@ -1,7 +1,7 @@
 # Rutas relativas en Java (Java 21+)
 
 > **Fuente de referencia:** artículo «Ruta relativa en Java», DelftStack.
-> **Destinatario:** programador Java junior.
+> **Destinatario:** programador Java.
 > **Versión objetivo:** Java 21 (LTS) y posteriores.
 
 ---

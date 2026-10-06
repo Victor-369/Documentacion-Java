@@ -1,7 +1,7 @@
 # Arquitectura Criptográfica de Java (JCA) — Guía de referencia (Java 21+)
 
 > **Fuente de referencia:** *Java Cryptography Architecture (JCA) Reference Guide* (Oracle).
-> **Destinatario:** programador Java junior.
+> **Destinatario:** programador Java.
 > **Versión objetivo:** Java 21 (LTS) y posteriores.
 
 ---

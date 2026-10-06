@@ -1,6 +1,6 @@
 # Comparable y Comparator en Java
 
-### Guía de estudio para programadores junior (Java 21 en adelante)
+### Guía de estudio para programadores (Java 21 en adelante)
 
 > **Cómo se ha elaborado esta guía**
 >

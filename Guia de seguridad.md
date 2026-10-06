@@ -1,7 +1,7 @@
 # Guía del desarrollador de seguridad en Java SE (Java 21+)
 
 > **Fuente de referencia:** *Java Platform, Standard Edition Security Developer's Guide* (Oracle).
-> **Destinatario:** programador Java junior.
+> **Destinatario:** programador Java.
 > **Versión objetivo:** Java 21 (LTS) y posteriores.
 
 ---
