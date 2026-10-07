@@ -993,11 +993,34 @@ try {
 
 #### Métodos encadenados y varargs
 
-Muchos métodos aceptan un número variable de **opciones** (`OpenOption`, `CopyOption`, `LinkOption`, `FileVisitOption`…) al final:
+En Java, varargs (argumentos variables) permiten que un método reciba cero o más valores del mismo tipo. Se escriben con `...` y, dentro del método, se pueden usar como un array.
+```Java
+static int sumar(int... numeros) {
+    int total = 0;
+    for (int numero : numeros) {
+        total += numero;
+    }
+    return total;
+}
 
-```java
-Files.copy(origen, destino, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.COPY_ATTRIBUTES);
+// Se puede llamar con distintas cantidades de argumentos:
+sumar(2, 3);       // 5
+sumar(1, 2, 3, 4); // 10
+sumar();           // 0
 ```
+
+Otro ejemplo para saludar a varias personas:
+```Java
+static void saludar(String... nombres) {
+    for (String nombre : nombres) {
+        System.out.println("¡Hola, " + nombre + "!");
+    }
+}
+
+saludar("Ana", "Luis");
+```
+
+Un método solo puede tener un parámetro varargs, y *debe ser el último*. Por ejemplo, `void mostrar(int codigo, String... nombres)` es válido; `void mostrar(String... nombres, int codigo)` no.
 
 #### Operaciones atómicas
 
