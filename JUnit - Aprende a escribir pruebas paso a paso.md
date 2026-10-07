@@ -218,6 +218,7 @@ void sumaDosNumerosPositivos() {
 
 - La clase de prueba suele llamarse como la clase probada más el sufijo `Test` o `Tests`: `CalculadoraTest`.
 - Maven Surefire busca por defecto clases que coincidan con `Test*.java`, `*Test.java`, `*Tests.java` o `*TestCase.java`.
+- Para nombrar los **métodos** de prueba, consulta el patrón `método_condición_resultadoEsperado` en la [sección 8](#convención-de-nombres-método_condición_resultadoesperado).
 
 ---
 
@@ -546,6 +547,69 @@ class CalculadoraGeneradorNombresTest {
     }
 }
 ```
+
+### Convención de nombres: `método_condición_resultadoEsperado`
+
+Un buen nombre de test funciona como un mensaje de error anticipado. Cuando una prueba falla en el informe del IDE o en la integración continua, lo primero que ves es el nombre. Si ese nombre es suficientemente claro, sabes **qué se rompió sin abrir el código**.
+
+Un patrón muy extendido es dividir el nombre en tres partes separadas por guiones bajos:
+
+```
+método_condición_resultadoEsperado
+```
+
+| Parte | Responde a... | Ejemplo |
+|---|---|---|
+| **método** | ¿Qué se está probando? | `dividir` |
+| **condición** | ¿En qué situación o con qué datos? | `entreCero` |
+| **resultadoEsperado** | ¿Qué debería ocurrir? | `lanzaArithmeticException` |
+
+Resultado: `dividir_entreCero_lanzaArithmeticException`.
+
+Los guiones bajos separan las tres ideas, y dentro de cada parte se usa camelCase.
+
+#### Antes y después
+
+Nombres de los ejemplos de esta guía reescritos con el patrón:
+
+| Nombre original | Con el patrón |
+|---|---|
+| `sumaDosNumerosPositivos` | `sumar_dosPositivos_devuelveLaSuma` |
+| `dividirEntreCeroLanzaExcepcion` | `dividir_entreCero_lanzaArithmeticException` |
+| `ingresarAumentaElSaldo` | `ingresar_cantidadValida_aumentaElSaldo` |
+| `retirarMasDelSaldoLanzaExcepcion` | `retirar_masDelSaldo_lanzaExcepcion` |
+| `noSePuedeCrearUnaCuentaConSaldoNegativo` | `crearCuenta_saldoNegativo_lanzaExcepcion` |
+
+Los nombres originales ya eran descriptivos. El patrón añade **consistencia**: todos los tests dicen lo mismo en el mismo orden. Además te obliga a pensar en las tres partes, y si no sabes qué poner en alguna, quizá el test prueba demasiado.
+
+#### Combinarlo con `@DisplayNameGeneration`
+
+El generador `ReplaceUnderscores` encaja con este patrón, porque convierte cada guion bajo en un espacio:
+
+```java
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+class CalculadoraTest {
+
+    @Test
+    void dividir_entreCero_lanzaArithmeticException() {
+        assertThrows(ArithmeticException.class, () -> new Calculadora().dividir(1, 0));
+    }
+}
+```
+
+En el informe aparecerá como: `dividir entreCero lanzaArithmeticException`.
+
+Ten en cuenta que `ReplaceUnderscores` **no separa el camelCase**, solo cambia los guiones bajos. Si quieres frases completas con espacios y tildes, usa `@DisplayName` y deja el nombre del método con el patrón para localizarlo en el código.
+
+#### Buenas prácticas para los nombres
+
+1. **Mantén las tres partes.** No omitas la condición ni el resultado, aunque parezcan obvios.
+2. **Sé concreto en el resultado.** `lanzaArithmeticException` informa más que `lanzaExcepcion`, y `devuelveLaSuma` más que `funciona`.
+3. **Un nombre largo es aceptable.** Los métodos de test no se llaman desde otro código, así que la claridad pesa más que la brevedad.
+4. **Si el nombre necesita un "y", divide el test.** `ingresar_cantidadValida_aumentaSaldoYRegistraMovimiento` indica que hay dos comportamientos y que conviene escribir dos tests.
+5. **Con `@Nested`, la condición puede ir en la clase.** Si agrupas tests por situación (por ejemplo, una clase `CuandoLaPilaEstaVacia`), el método puede quedarse en `pop_lanzaExcepcion`.
+
+> **Nota:** los guiones bajos en nombres de método se salen de la convención habitual de Java (camelCase), aunque muchas guías de estilo los permiten expresamente en los tests. Lo importante es que **todo el equipo use la misma convención**.
 
 ---
 
