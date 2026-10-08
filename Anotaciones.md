@@ -1,7 +1,5 @@
 # Anotaciones (Annotations) en Java 25+
 
-> Guía para programadores. Incluye ejemplos sencillos que puedes copiar, ejecutar y modificar.
->
 > **Fuentes base:** [Oracle – The Java Tutorials: Annotations](https://docs.oracle.com/javase/tutorial/java/annotations/index.html) y [W3Schools – Java Annotations](https://www.w3schools.com/java/java_annotations.asp). El tutorial de Oracle está escrito para JDK 8; esta guía lo complementa con lo que importa en Java 25 (versión LTS).
 
 ---
@@ -19,9 +17,17 @@
 9. [Anotaciones repetibles](#9-anotaciones-repetibles)
 10. [Anotaciones de tipo (type annotations)](#10-anotaciones-de-tipo-type-annotations)
 11. [Anotaciones y características modernas de Java](#11-anotaciones-y-características-modernas-de-java)
-12. [Errores comunes y buenas prácticas](#12-errores-comunes-y-buenas-prácticas)
-13. [Resumen rápido](#13-resumen-rápido)
-14. [Ejercicios propuestos](#14-ejercicios-propuestos)
+12. [Reflexión en profundidad y reglas adicionales](#12-reflexión-en-profundidad-y-reglas-adicionales)
+13. [Ejemplo práctico: un validador de campos](#13-ejemplo-práctico-un-validador-de-campos)
+14. [Anotaciones en paquetes y módulos](#14-anotaciones-en-paquetes-y-módulos)
+15. [Procesadores de anotaciones (en compilación)](#15-procesadores-de-anotaciones-en-compilación)
+16. [Anotaciones en el ecosistema Java](#16-anotaciones-en-el-ecosistema-java)
+17. [Errores comunes y buenas prácticas](#17-errores-comunes-y-buenas-prácticas)
+18. [Preguntas frecuentes](#18-preguntas-frecuentes)
+19. [Resumen rápido](#19-resumen-rápido)
+20. [Ejercicios propuestos](#20-ejercicios-propuestos)
+21. [Soluciones](#21-soluciones-ejercicios-3-4-5-y-7)
+22. [Glosario](#22-glosario)
 
 ---
 
@@ -599,7 +605,7 @@ import java.lang.annotation.Target;
 record Usuario(String nombre, @Sensible String contrasena) { }
 ```
 
-Aquí `@Sensible` se aplica tanto al campo `contrasena` como a su método `contrasena()`, porque ambos están en su `@Target`.
+Aquí `@Sensible` se aplica tanto al campo `contrasena` como a su método `contrasena()`, porque ambos están en su `@Target`. Para que además quede en el *componente* del record (visible con `RecordComponent`), habría que añadir `ElementType.RECORD_COMPONENT` al `@Target` (ver [sección 12.3](#12-reflexión-en-profundidad-y-reglas-adicionales)).
 
 ### 11.2 `@Override` en records e interfaces
 
@@ -628,10 +634,427 @@ Si al actualizar a Java 25 un proyecto que usaba generación de código por anot
 | `@SafeVarargs` (con soporte para métodos privados) | Java 9 |
 | `@Serial`, records y su propagación de anotaciones | Java 14–16 |
 | Procesamiento de anotaciones desactivado por defecto | JDK 23 |
+| Class-File API estándar (`java.lang.classfile`), que permite inspeccionar anotaciones en archivos `.class` | JDK 24 |
 
 ---
 
-## 12. Errores comunes y buenas prácticas
+## 12. Reflexión en profundidad y reglas adicionales
+
+### 12.1 `@Inherited`: anotaciones que pasan a las subclases
+
+Con `@Inherited`, una anotación puesta en una **clase** también "se ve" desde sus subclases. Fíjate en la diferencia entre `getAnnotations()` (incluye las heredadas) y `getDeclaredAnnotations()` (solo las declaradas directamente en esa clase):
+
+```java
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+public class HerenciaDemo {
+    public static void main(String[] args) {
+        System.out.println(Base.class.isAnnotationPresent(Auditable.class));      // true
+        System.out.println(Derivada.class.isAnnotationPresent(Auditable.class));  // true (heredada)
+        System.out.println(Derivada.class.getDeclaredAnnotations().length);       // 0 (no la declara ella)
+        System.out.println(Derivada.class.getAnnotations().length);               // 1
+    }
+}
+
+@Auditable
+class Base { }
+
+class Derivada extends Base { }
+
+@Retention(RetentionPolicy.RUNTIME)
+@Inherited
+@interface Auditable { }
+```
+
+Recuerda: `@Inherited` solo funciona de **clase a subclase**. No se hereda desde interfaces ni afecta a métodos o campos.
+
+### 12.2 Anotaciones en parámetros
+
+```java
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
+
+public class ParametrosDemo {
+
+    void saludar(@Nombre("persona") String quien, int veces) { }
+
+    public static void main(String[] args) throws Exception {
+        Method m = ParametrosDemo.class.getDeclaredMethod("saludar", String.class, int.class);
+        for (Parameter p : m.getParameters()) {
+            Nombre n = p.getAnnotation(Nombre.class);
+            System.out.println(p.getType().getSimpleName() + " -> "
+                    + (n != null ? n.value() : "sin anotación"));
+        }
+    }
+}
+
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.PARAMETER)
+@interface Nombre {
+    String value();
+}
+```
+
+Salida:
+
+```text
+String -> persona
+int -> sin anotación
+```
+
+### 12.3 Anotaciones en componentes de un `record`
+
+Para poder leer la anotación directamente desde el **componente** del record, su `@Target` debe incluir `RECORD_COMPONENT`:
+
+```java
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import java.lang.reflect.RecordComponent;
+
+public class LeerRecord {
+    public static void main(String[] args) {
+        for (RecordComponent c : Usuario.class.getRecordComponents()) {
+            Sensible s = c.getAnnotation(Sensible.class);
+            System.out.println(c.getName() + (s != null ? " -> sensible" : ""));
+        }
+    }
+}
+
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.RECORD_COMPONENT, ElementType.FIELD, ElementType.METHOD})
+@interface Sensible { }
+
+record Usuario(String nombre, @Sensible String contrasena) { }
+```
+
+Salida:
+
+```text
+nombre
+contrasena -> sensible
+```
+
+### 12.4 Una anotación es, en el fondo, una interfaz
+
+Cada anotación que lees por reflexión es un objeto que implementa la interfaz de tu `@interface`. Por eso puedes llamar a sus "métodos" (los elementos) y también a estos:
+
+| Método | Qué devuelve |
+|---|---|
+| `anotacion.annotationType()` | La clase de la anotación (por ejemplo, `Prueba.class`) |
+| `anotacion.toString()` | Una representación textual con sus valores |
+| `anotacion.equals(otra)` | `true` si son del mismo tipo y tienen los mismos valores |
+
+Además, por diseño del lenguaje:
+
+- No puedes crear una con `new`; el valor lo construye la JVM al leerla.
+- Una anotación **no puede extender** a otra ni a otra interfaz.
+- Una anotación **no puede ser genérica**.
+- Sus elementos no pueden lanzar excepciones ni recibir parámetros.
+
+### 12.5 Los valores deben ser constantes de compilación
+
+El valor de un elemento tiene que poder calcularse al **compilar**. Una constante (`static final` con valor fijo) sirve; una variable normal, no:
+
+```java
+@interface Limite {
+    int value();
+}
+
+class Config {
+    static final int MAXIMO = 100;     // constante: válida
+    static int dinamico = 50;          // variable: NO es constante
+
+    @Limite(MAXIMO)                    // OK
+    void a() { }
+
+    @Limite(MAXIMO * 2)                // OK: la expresión también es constante
+    void b() { }
+
+    // @Limite(dinamico)               // ERROR de compilación
+    // void c() { }
+}
+```
+
+### 12.6 Limitaciones de lectura
+
+- Las anotaciones sobre **variables locales** no se pueden leer por reflexión (no hay forma de "preguntar" por una variable local en ejecución). Sirven para el compilador o herramientas de análisis.
+- Para leer nombres reales de parámetros con `Parameter.getName()` hay que compilar con la opción `-parameters`; si no, verás `arg0`, `arg1`… Las anotaciones de parámetros, en cambio, se leen sin ese requisito.
+
+---
+
+## 13. Ejemplo práctico: un validador de campos
+
+Este ejemplo junta casi todo lo aprendido: anotaciones propias, `record`, reflexión y `instanceof` con patrones. Es una versión muy reducida de lo que hace una librería de validación (como Jakarta Bean Validation).
+
+Guarda el archivo como `ValidadorDemo.java` y ejecútalo con `java ValidadorDemo.java`:
+
+```java
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+
+public class ValidadorDemo {
+
+    public static void main(String[] args) throws IllegalAccessException {
+        Registro correcto = new Registro("Ana", "ana@correo.com", 25);
+        Registro incorrecto = new Registro("", "sin-arroba", 12);
+
+        System.out.println("correcto:   " + validar(correcto));
+        System.out.println("incorrecto: " + validar(incorrecto));
+    }
+
+    static List<String> validar(Object objeto) throws IllegalAccessException {
+        List<String> errores = new ArrayList<>();
+
+        for (Field campo : objeto.getClass().getDeclaredFields()) {
+            campo.setAccessible(true);
+            Object valor = campo.get(objeto);
+
+            if (campo.isAnnotationPresent(NoVacio.class)
+                    && (valor == null || valor.toString().isBlank())) {
+                errores.add(campo.getName() + " no puede estar vacío");
+            }
+
+            Contiene contiene = campo.getAnnotation(Contiene.class);
+            if (contiene != null && valor instanceof String texto
+                    && !texto.contains(contiene.value())) {
+                errores.add(campo.getName() + " debe contener " + contiene.value());
+            }
+
+            Rango rango = campo.getAnnotation(Rango.class);
+            if (rango != null && valor instanceof Integer numero
+                    && (numero < rango.min() || numero > rango.max())) {
+                errores.add(campo.getName() + " debe estar entre "
+                        + rango.min() + " y " + rango.max());
+            }
+        }
+        return errores;
+    }
+}
+
+// Los datos a validar: la anotación en un componente se propaga al campo
+record Registro(
+        @NoVacio String nombre,
+        @NoVacio @Contiene("@") String correo,
+        @Rango(min = 18, max = 120) int edad) { }
+
+// Las anotaciones de validación
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.FIELD)
+@interface NoVacio { }
+
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.FIELD)
+@interface Contiene {
+    String value();
+}
+
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.FIELD)
+@interface Rango {
+    int min();
+    int max();
+}
+```
+
+Salida esperada:
+
+```text
+correcto:   []
+incorrecto: [nombre no puede estar vacío, correo debe contener @, edad debe estar entre 18 y 120]
+```
+
+Observa que **la lógica está separada de los datos**: `Registro` solo declara *qué* reglas tiene (con anotaciones) y `validar` decide *cómo* aplicarlas. Esa separación es justamente lo que hacen los frameworks. El orden de los errores depende del orden en que `getDeclaredFields()` devuelva los campos; la especificación no lo garantiza, aunque en la práctica suele coincidir con el orden de declaración.
+
+---
+
+## 14. Anotaciones en paquetes y módulos
+
+### Paquetes: `package-info.java`
+
+Para anotar un paquete se crea un archivo especial llamado `package-info.java` dentro de la carpeta del paquete. Contiene solo la declaración del paquete, precedida de las anotaciones (y, opcionalmente, un comentario Javadoc):
+
+```java
+// Archivo: com/ejemplo/interno/package-info.java
+
+/**
+ * Clases de uso interno de la aplicación.
+ */
+@AplicacionInterna
+package com.ejemplo.interno;
+```
+
+La anotación debe declararse con `@Target(ElementType.PACKAGE)`. Si además tiene `@Retention(RUNTIME)`, podrás leerla con `Class.getPackage().getAnnotation(...)`.
+
+### Módulos: `module-info.java`
+
+Desde Java 9, `@Deprecated` (y cualquier anotación con `@Target(ElementType.MODULE)`) puede aplicarse a un módulo:
+
+```java
+// Archivo: module-info.java
+@Deprecated(since = "3.0", forRemoval = true)
+module mi.modulo.antiguo {
+    exports com.ejemplo.api;
+}
+```
+
+---
+
+## 15. Procesadores de anotaciones (en compilación)
+
+Hasta ahora las anotaciones se leían **mientras el programa se ejecuta**. Los *procesadores de anotaciones* las leen **mientras `javac` compila**. Con ellos se puede:
+
+- Mostrar avisos o errores personalizados al compilar.
+- Generar nuevas clases o archivos automáticamente (es lo que hacen herramientas como Lombok o MapStruct).
+
+Para esto no hace falta `RetentionPolicy.RUNTIME`: basta con `SOURCE`.
+
+### Un procesador mínimo
+
+Estructura de archivos (paquete `ejemplo`):
+
+```text
+ejemplo/Importante.java
+ejemplo/ProcesadorImportante.java
+ejemplo/Cliente.java
+```
+
+**`ejemplo/Importante.java`**
+
+```java
+package ejemplo;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Retention(RetentionPolicy.SOURCE)
+@Target(ElementType.TYPE)
+public @interface Importante { }
+```
+
+**`ejemplo/ProcesadorImportante.java`**
+
+```java
+package ejemplo;
+
+import java.util.Set;
+import javax.annotation.processing.AbstractProcessor;
+import javax.annotation.processing.RoundEnvironment;
+import javax.annotation.processing.SupportedAnnotationTypes;
+import javax.lang.model.SourceVersion;
+import javax.lang.model.element.Element;
+import javax.lang.model.element.TypeElement;
+import javax.tools.Diagnostic;
+
+@SupportedAnnotationTypes("ejemplo.Importante")
+public class ProcesadorImportante extends AbstractProcessor {
+
+    @Override
+    public SourceVersion getSupportedSourceVersion() {
+        return SourceVersion.latestSupported();
+    }
+
+    @Override
+    public boolean process(Set<? extends TypeElement> anotaciones, RoundEnvironment ronda) {
+        for (Element elemento : ronda.getElementsAnnotatedWith(Importante.class)) {
+            processingEnv.getMessager().printMessage(
+                    Diagnostic.Kind.NOTE,
+                    "Clase marcada como importante: " + elemento.getSimpleName(),
+                    elemento);
+        }
+        return false;
+    }
+}
+```
+
+**`ejemplo/Cliente.java`**
+
+```java
+package ejemplo;
+
+@Importante
+public class Cliente { }
+```
+
+### Compilar y ejecutar el procesador
+
+```bash
+# 1. Compilar la anotación y el procesador (sin procesar anotaciones)
+javac -proc:none -d clases ejemplo/Importante.java ejemplo/ProcesadorImportante.java
+
+# 2. Compilar el cliente indicando explícitamente el procesador
+javac -cp clases -processor ejemplo.ProcesadorImportante -d salida ejemplo/Cliente.java
+```
+
+Durante el segundo paso `javac` debería mostrar un mensaje de tipo *Note* mencionando `Cliente`.
+
+### Opciones de `javac` relacionadas
+
+| Opción | Efecto |
+|---|---|
+| `-proc:none` | No ejecuta procesadores de anotaciones. |
+| `-proc:only` | Solo procesa anotaciones; no genera `.class`. |
+| `-proc:full` | Ejecuta los procesadores encontrados (necesaria desde JDK 23 si no indicas `-processor`). |
+| `-processor <clases>` | Indica explícitamente qué procesadores usar. |
+| `-processorpath <ruta>` | Dónde buscar los procesadores. |
+
+> **Recuerda (JDK 23+):** si no indicas ninguna de estas opciones, `javac` ya **no** busca procesadores automáticamente en el classpath. Si tienes dudas, consulta `javac --help` en tu instalación.
+
+En un proyecto real, los procesadores se registran para que `javac` los descubra mediante el archivo `META-INF/services/javax.annotation.processing.Processor` (un mecanismo de `ServiceLoader`), y los gestores de dependencias (Maven, Gradle) se encargan de la configuración.
+
+### Leer anotaciones desde archivos `.class`
+
+Otra opción, más avanzada, es analizar archivos `.class` **sin cargarlos** en la JVM. Desde JDK 24 existe una API estándar para ello, la *Class-File API* (`java.lang.classfile`), que permite inspeccionar entre otras cosas las anotaciones guardadas en el bytecode. Es un tema para más adelante, pero conviene saber que existe.
+
+---
+
+## 16. Anotaciones en el ecosistema Java
+
+Además de las anotaciones de Java SE, casi todos los proyectos usan anotaciones de **bibliotecas y frameworks**. Estas **no vienen con el JDK**: hay que añadir la dependencia correspondiente.
+
+| Biblioteca | Anotaciones típicas | Para qué se usan |
+|---|---|---|
+| **JUnit 5** | `@Test`, `@BeforeEach`, `@Disabled` | Escribir pruebas automáticas |
+| **Spring** | `@Component`, `@Autowired`, `@RestController`, `@GetMapping` | Inyección de dependencias y servicios web |
+| **Jakarta Persistence (JPA)** | `@Entity`, `@Id`, `@Table` | Mapear clases a tablas de base de datos |
+| **Jakarta Bean Validation** | `@NotNull`, `@Size`, `@Email` | Validar datos (como nuestro validador, pero profesional) |
+| **Jackson** | `@JsonProperty`, `@JsonIgnore` | Convertir objetos a/desde JSON |
+| **Lombok** | `@Getter`, `@Setter`, `@Data` | Generar código repetitivo al compilar (procesador de anotaciones) |
+
+> En versiones recientes de Jakarta EE el paquete base es `jakarta.*`; en versiones antiguas era `javax.*`. Si ves ambos en tutoriales, es por eso.
+
+Fíjate cómo se parece este test de JUnit a nuestro `@Prueba` de la sección 8: JUnit hace, a gran escala, exactamente lo mismo (buscar métodos anotados por reflexión y ejecutarlos).
+
+```java
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
+
+class CalculadoraTest {
+
+    @Test
+    void sumaDosNumeros() {
+        assertEquals(4, 2 + 2);
+    }
+}
+```
+
+---
+
+## 17. Errores comunes y buenas prácticas
 
 ### Errores frecuentes
 
@@ -641,6 +1064,10 @@ Si al actualizar a Java 25 un proyecto que usaba generación de código por anot
 4. **Usar `@SuppressWarnings` para "callar" al compilador** en lugar de corregir el problema.
 5. **Escribir `@Override` mal o no usarlo.** Es la protección más barata contra errores de nombre o de firma.
 6. **Confundir `@deprecated` (Javadoc) con `@Deprecated` (anotación).** Lo ideal es usar **las dos** juntas.
+7. **Usar `@Inherited` esperando que funcione en métodos o interfaces.** Solo afecta a clases y sus subclases.
+8. **Usar un valor no constante en un elemento** (por ejemplo, una variable normal): el compilador lo rechaza.
+9. **Asumir que `RECORD_COMPONENT` está incluido** en el `@Target`: si no lo pones, no podrás leer la anotación desde `getRecordComponents()`.
+10. **Actualizar de JDK y que "dejen de generarse clases".** Revisa la configuración de procesadores de anotaciones (JDK 23+).
 
 ### Buenas prácticas
 
@@ -650,10 +1077,34 @@ Si al actualizar a Java 25 un proyecto que usaba generación de código por anot
 - Da valores `default` razonables a los elementos para que la anotación sea cómoda de usar.
 - Usa nombres claros y, si solo hay un elemento, llámalo `value` para poder usar la sintaxis corta.
 - Pon cada anotación en su propia línea sobre la declaración.
+- No abuses: si una simple llamada a un método o un parámetro resuelve el problema con claridad, probablemente no necesitas una anotación propia.
+- Documenta tus anotaciones con Javadoc y, si quieres que aparezcan en la documentación de quien las use, añade `@Documented`.
 
 ---
 
-## 13. Resumen rápido
+## 18. Preguntas frecuentes
+
+**¿Las anotaciones hacen que mi programa sea más lento?**
+Ponerlas no cuesta nada en ejecución si su retención es `SOURCE` o `CLASS`. Si son `RUNTIME`, leerlas por reflexión tiene un coste pequeño; en aplicaciones normales es irrelevante, pero conviene no leerlas repetidamente en bucles críticos (guarda el resultado).
+
+**¿Puedo modificar el valor de una anotación en ejecución?**
+No. Son metadatos fijados al compilar; los valores se leen, no se cambian.
+
+**¿Una anotación puede heredar de otra?**
+No. Para "combinar" varias, lo habitual es que tu código (o el framework) busque anotaciones dentro de otras anotaciones.
+
+**¿Cuál es la diferencia entre una anotación y un comentario?**
+Un comentario lo ignora el compilador; una anotación forma parte del código, la valida el compilador y puede leerse con herramientas o en ejecución.
+
+**¿Cuál es la diferencia entre una anotación marcadora y una interfaz marcadora?**
+Ambas "etiquetan" una clase (`Serializable` es una interfaz marcadora). Las anotaciones son más flexibles: se pueden poner en métodos, campos, parámetros…, y admiten elementos con valores.
+
+**¿Necesito saber crear anotaciones para ser programador Java?**
+Para el día a día, **usarlas** es lo imprescindible. Crear las tuyas es útil, pero se hace con menos frecuencia, normalmente al escribir bibliotecas o herramientas internas.
+
+---
+
+## 19. Resumen rápido
 
 | Concepto | Idea clave |
 |---|---|
@@ -666,13 +1117,17 @@ Si al actualizar a Java 25 un proyecto que usaba generación de código por anot
 | `@interface` | Sirve para declarar una anotación propia. |
 | `@Retention` | `SOURCE`, `CLASS` (defecto) o `RUNTIME`. |
 | `@Target` | Define dónde se puede usar la anotación. |
+| `@Inherited` | Hace que una anotación de clase pase a sus subclases. |
 | `@Repeatable` | Permite repetir la anotación en un mismo elemento. |
 | `TYPE_USE` | Permite anotar usos de tipos (`List<@X String>`). |
+| `RECORD_COMPONENT` | Permite leer la anotación desde el componente del record. |
 | Reflexión | `getAnnotation(...)` solo funciona con `RUNTIME`. |
+| Procesadores | Leen anotaciones al compilar; en JDK 23+ hay que activarlos explícitamente. |
+| Valores | Deben ser constantes de compilación y nunca `null`. |
 
 ---
 
-## 14. Ejercicios propuestos
+## 20. Ejercicios propuestos
 
 ### Ejercicio 1 – `@Override`
 Crea una clase `Figura` con un método `area()` que devuelva `0`. Crea `Circulo` que lo sobrescriba. Introduce un error de ortografía en el nombre del método sobrescrito (con `@Override`) y observa el mensaje del compilador. Corrígelo.
@@ -689,10 +1144,117 @@ Escribe un programa que recorra los métodos del ejercicio 3 y muestre solo aque
 ### Ejercicio 5 – Anotación repetible *(reto)*
 Crea una anotación repetible `@Etiqueta("...")` y aplícala tres veces a una clase. Con `getAnnotationsByType` muestra todas las etiquetas por consola.
 
+### Ejercicio 6 – Ampliar el validador *(reto)*
+Parte del ejemplo de la sección 13 y añade una anotación `@LongitudMaxima(int)` para campos `String`. Aplícala al campo `nombre` con un máximo de 10 caracteres y comprueba que falla con un nombre más largo.
+
+### Ejercicio 7 – Herencia de anotaciones
+Replica el ejemplo de `@Inherited` y comprueba qué ocurre si **quitas** `@Inherited` de la anotación: ¿qué imprime ahora `Derivada.class.isAnnotationPresent(Auditable.class)`?
+
+### Ejercicio 8 – Procesador *(avanzado)*
+Modifica `ProcesadorImportante` para que, en lugar de un `NOTE`, emita un `Diagnostic.Kind.WARNING` cuando la clase marcada como `@Importante` **no** sea `public`.
+
 ### Pistas
 - Ejercicio 3: usa `@Target(ElementType.METHOD)` y `@Retention(RetentionPolicy.RUNTIME)`.
 - Ejercicio 4: `getDeclaredMethods()` + `getAnnotation(Tarea.class)`; comprueba que no sea `null`.
 - Ejercicio 5: necesitas una anotación contenedora con un elemento `Etiqueta[] value()`.
+- Ejercicio 6: copia la estructura de `Rango` y usa `texto.length()`.
+- Ejercicio 8: `elemento.getModifiers()` devuelve un `Set<Modifier>`; busca `Modifier.PUBLIC`.
+
+---
+
+## 21. Soluciones (ejercicios 3, 4, 5 y 7)
+
+Intenta resolverlos tú primero y compara después.
+
+### Ejercicios 3 y 4
+
+```java
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import java.lang.reflect.Method;
+
+public class Agenda {
+
+    @Tarea(responsable = "Ana", prioridad = 1)
+    void entregarInforme() { }
+
+    @Tarea(responsable = "Luis")                // prioridad 3 por defecto
+    void ordenarEscritorio() { }
+
+    @Tarea(responsable = "Marta", prioridad = 2)
+    void revisarCorreo() { }
+
+    public static void main(String[] args) {
+        for (Method m : Agenda.class.getDeclaredMethods()) {
+            Tarea t = m.getAnnotation(Tarea.class);
+            if (t != null && t.prioridad() <= 2) {
+                System.out.println(m.getName() + " -> " + t.responsable()
+                        + " (prioridad " + t.prioridad() + ")");
+            }
+        }
+    }
+}
+
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+@interface Tarea {
+    String responsable();
+    int prioridad() default 3;
+}
+```
+
+### Ejercicio 5
+
+```java
+import java.lang.annotation.Repeatable;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+@Etiqueta("java")
+@Etiqueta("anotaciones")
+@Etiqueta("junior")
+public class Articulo {
+    public static void main(String[] args) {
+        for (Etiqueta e : Articulo.class.getAnnotationsByType(Etiqueta.class)) {
+            System.out.println(e.value());
+        }
+    }
+}
+
+@Retention(RetentionPolicy.RUNTIME)
+@Repeatable(Etiquetas.class)
+@interface Etiqueta {
+    String value();
+}
+
+@Retention(RetentionPolicy.RUNTIME)
+@interface Etiquetas {
+    Etiqueta[] value();
+}
+```
+
+### Ejercicio 7
+
+Sin `@Inherited`, `Derivada.class.isAnnotationPresent(Auditable.class)` imprime **`false`**: la subclase no "ve" la anotación de `Base`. Solo `Base.class.isAnnotationPresent(Auditable.class)` seguirá devolviendo `true`.
+
+---
+
+## 22. Glosario
+
+| Término | Significado |
+|---|---|
+| **Anotación** | Metadato en el código, escrito con `@`. |
+| **Elemento** | Cada "campo" declarado dentro de una anotación (por ejemplo, `prioridad()`). |
+| **Meta-anotación** | Anotación que se aplica a otra anotación (`@Retention`, `@Target`…). |
+| **Retención (retention)** | Hasta qué fase se conserva la anotación: fuente, clase o ejecución. |
+| **Reflexión (reflection)** | API de Java para inspeccionar clases, métodos y campos en ejecución. |
+| **Procesador de anotaciones** | Programa que `javac` ejecuta durante la compilación para leer anotaciones. |
+| **Anotación marcadora** | Anotación sin elementos que solo "etiqueta" algo. |
+| **Anotación contenedora** | Anotación que agrupa varias repetidas de otra (`Roles` respecto a `Rol`). |
+| **Anotación de tipo** | Anotación con `TYPE_USE`, aplicable a usos de tipos. |
+| **Metadatos** | Datos sobre los datos o sobre el programa, no parte de su lógica. |
 
 ---
 
@@ -703,4 +1265,5 @@ Crea una anotación repetible `@Etiqueta("...")` y aplícala tres veces a una cl
   - [Predefined Annotation Types](https://docs.oracle.com/javase/tutorial/java/annotations/predefined.html)
 - W3Schools. *Java Annotations*. <https://www.w3schools.com/java/java_annotations.asp>
 - Oracle. *Java Language Changes* (cambios del lenguaje desde Java 9). <https://docs.oracle.com/pls/topic/lookup?ctx=en/java/javase&id=java_language_changes>
+- Oracle. *JDK Release Notes*. <https://www.oracle.com/technetwork/java/javase/jdk-relnotes-index-2162236.html>
 - Dev.java – tutoriales actualizados. <https://dev.java/learn/>
