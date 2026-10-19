@@ -38,6 +38,8 @@ Actualmente, el repositorio cuenta con documentación sobre diferentes conceptos
 | [Colecciones](https://github.com/Victor-369/Documentacion-Java/blob/main/Colecciones.md) | Resumen del *Java Collections Framework*: jerarquía de interfaces, `List`, `Set`, `Map`, `Queue` y `Deque`, colecciones inmutables, *Sequenced Collections* (Java 21), la clase `Collections`, genéricos, Stream API y colecciones concurrentes. |
 | [Comparable vs Comparator](https://github.com/Victor-369/Documentacion-Java/blob/main/Comparable%20vs%20Comparator.md) | Guía de estudio para programadores (Java 21 o superior), con ejemplos compilados y ejecutados, errores típicos, novedades de Java 21, ejercicios, chuleta de repaso y autoevaluación.                                                                                                     |
 | [Generics](https://github.com/Victor-369/Documentacion-Java/blob/main/Generics.md) | Guía de genéricos: clases, interfaces y métodos genéricos, *raw types*, inferencia de tipos, tipos acotados, comodines (*wildcards*), borrado de tipos (*type erasure*), restricciones, uso con características modernas de Java, errores habituales, chuleta y ejercicios. |
+| [Enums](https://github.com/Victor-369/Documentacion-Java/blob/main/Enums.md) | Enumeraciones (`enum`): declaración, uso dentro de clases y en `switch`, recorrido de constantes, diferencias con las clases y cuándo usarlas. Ampliación con enums «con cuerpo» (atributos, constructor, interfaces), `EnumMap` y `EnumSet`, y novedades desde Java 21 (`switch` con patrones, exhaustividad, `case null`, variables sin nombre `_`, constructores flexibles de Java 25). |
+| [Records](https://github.com/Victor-369/Documentacion-Java/blob/main/Records.md) | Clases de datos inmutables: declaración, constructor compacto, métodos y miembros estáticos, interfaces, cuándo usarlos y reglas (JEP 395). Ampliación con copia defensiva, records locales, anotaciones, reflexión, interfaces `sealed`, patrones de record (Java 21), variables sin nombre (`_`) y constructores flexibles (Java 25). |
 
 ### λ Programación funcional: lambdas y streams
 
@@ -58,6 +60,12 @@ Actualmente, el repositorio cuenta con documentación sobre diferentes conceptos
 | --- | --- |
 | [Entrada - Salida básica](https://github.com/Victor-369/Documentacion-Java/blob/main/Entrada%20-%20Salida%20basica.md) | Guía de E/S en Java 21+: flujos de bytes y de caracteres, flujos con búfer, `Scanner` y `printf`, E/S desde la línea de comandos, *Data Streams*, serialización de objetos y ficheros con NIO.2, además de errores frecuentes, ejercicios y recursos para seguir aprendiendo. |
 | [Rutas relativas](https://github.com/Victor-369/Documentacion-Java/blob/main/Rutas%20relativas.md) | Qué es una ruta relativa, notación especial (`.` y `..`), directorio de trabajo actual, `java.io.File` frente a `java.nio.file.Path`, rutas relativas al proyecto y al *classpath*, diferencias entre sistemas operativos, *Path Traversal* y errores comunes. |
+
+### 🕒 Fechas y horas
+
+| Documento | Qué encontrarás |
+| --- | --- |
+| [Fechas](https://github.com/Victor-369/Documentacion-Java/blob/main/Fechas.md) | API `java.time`: fecha y hora actuales, `DateTimeFormatter` y patrones, qué clase usar en cada caso, inmutabilidad, `Period`, `Duration` y `ChronoUnit`, zonas horarias e instantes, `Clock` para pruebas, *parsing* y modos de resolución, y novedades desde Java 21 (CLDR, eras, espacios laxos). |
 
 ### ⚠️ Excepciones y gestión de errores
 
@@ -82,6 +90,13 @@ Actualmente, el repositorio cuenta con documentación sobre diferentes conceptos
 | [Guía de seguridad](https://github.com/Victor-369/Documentacion-Java/blob/main/Guia%20de%20seguridad.md) | Introducción a la *Security Developer's Guide* de Java SE (Java 21+): mapa de la seguridad en Java (JCA/JCE, PKI, JSSE, JAAS, SASL, firma de código, serialización segura), cambios desde Java 17, herramientas de línea de comandos (`keytool`, `jarsigner`), buenas prácticas y un ejemplo mínimo de hash SHA-256. |
 | [Arquitectura criptográfica](https://github.com/Victor-369/Documentacion-Java/blob/main/Arquitectura%20criptografica.md) | Guía de referencia de la JCA (Java 21+): principios de diseño, proveedores, clase `Security`, clases *engine*, `SecureRandom`, `MessageDigest`, `Signature`, `Cipher`, `Mac`, claves, `KeyStore`, certificados, excepciones habituales, buenas prácticas y glosario. |
 
+### 🗄️ Bases de datos
+
+| Documento | Qué encontrarás |
+| --- | --- |
+| [BBDD: tipos de datos](https://github.com/Victor-369/Documentacion-Java/blob/main/BBDD%20-%20Tipos%20de%20datos.md) | Tipos de datos de MySQL (estado en 2026: 9.7 LTS, 8.4 LTS y fin de vida de 8.0): numéricos, cadena (`CHAR`, `VARCHAR`, `BLOB`, `TEXT`, `ENUM`, `SET`, `VECTOR`), fecha y hora, atributos de columna, guía rápida de elección, correcciones respecto al artículo original y fuentes. |
+| [ER: diagrama](https://github.com/Victor-369/Documentacion-Java/blob/main/ER%20-%20Diagrama.md) | Diagrama Entidad-Relación: entidades, relaciones y atributos, cardinalidad, notaciones de Chen y *Crow's Foot*, creación paso a paso, buenas prácticas, comparación con UML, preguntas frecuentes y paso del diagrama a tablas MySQL. |
+
 ### 📝 Logging y registro de información
 
 | Documento | Qué encontrarás |
@@ -99,7 +114,7 @@ Actualmente, el repositorio cuenta con documentación sobre diferentes conceptos
 
 ## 🚧 Documentación en desarrollo
 
-Este repositorio está pensado para **crecer progresivamente**. Actualmente solo se han añadido algunos temas de Java, pero el objetivo es continuar ampliando la documentación con nuevos contenidos, ejemplos y explicaciones.
+Este repositorio está pensado para **crecer progresivamente**. Actualmente solo se han añadido algunos temas de Java y bases de datos, pero el objetivo es continuar ampliando la documentación con nuevos contenidos, ejemplos y explicaciones.
 
 **Estado de los temas previstos:**
 
@@ -122,18 +137,19 @@ Este repositorio está pensado para **crecer progresivamente**. Actualmente solo
 - [ ] Arrays
 - [ ] Métodos
 - [ ] Herencia, encapsulación y polimorfismo
-- [ ] Enumeraciones (`enum`)
-- [ ] Records
+- [x] Enumeraciones (`enum`)
+- [x] Records
 - [x] Genéricos
 - [x] Streams y expresiones lambda
 - [x] `Optional`
 - [ ] Programación funcional
 - [x] Entrada y salida de datos y ficheros
-- [ ] Fechas y horas
+- [x] Fechas y horas
 - [ ] Concurrencia, hilos y sincronización
 - [ ] Mockito
 - [ ] Maven y Gradle
-- [ ] JDBC y bases de datos
+- [x] Bases de datos: tipos de datos MySQL y diagramas ER
+- [ ] JDBC y acceso a bases de datos desde Java
 - [ ] Patrones de diseño
 - [ ] Principios SOLID
 - [ ] Arquitectura de aplicaciones
@@ -172,11 +188,15 @@ Documentacion-Java/
 ├── Anotaciones.md
 ├── Arquitectura criptografica.md
 ├── AssertJ - Guia para empezar desde cero.md
+├── BBDD - Tipos de datos.md
 ├── Colecciones.md
 ├── Comparable vs Comparator.md
 ├── Conventional Commits.md
+├── ER - Diagrama.md
 ├── Entrada - Salida basica.md
+├── Enums.md
 ├── Excepciones checked y unchecked.md
+├── Fechas.md
 ├── Generics.md
 ├── Guia de seguridad.md
 ├── JUnit - Aprende a escribir pruebas paso a paso.md
@@ -187,6 +207,7 @@ Documentacion-Java/
 ├── Log4J - Guia.md
 ├── Manejo Eficaz de Errores en Java - Estrategias y Buenas Practicas.md
 ├── README.md
+├── Records.md
 ├── Reflections.md
 ├── Rutas relativas.md
 └── Test-Driven Development (TDD).md
@@ -242,8 +263,9 @@ La documentación del repositorio incluye material más detallado sobre [JUnit](
 
 Actualmente, el repositorio contiene documentación relacionada con:
 
-- ☕ Java (colecciones, genéricos, lambdas y streams, excepciones, clases abstractas e interfaces, ordenación, entrada/salida y rutas de ficheros)
+- ☕ Java (colecciones, genéricos, lambdas y streams, excepciones, clases abstractas e interfaces, ordenación, enums, records, fechas y horas, entrada/salida y rutas de ficheros)
 - 🧬 Anotaciones y *Reflection* (metaprogramación en Java)
+- 🗄️ Bases de datos (tipos de datos de MySQL y diagramas Entidad-Relación)
 - 🔐 Seguridad y criptografía en Java (JCA/JCE)
 - 🧪 JUnit
 - 🔍 AssertJ
@@ -275,15 +297,18 @@ Si estás comenzando a aprender Java, puedes utilizar esta documentación como m
 No es necesario seguir un orden concreto, ya que cada documento está pensado para poder consultarse de manera independiente. Aun así, si no sabes por dónde empezar, esta ruta puede servirte de orientación:
 
 1. [Abstract Class vs Interface](https://github.com/Victor-369/Documentacion-Java/blob/main/Abstract%20Class%20vs%20Interface.md) y [Colecciones](https://github.com/Victor-369/Documentacion-Java/blob/main/Colecciones.md): base del lenguaje.
-2. [Generics](https://github.com/Victor-369/Documentacion-Java/blob/main/Generics.md) y [Comparable vs Comparator](https://github.com/Victor-369/Documentacion-Java/blob/main/Comparable%20vs%20Comparator.md): tipos genéricos y ordenación de objetos.
-3. [Lambdas y Streams](https://github.com/Victor-369/Documentacion-Java/blob/main/Lambdas%20y%20Streams.md): programación funcional y procesamiento de datos.
-4. [Excepciones checked y unchecked](https://github.com/Victor-369/Documentacion-Java/blob/main/Excepciones%20checked%20y%20unchecked.md) y [Manejo eficaz de errores](https://github.com/Victor-369/Documentacion-Java/blob/main/Manejo%20Eficaz%20de%20Errores%20en%20Java%20-%20Estrategias%20y%20Buenas%20Practicas.md): gestión de errores.
-5. [Entrada - Salida básica](https://github.com/Victor-369/Documentacion-Java/blob/main/Entrada%20-%20Salida%20basica.md) y [Rutas relativas](https://github.com/Victor-369/Documentacion-Java/blob/main/Rutas%20relativas.md): trabajo con datos y ficheros.
-6. [Anotaciones](https://github.com/Victor-369/Documentacion-Java/blob/main/Anotaciones.md) y [Reflections](https://github.com/Victor-369/Documentacion-Java/blob/main/Reflections.md): metaprogramación (conviene leerlas en este orden).
-7. [JUnit](https://github.com/Victor-369/Documentacion-Java/blob/main/JUnit%20-%20Vision%20general%20e%20introduccion.md), [AssertJ](https://github.com/Victor-369/Documentacion-Java/blob/main/AssertJ%20-%20Guia%20para%20empezar%20desde%20cero.md) y [TDD](https://github.com/Victor-369/Documentacion-Java/blob/main/Test-Driven%20Development%20%28TDD%29.md): pruebas automatizadas.
-8. [Log4J](https://github.com/Victor-369/Documentacion-Java/blob/main/Log4J%20-%20Guia.md): registro de información.
-9. [Guía de seguridad](https://github.com/Victor-369/Documentacion-Java/blob/main/Guia%20de%20seguridad.md) y [Arquitectura criptográfica](https://github.com/Victor-369/Documentacion-Java/blob/main/Arquitectura%20criptografica.md): seguridad y criptografía.
-10. [Conventional Commits](https://github.com/Victor-369/Documentacion-Java/blob/main/Conventional%20Commits.md): buenas prácticas con Git.
+2. [Enums](https://github.com/Victor-369/Documentacion-Java/blob/main/Enums.md) y [Records](https://github.com/Victor-369/Documentacion-Java/blob/main/Records.md): tipos de datos propios.
+3. [Generics](https://github.com/Victor-369/Documentacion-Java/blob/main/Generics.md) y [Comparable vs Comparator](https://github.com/Victor-369/Documentacion-Java/blob/main/Comparable%20vs%20Comparator.md): tipos genéricos y ordenación de objetos.
+4. [Lambdas y Streams](https://github.com/Victor-369/Documentacion-Java/blob/main/Lambdas%20y%20Streams.md): programación funcional y procesamiento de datos.
+5. [Excepciones checked y unchecked](https://github.com/Victor-369/Documentacion-Java/blob/main/Excepciones%20checked%20y%20unchecked.md) y [Manejo eficaz de errores](https://github.com/Victor-369/Documentacion-Java/blob/main/Manejo%20Eficaz%20de%20Errores%20en%20Java%20-%20Estrategias%20y%20Buenas%20Practicas.md): gestión de errores.
+6. [Fechas](https://github.com/Victor-369/Documentacion-Java/blob/main/Fechas.md): fechas y horas con `java.time`.
+7. [Entrada - Salida básica](https://github.com/Victor-369/Documentacion-Java/blob/main/Entrada%20-%20Salida%20basica.md) y [Rutas relativas](https://github.com/Victor-369/Documentacion-Java/blob/main/Rutas%20relativas.md): trabajo con datos y ficheros.
+8. [Anotaciones](https://github.com/Victor-369/Documentacion-Java/blob/main/Anotaciones.md) y [Reflections](https://github.com/Victor-369/Documentacion-Java/blob/main/Reflections.md): metaprogramación (conviene leerlas en este orden).
+9. [JUnit](https://github.com/Victor-369/Documentacion-Java/blob/main/JUnit%20-%20Vision%20general%20e%20introduccion.md), [AssertJ](https://github.com/Victor-369/Documentacion-Java/blob/main/AssertJ%20-%20Guia%20para%20empezar%20desde%20cero.md) y [TDD](https://github.com/Victor-369/Documentacion-Java/blob/main/Test-Driven%20Development%20%28TDD%29.md): pruebas automatizadas.
+10. [Log4J](https://github.com/Victor-369/Documentacion-Java/blob/main/Log4J%20-%20Guia.md): registro de información.
+11. [Guía de seguridad](https://github.com/Victor-369/Documentacion-Java/blob/main/Guia%20de%20seguridad.md) y [Arquitectura criptográfica](https://github.com/Victor-369/Documentacion-Java/blob/main/Arquitectura%20criptografica.md): seguridad y criptografía.
+12. [Conventional Commits](https://github.com/Victor-369/Documentacion-Java/blob/main/Conventional%20Commits.md): buenas prácticas con Git.
+13. [BBDD: tipos de datos](https://github.com/Victor-369/Documentacion-Java/blob/main/BBDD%20-%20Tipos%20de%20datos.md) y [ER: diagrama](https://github.com/Victor-369/Documentacion-Java/blob/main/ER%20-%20Diagrama.md): diseño y modelado de bases de datos.
 
 A medida que se incorporen nuevos temas, se irá organizando la documentación para facilitar un recorrido de aprendizaje más estructurado.
 
