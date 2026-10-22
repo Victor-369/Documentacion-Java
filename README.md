@@ -97,6 +97,9 @@ Actualmente, el repositorio cuenta con documentación sobre diferentes conceptos
 | [BBDD: tipos de datos](https://github.com/Victor-369/Documentacion-Java/blob/main/BBDD%20-%20Tipos%20de%20datos.md) | Tipos de datos de MySQL (estado en 2026: 9.7 LTS, 8.4 LTS y fin de vida de 8.0): numéricos, cadena (`CHAR`, `VARCHAR`, `BLOB`, `TEXT`, `ENUM`, `SET`, `VECTOR`), fecha y hora, atributos de columna, guía rápida de elección, correcciones respecto al artículo original y fuentes. |
 | [Entidad-Relación: diagrama](https://github.com/Victor-369/Documentacion-Java/blob/main/Entidad%20-%20Relacion%3A%20Diagrama.md) | Diagrama Entidad-Relación: entidades, relaciones y atributos, cardinalidad, notaciones de Chen y *Crow's Foot*, creación paso a paso, buenas prácticas, comparación con UML, preguntas frecuentes y paso del diagrama a tablas MySQL. |
 | [Entidad-Relación: PlantUML](https://github.com/Victor-369/Documentacion-Java/blob/main/Entidad%20-%20Relacion%3A%20PlantUML.md) | Guía para dibujar diagramas E/R como código con PlantUML: instalación y herramientas, entidades, clases y enums, cardinalidad en notación pata de gallo, relaciones de diagrama de clases, casos típicos (1:1, 1:N, N:M, reflexiva, jerarquía, ternaria), notación de Chen, paquetes y notas, estilos y temas, macros del preprocesador, ejemplo completo de tienda online con su SQL, buenas prácticas, errores frecuentes y chuleta. |
+| [NoSQL y diferencias con SQL](https://github.com/Victor-369/Documentacion-Java/blob/main/Diferencias%20entre%20nosql%20y%20sql.md) | Qué es NoSQL y sus tipos (documentales, clave-valor, columnas anchas, grafos y multimodelo), breve historia, características, ACID frente a BASE y teorema CAP, ejemplo relacional frente a documental, diferencias entre RDBMS y NoSQL, equivalencias de conceptos y consultas SQL ↔ MongoDB (MQL), cuándo elegir cada opción, mitos habituales y preguntas frecuentes (revisado para MongoDB 9.0). |
+| [MongoDB: modelado de datos y diseño](https://github.com/Victor-369/Documentacion-Java/blob/main/MongoDB%3A%20modelado%20de%20datos%20y%20diseno.md) | Modelado de datos en MongoDB: diferencias con el diseño relacional, proceso de diseño del esquema en 4 pasos, relaciones (1:1, 1:pocos, 1:N, N:M y `$lookup`), embeber o referenciar, duplicación y coherencia, validación de esquemas, índices, atomicidad y *sharding*, patrones de diseño (*Computed*, *Bucket*, *Outlier*, *Subset*, *Extended Reference*, versionado…), antipatrones, estructuras de árbol, ejemplo de tienda en línea y lista de comprobación. |
+| [MongoDB: tutoriales](https://github.com/Victor-369/Documentacion-Java/blob/main/MongoDB%3A%20tutoriales.md) | Índice organizado de los tutoriales oficiales del manual (MongoDB 9.0) con guía rápida en `mongosh`: CRUD, índices, agregación y transacciones; conjuntos de réplicas, *sharding*, administración, seguridad, patrones de desarrollo y de búsqueda de texto, novedades de la 9.0 y ruta de aprendizaje recomendada. |
 
 ### 📝 Logging y registro de información
 
@@ -150,6 +153,7 @@ Este repositorio está pensado para **crecer progresivamente**. Actualmente solo
 - [ ] Mockito
 - [ ] Maven y Gradle
 - [x] Bases de datos: tipos de datos MySQL y diagramas Entidad-Relación (incluido PlantUML)
+- [x] Bases de datos NoSQL: diferencias con SQL y MongoDB (modelado de datos y tutoriales)
 - [ ] JDBC y acceso a bases de datos desde Java
 - [ ] Patrones de diseño
 - [ ] Principios SOLID
@@ -193,6 +197,7 @@ Documentacion-Java/
 ├── Colecciones.md
 ├── Comparable vs Comparator.md
 ├── Conventional Commits.md
+├── Diferencias entre nosql y sql.md
 ├── Entidad - Relacion: Diagrama.md
 ├── Entidad - Relacion: PlantUML.md
 ├── Entrada - Salida basica.md
@@ -208,6 +213,8 @@ Documentacion-Java/
 ├── Log4J: Gestion de Registros.md
 ├── Log4J: Guia.md
 ├── Manejo Eficaz de Errores en Java - Estrategias y Buenas Practicas.md
+├── MongoDB: modelado de datos y diseno.md
+├── MongoDB: tutoriales.md
 ├── README.md
 ├── Records.md
 ├── Reflections.md
@@ -267,7 +274,8 @@ Actualmente, el repositorio contiene documentación relacionada con:
 
 - ☕ Java (colecciones, genéricos, lambdas y streams, excepciones, clases abstractas e interfaces, ordenación, enums, records, fechas y horas, entrada/salida y rutas de ficheros)
 - 🧬 Anotaciones y *Reflection* (metaprogramación en Java)
-- 🗄️ Bases de datos (tipos de datos de MySQL y diagramas Entidad-Relación)
+- 🗄️ Bases de datos relacionales (tipos de datos de MySQL y diagramas Entidad-Relación)
+- 🍃 Bases de datos NoSQL y MongoDB (diferencias con SQL, modelado de datos, `mongosh`, CRUD, índices y agregación)
 - 🌱 PlantUML (diagramas Entidad-Relación como código)
 - 🔐 Seguridad y criptografía en Java (JCA/JCE)
 - 🧪 JUnit
@@ -311,7 +319,8 @@ No es necesario seguir un orden concreto, ya que cada documento está pensado pa
 10. [Log4J](https://github.com/Victor-369/Documentacion-Java/blob/main/Log4J%3A%20Guia.md): registro de información.
 11. [Guía de seguridad](https://github.com/Victor-369/Documentacion-Java/blob/main/Guia%20de%20seguridad.md) y [Arquitectura criptográfica](https://github.com/Victor-369/Documentacion-Java/blob/main/Arquitectura%20criptografica.md): seguridad y criptografía.
 12. [Conventional Commits](https://github.com/Victor-369/Documentacion-Java/blob/main/Conventional%20Commits.md): buenas prácticas con Git.
-13. [BBDD: tipos de datos](https://github.com/Victor-369/Documentacion-Java/blob/main/BBDD%20-%20Tipos%20de%20datos.md), [Entidad-Relación: diagrama](https://github.com/Victor-369/Documentacion-Java/blob/main/Entidad%20-%20Relacion%3A%20Diagrama.md) y [Entidad-Relación: PlantUML](https://github.com/Victor-369/Documentacion-Java/blob/main/Entidad%20-%20Relacion%3A%20PlantUML.md): diseño y modelado de bases de datos.
+13. [BBDD: tipos de datos](https://github.com/Victor-369/Documentacion-Java/blob/main/BBDD%20-%20Tipos%20de%20datos.md), [Entidad-Relación: diagrama](https://github.com/Victor-369/Documentacion-Java/blob/main/Entidad%20-%20Relacion%3A%20Diagrama.md) y [Entidad-Relación: PlantUML](https://github.com/Victor-369/Documentacion-Java/blob/main/Entidad%20-%20Relacion%3A%20PlantUML.md): diseño y modelado de bases de datos relacionales.
+14. [NoSQL y diferencias con SQL](https://github.com/Victor-369/Documentacion-Java/blob/main/Diferencias%20entre%20nosql%20y%20sql.md), [MongoDB: modelado de datos y diseño](https://github.com/Victor-369/Documentacion-Java/blob/main/MongoDB%3A%20modelado%20de%20datos%20y%20diseno.md) y [MongoDB: tutoriales](https://github.com/Victor-369/Documentacion-Java/blob/main/MongoDB%3A%20tutoriales.md): bases de datos NoSQL con MongoDB (conviene leerlas en este orden).
 
 A medida que se incorporen nuevos temas, se irá organizando la documentación para facilitar un recorrido de aprendizaje más estructurado.
 
