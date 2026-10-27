@@ -40,6 +40,7 @@ Actualmente, el repositorio cuenta con documentación sobre diferentes conceptos
 | [Generics](https://github.com/Victor-369/Documentacion-Java/blob/main/Generics.md) | Guía de genéricos: clases, interfaces y métodos genéricos, *raw types*, inferencia de tipos, tipos acotados, comodines (*wildcards*), borrado de tipos (*type erasure*), restricciones, uso con características modernas de Java, errores habituales, chuleta y ejercicios. |
 | [Enums](https://github.com/Victor-369/Documentacion-Java/blob/main/Enums.md) | Enumeraciones (`enum`): declaración, uso dentro de clases y en `switch`, recorrido de constantes, diferencias con las clases y cuándo usarlas. Ampliación con enums «con cuerpo» (atributos, constructor, interfaces), `EnumMap` y `EnumSet`, y novedades desde Java 21 (`switch` con patrones, exhaustividad, `case null`, variables sin nombre `_`, constructores flexibles de Java 25). |
 | [Records](https://github.com/Victor-369/Documentacion-Java/blob/main/Records.md) | Clases de datos inmutables: declaración, constructor compacto, métodos y miembros estáticos, interfaces, cuándo usarlos y reglas (JEP 395). Ampliación con copia defensiva, records locales, anotaciones, reflexión, interfaces `sealed`, patrones de record (Java 21), variables sin nombre (`_`) y constructores flexibles (Java 25). |
+| [Calistenia de objetos](https://github.com/Victor-369/Documentacion-Java/blob/main/Calistenia%20de%20objetos.md) | Las nueve reglas de *Object Calisthenics* (Jeff Bay) actualizadas a Java 25: un nivel de indentación, sin `else`, encapsular primitivos, colecciones de primera clase, un punto por línea, no abreviar, entidades pequeñas, dos variables de instancia y sin *getters*/*setters*. Cada regla con ejemplos antes/después apoyados en *records*, `sealed`, `switch` con patrones, *gatherers* y ficheros fuente compactos, más un ejemplo completo (carrito de la compra), tabla resumen y cómo aplicarlas en katas y en producción. |
 
 ### λ Programación funcional: lambdas y streams
 
@@ -155,6 +156,7 @@ Este repositorio está pensado para **crecer progresivamente**. Actualmente solo
 - [x] Bases de datos: tipos de datos MySQL y diagramas Entidad-Relación (incluido PlantUML)
 - [x] Bases de datos NoSQL: diferencias con SQL y MongoDB (modelado de datos y tutoriales)
 - [ ] JDBC y acceso a bases de datos desde Java
+- [x] Calistenia de objetos (*Object Calisthenics*)
 - [ ] Patrones de diseño
 - [ ] Principios SOLID
 - [ ] Arquitectura de aplicaciones
@@ -194,6 +196,7 @@ Documentacion-Java/
 ├── Arquitectura criptografica.md
 ├── AssertJ - Guia para empezar desde cero.md
 ├── BBDD - Tipos de datos.md
+├── Calistenia de objetos.md
 ├── Colecciones.md
 ├── Comparable vs Comparator.md
 ├── Conventional Commits.md
@@ -273,6 +276,7 @@ La documentación del repositorio incluye material más detallado sobre [JUnit](
 Actualmente, el repositorio contiene documentación relacionada con:
 
 - ☕ Java (colecciones, genéricos, lambdas y streams, excepciones, clases abstractas e interfaces, ordenación, enums, records, fechas y horas, entrada/salida y rutas de ficheros)
+- 🏋️ Diseño orientado a objetos (reglas de calistenia de objetos con Java 25)
 - 🧬 Anotaciones y *Reflection* (metaprogramación en Java)
 - 🗄️ Bases de datos relacionales (tipos de datos de MySQL y diagramas Entidad-Relación)
 - 🍃 Bases de datos NoSQL y MongoDB (diferencias con SQL, modelado de datos, `mongosh`, CRUD, índices y agregación)
@@ -311,16 +315,17 @@ No es necesario seguir un orden concreto, ya que cada documento está pensado pa
 2. [Enums](https://github.com/Victor-369/Documentacion-Java/blob/main/Enums.md) y [Records](https://github.com/Victor-369/Documentacion-Java/blob/main/Records.md): tipos de datos propios.
 3. [Generics](https://github.com/Victor-369/Documentacion-Java/blob/main/Generics.md) y [Comparable vs Comparator](https://github.com/Victor-369/Documentacion-Java/blob/main/Comparable%20vs%20Comparator.md): tipos genéricos y ordenación de objetos.
 4. [Lambdas y Streams](https://github.com/Victor-369/Documentacion-Java/blob/main/Lambdas%20y%20Streams.md): programación funcional y procesamiento de datos.
-5. [Excepciones checked y unchecked](https://github.com/Victor-369/Documentacion-Java/blob/main/Excepciones%20checked%20y%20unchecked.md) y [Manejo eficaz de errores](https://github.com/Victor-369/Documentacion-Java/blob/main/Manejo%20Eficaz%20de%20Errores%20en%20Java%20-%20Estrategias%20y%20Buenas%20Practicas.md): gestión de errores.
-6. [Fechas](https://github.com/Victor-369/Documentacion-Java/blob/main/Fechas.md): fechas y horas con `java.time`.
-7. [Entrada - Salida básica](https://github.com/Victor-369/Documentacion-Java/blob/main/Entrada%20-%20Salida%20basica.md) y [Rutas relativas](https://github.com/Victor-369/Documentacion-Java/blob/main/Rutas%20relativas.md): trabajo con datos y ficheros.
-8. [Anotaciones](https://github.com/Victor-369/Documentacion-Java/blob/main/Anotaciones.md) y [Reflections](https://github.com/Victor-369/Documentacion-Java/blob/main/Reflections.md): metaprogramación (conviene leerlas en este orden).
-9. [JUnit](https://github.com/Victor-369/Documentacion-Java/blob/main/JUnit%3A%20Vision%20general%20e%20introduccion.md), [AssertJ](https://github.com/Victor-369/Documentacion-Java/blob/main/AssertJ%20-%20Guia%20para%20empezar%20desde%20cero.md) y [TDD](https://github.com/Victor-369/Documentacion-Java/blob/main/Test-Driven%20Development%20%28TDD%29.md): pruebas automatizadas.
-10. [Log4J](https://github.com/Victor-369/Documentacion-Java/blob/main/Log4J%3A%20Guia.md): registro de información.
-11. [Guía de seguridad](https://github.com/Victor-369/Documentacion-Java/blob/main/Guia%20de%20seguridad.md) y [Arquitectura criptográfica](https://github.com/Victor-369/Documentacion-Java/blob/main/Arquitectura%20criptografica.md): seguridad y criptografía.
-12. [Conventional Commits](https://github.com/Victor-369/Documentacion-Java/blob/main/Conventional%20Commits.md): buenas prácticas con Git.
-13. [BBDD: tipos de datos](https://github.com/Victor-369/Documentacion-Java/blob/main/BBDD%20-%20Tipos%20de%20datos.md), [Entidad-Relación: diagrama](https://github.com/Victor-369/Documentacion-Java/blob/main/Entidad%20-%20Relacion%3A%20Diagrama.md) y [Entidad-Relación: PlantUML](https://github.com/Victor-369/Documentacion-Java/blob/main/Entidad%20-%20Relacion%3A%20PlantUML.md): diseño y modelado de bases de datos relacionales.
-14. [NoSQL y diferencias con SQL](https://github.com/Victor-369/Documentacion-Java/blob/main/Diferencias%20entre%20nosql%20y%20sql.md), [MongoDB: modelado de datos y diseño](https://github.com/Victor-369/Documentacion-Java/blob/main/MongoDB%3A%20modelado%20de%20datos%20y%20diseno.md) y [MongoDB: tutoriales](https://github.com/Victor-369/Documentacion-Java/blob/main/MongoDB%3A%20tutoriales.md): bases de datos NoSQL con MongoDB (conviene leerlas en este orden).
+5. [Calistenia de objetos](https://github.com/Victor-369/Documentacion-Java/blob/main/Calistenia%20de%20objetos.md): reglas para practicar un diseño orientado a objetos más limpio (se apoya en *records*, `sealed` y *streams*).
+6. [Excepciones checked y unchecked](https://github.com/Victor-369/Documentacion-Java/blob/main/Excepciones%20checked%20y%20unchecked.md) y [Manejo eficaz de errores](https://github.com/Victor-369/Documentacion-Java/blob/main/Manejo%20Eficaz%20de%20Errores%20en%20Java%20-%20Estrategias%20y%20Buenas%20Practicas.md): gestión de errores.
+7. [Fechas](https://github.com/Victor-369/Documentacion-Java/blob/main/Fechas.md): fechas y horas con `java.time`.
+8. [Entrada - Salida básica](https://github.com/Victor-369/Documentacion-Java/blob/main/Entrada%20-%20Salida%20basica.md) y [Rutas relativas](https://github.com/Victor-369/Documentacion-Java/blob/main/Rutas%20relativas.md): trabajo con datos y ficheros.
+9. [Anotaciones](https://github.com/Victor-369/Documentacion-Java/blob/main/Anotaciones.md) y [Reflections](https://github.com/Victor-369/Documentacion-Java/blob/main/Reflections.md): metaprogramación (conviene leerlas en este orden).
+10. [JUnit](https://github.com/Victor-369/Documentacion-Java/blob/main/JUnit%3A%20Vision%20general%20e%20introduccion.md), [AssertJ](https://github.com/Victor-369/Documentacion-Java/blob/main/AssertJ%20-%20Guia%20para%20empezar%20desde%20cero.md) y [TDD](https://github.com/Victor-369/Documentacion-Java/blob/main/Test-Driven%20Development%20%28TDD%29.md): pruebas automatizadas.
+11. [Log4J](https://github.com/Victor-369/Documentacion-Java/blob/main/Log4J%3A%20Guia.md): registro de información.
+12. [Guía de seguridad](https://github.com/Victor-369/Documentacion-Java/blob/main/Guia%20de%20seguridad.md) y [Arquitectura criptográfica](https://github.com/Victor-369/Documentacion-Java/blob/main/Arquitectura%20criptografica.md): seguridad y criptografía.
+13. [Conventional Commits](https://github.com/Victor-369/Documentacion-Java/blob/main/Conventional%20Commits.md): buenas prácticas con Git.
+14. [BBDD: tipos de datos](https://github.com/Victor-369/Documentacion-Java/blob/main/BBDD%20-%20Tipos%20de%20datos.md), [Entidad-Relación: diagrama](https://github.com/Victor-369/Documentacion-Java/blob/main/Entidad%20-%20Relacion%3A%20Diagrama.md) y [Entidad-Relación: PlantUML](https://github.com/Victor-369/Documentacion-Java/blob/main/Entidad%20-%20Relacion%3A%20PlantUML.md): diseño y modelado de bases de datos relacionales.
+15. [NoSQL y diferencias con SQL](https://github.com/Victor-369/Documentacion-Java/blob/main/Diferencias%20entre%20nosql%20y%20sql.md), [MongoDB: modelado de datos y diseño](https://github.com/Victor-369/Documentacion-Java/blob/main/MongoDB%3A%20modelado%20de%20datos%20y%20diseno.md) y [MongoDB: tutoriales](https://github.com/Victor-369/Documentacion-Java/blob/main/MongoDB%3A%20tutoriales.md): bases de datos NoSQL con MongoDB (conviene leerlas en este orden).
 
 A medida que se incorporen nuevos temas, se irá organizando la documentación para facilitar un recorrido de aprendizaje más estructurado.
 
