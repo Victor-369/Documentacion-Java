@@ -123,6 +123,11 @@ public class ImpresoraLibros {
 >
 > Robert C. Martin aclaró más tarde que «un motivo para cambiar» equivale a **un único actor o grupo de interesados**: si el departamento de contabilidad y el de recursos humanos pueden pedir cambios en la misma clase por motivos distintos, esa clase tiene dos responsabilidades.
 
+**Un truco práctico**
+Intenta describir la clase en una frase sin usar "y". Con el original sale "guarda y manipula el texto de un libro y lo imprime en consola". Ese "y" marca por dónde partir la clase.
+
+La clase del dominio se queda con lo que el objeto **es** y lo que hace con sus propios datos. Lo que tiene que ver con el mundo exterior (mostrarlo, enviarlo, guardarlo) se va a otra clase.
+
 ---
 
 ## 4. O — Principio abierto/cerrado (OCP)
