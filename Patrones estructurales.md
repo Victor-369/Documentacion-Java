@@ -36,6 +36,25 @@ Los patrones clásicos se recogieron en el libro *Design Patterns* (1994), de cu
 | **Estructurales** (este documento) | **Combinar** clases y objetos para formar estructuras más grandes | Adapter, Composite, Decorator, Facade, Proxy |
 | **De comportamiento** | Organizar **cómo se comunican** los objetos y quién hace cada cosa | Strategy, Observer, Command |
 
+### ¿Por qué merece la pena aprenderlos?
+
+- **No reinventas la rueda:** otras personas ya pensaron una buena solución.
+- **Hablas el mismo idioma que tu equipo:** decir «aquí usamos un *Decorator*» se entiende al momento, sin explicar todo el código.
+- **Reconoces el código que lees:** muchas librerías de Java usan estos patrones. Si los conoces, entiendes antes cómo funcionan.
+- **Tu código aguanta mejor los cambios:** cada pieza tiene un papel claro, así que añadir algo nuevo no obliga a reescribir lo que ya funciona.
+
+### Patrones y principios SOLID
+
+**SOLID** son cinco principios para escribir código orientado a objetos fácil de mantener. **No necesitas conocerlos para seguir este documento**, pero si ya los conoces verás que muchos patrones son, en la práctica, una forma concreta de aplicarlos. Los tienes explicados en [Principios SOLID](<Principio SOLID.md>).
+
+| Patrón | Principio que refuerza | Por qué |
+|---|---|---|
+| **Adapter** | Abierto/cerrado (OCP) | Permite usar una clase con otra interfaz **sin modificarla**. |
+| **Composite** | Abierto/cerrado (OCP) | Se pueden añadir tipos nuevos de elementos sin cambiar el código que recorre el árbol. |
+| **Decorator** | Abierto/cerrado (OCP) y responsabilidad única (SRP) | Añade comportamiento sin tocar la clase original, y cada decorador se ocupa de **una sola cosa**. |
+| **Facade** | Inversión de dependencias (DIP) y bajo acoplamiento | El código cliente depende de una puerta de entrada sencilla, no de todas las clases internas. |
+| **Proxy** | Responsabilidad única (SRP) | El control de acceso, la caché o el registro van en el proxy, no en la clase real. |
+
 ---
 
 ## 2. Antes de empezar: cómo probar los ejemplos
