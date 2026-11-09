@@ -1,5 +1,7 @@
 # Excepciones checked y unchecked en Java
 
+> Versión de referencia: **Java 25 (LTS)** o superior. Los ejemplos se han compilado con OpenJDK 25.
+
 ## 1. Introducción
 
 Las excepciones de Java se dividen en dos categorías principales:
@@ -18,24 +20,30 @@ Java verifica las checked exceptions **en tiempo de compilación**.
 Por ello, se puede declarar una checked exception mediante la palabra clave `throws`:
 
 ```java
-private static void checkedExceptionWithThrows() throws FileNotFoundException {
-    File file = new File("not_existing_file.txt");
-    FileInputStream stream = new FileInputStream(file);
+private static void checkedExceptionWithThrows() throws IOException {
+    try (var stream = new FileInputStream("not_existing_file.txt")) {
+        // leer del fichero...
+    }
 }
 ```
+
+> `try (...)` es un **try-with-resources**: cierra el fichero automáticamente al terminar (ver [sección 6.1](#61-try-with-resources-java-7)). Como `close()` también puede lanzar `IOException`, se declara `IOException`, que incluye a `FileNotFoundException`.
 
 También se puede gestionar una checked exception mediante un bloque `try-catch`:
 
 ```java
 private static void checkedExceptionWithTryCatch() {
-    File file = new File("not_existing_file.txt");
-    try {
-        FileInputStream stream = new FileInputStream(file);
+    try (var stream = new FileInputStream("not_existing_file.txt")) {
+        // leer del fichero...
     } catch (FileNotFoundException e) {
-        e.printStackTrace();
+        System.err.println("No se encuentra el fichero: " + e.getMessage());
+    } catch (IOException e) {
+        System.err.println("Error al cerrar el fichero: " + e.getMessage());
     }
 }
 ```
+
+> En una aplicación real, en lugar de `System.err` o `e.printStackTrace()` se usa un sistema de *logging* (ver [Log4j](<Log4J: Guia.md>)). Y en código nuevo se suele preferir la API NIO.2 (`Files.newInputStream(Path.of(...))`), que lanza `NoSuchFileException`, también comprobada.
 
 Algunos ejemplos habituales de checked exceptions en Java son:
 
@@ -43,7 +51,7 @@ Algunos ejemplos habituales de checked exceptions en Java son:
 - `SQLException`
 - `ParseException`
 
-La clase `Exception` es la superclase de las checked exceptions. Por tanto, se puede crear una checked exception personalizada extendiendo `Exception`:
+La clase `Exception` es la superclase de las checked exceptions (todas sus subclases son comprobadas, **salvo** `RuntimeException` y las suyas). Por tanto, se puede crear una checked exception personalizada extendiendo `Exception`:
 
 ```java
 public class IncorrectFileNameException extends Exception {
@@ -79,7 +87,7 @@ Algunos ejemplos habituales de unchecked exceptions en Java son:
 - `ArrayIndexOutOfBoundsException`
 - `IllegalArgumentException`
 
-La clase `RuntimeException` es la superclase de todas las unchecked exceptions. Por tanto, se puede crear una unchecked exception personalizada extendiendo `RuntimeException`:
+La clase `RuntimeException` es la superclase de las unchecked exceptions que se usan en las aplicaciones (la otra rama no comprobada es `Error`, ver [sección 6.6](#66-error-la-tercera-rama)). Por tanto, se puede crear una unchecked exception personalizada extendiendo `RuntimeException`:
 
 ```java
 public class NullOrEmptyException extends RuntimeException {
@@ -133,10 +141,62 @@ if (fileName == null || fileName.isEmpty()) {
 | Comprobación | En tiempo de compilación | No se comprueba en tiempo de compilación |
 | Declaración con `throws` | Necesaria cuando se propaga | No es necesaria |
 | Situación descrita | Error fuera del control del programa | Error dentro de la lógica del programa |
-| Superclase | `Exception` | `RuntimeException` |
+| Superclase | `Exception` (salvo `RuntimeException`) | `RuntimeException` (y `Error`) |
 | Ejemplo | `FileNotFoundException` | `ArithmeticException` |
 
-## 6. Conclusión
+## 6. Excepciones en Java moderno (Java 25)
+
+Las reglas de checked y unchecked no han cambiado, pero el lenguaje ofrece herramientas que hacen el código de gestión de errores más claro.
+
+### 6.1. `try-with-resources` (Java 7)
+
+Cualquier recurso que implemente `AutoCloseable` (ficheros, conexiones, *streams*…) se cierra automáticamente al salir del bloque, incluso si se produce una excepción. Es la forma correcta de trabajar con ficheros: los ejemplos de la sección 2 la usan.
+
+### 6.2. *Multi-catch* (Java 7)
+
+Si varias excepciones se tratan igual, se capturan en un solo bloque con `|`:
+
+```java
+static String leerConfig(Path ruta) {
+    try {
+        return Files.readString(ruta);
+    } catch (NoSuchFileException | AccessDeniedException e) {
+        return "";                                                    // se puede continuar sin configuración
+    } catch (IOException e) {
+        throw new UncheckedIOException("No se pudo leer " + ruta, e);   // se envuelve conservando la causa
+    }
+}
+```
+
+Los bloques `catch` van de la excepción **más concreta a la más general**: si `IOException` fuese primero, el compilador daría error porque los otros nunca se alcanzarían.
+
+### 6.3. Variables sin nombre en `catch` (Java 22)
+
+Cuando no necesitas la excepción capturada, puedes llamarla `_` para dejar claro que se ignora a propósito:
+
+```java
+static int parseOrDefault(String text, int defaultValue) {
+    try {
+        return Integer.parseInt(text);
+    } catch (NumberFormatException _) {
+        return defaultValue;
+    }
+}
+```
+
+### 6.4. Encadenar excepciones
+
+Al convertir una checked exception en unchecked (por ejemplo, `IOException` en `UncheckedIOException`), pasa siempre la excepción original como **causa**. Así no se pierde la traza del error real.
+
+### 6.5. Checked exceptions y lambdas
+
+Las interfaces funcionales estándar (`Function`, `Consumer`, `Supplier`…) no declaran `throws`, así que una lambda que llama a un método con checked exceptions no compila sin tratarlas dentro. Lo habitual es capturarla dentro de la lambda y envolverla en una unchecked exception (como en 6.2). La guía [Lambdas y Streams](<Lambdas y Streams.md>) lo explica con detalle.
+
+### 6.6. `Error`: la tercera rama
+
+Además de `RuntimeException`, la clase `Error` y sus subclases (`OutOfMemoryError`, `StackOverflowError`…) tampoco son comprobadas. Representan problemas graves de la JVM de los que una aplicación normal no debe intentar recuperarse, por lo que no se capturan.
+
+## 7. Conclusión
 
 Las checked exceptions y las unchecked exceptions son las dos categorías principales de excepciones en Java.
 
