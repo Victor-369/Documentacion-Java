@@ -1,5 +1,7 @@
 # Resumen: Gestión de registros con Log4J
 
+> Este resumen se refiere a **Log4j 2** (la rama 1.x está abandonada desde 2015 y no debe usarse). Para la configuración práctica con Java 25 y la versión actual de la librería, consulta la [guía de Log4j](<Log4J: Guia.md>).
+
 ## ¿Qué es Log4J?
 Log4J es una biblioteca de Java utilizada para implementar un sistema de **logging**, permitiendo registrar eventos, mensajes y errores que ocurren durante la ejecución de una aplicación.
 
@@ -24,7 +26,6 @@ Log4J permite clasificar los mensajes según su importancia, por ejemplo:
 ### Desarrollo
 - `TRACE`: cuando se necesita un nivel de detalle muy elevado, normalmente para analizar problemas específicos durante el desarrollo o la depuración.
 - `DEBUG`: para información útil durante la depuración de la aplicación, como valores de variables, flujo de ejecución o detalles internos.
-### Desarrolo
 - `INFO`: para registrar eventos normales y relevantes del funcionamiento de la aplicación, como el inicio de un servicio, una operación completada o una conexión establecida.
 - `DEBUG`: para información útil durante la depuración de la aplicación, como valores de variables, flujo de ejecución o detalles internos.
 ### Producción
