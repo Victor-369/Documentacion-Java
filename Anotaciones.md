@@ -1028,7 +1028,7 @@ Además de las anotaciones de Java SE, casi todos los proyectos usan anotaciones
 
 | Biblioteca | Anotaciones típicas | Para qué se usan |
 |---|---|---|
-| **JUnit 5** | `@Test`, `@BeforeEach`, `@Disabled` | Escribir pruebas automáticas |
+| **JUnit (Jupiter)** | `@Test`, `@BeforeEach`, `@Disabled` | Escribir pruebas automáticas |
 | **Spring** | `@Component`, `@Autowired`, `@RestController`, `@GetMapping` | Inyección de dependencias y servicios web |
 | **Jakarta Persistence (JPA)** | `@Entity`, `@Id`, `@Table` | Mapear clases a tablas de base de datos |
 | **Jakarta Bean Validation** | `@NotNull`, `@Size`, `@Email` | Validar datos (como nuestro validador, pero profesional) |
