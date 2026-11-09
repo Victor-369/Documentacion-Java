@@ -1,148 +1,276 @@
-# Patrones de diseño creacionales en Java (21+)
+# Patrones de diseño creacionales en Java
 
-## Introducción: ¿qué es un patrón de diseño?
+> Versión de referencia: **Java 25 (LTS)** o superior. Todos los programas completos de este documento se han compilado y ejecutado con OpenJDK 25.
+>
+> Documentos relacionados: [Patrones estructurales](<Patrones estructurales.md>) · [Patrones de comportamiento](<Patrones comportamiento.md>)
 
-Los patrones de diseño son **soluciones típicas a problemas que aparecen a menudo** en el desarrollo de software. Funcionan como planos predefinidos que se pueden adaptar para resolver un problema de diseño recurrente en tu código.
+## Índice
 
-Un patrón **no es código para copiar y pegar**, como haríamos con una función o una librería. Es un concepto general, no una implementación concreta: te da una guía para construir una solución que encaje con las necesidades de tu proyecto.
+1. [¿Qué es un patrón de diseño?](#1-qué-es-un-patrón-de-diseño)
+2. [Antes de empezar: cómo probar los ejemplos](#2-antes-de-empezar-cómo-probar-los-ejemplos)
+3. [Vocabulario mínimo](#3-vocabulario-mínimo)
+4. [¿Qué problema resuelven los patrones creacionales?](#4-qué-problema-resuelven-los-patrones-creacionales)
+5. [Singleton](#5-singleton)
+6. [Factory Method (método fábrica)](#6-factory-method-método-fábrica)
+7. [Abstract Factory (fábrica abstracta)](#7-abstract-factory-fábrica-abstracta)
+8. [Builder (constructor paso a paso)](#8-builder-constructor-paso-a-paso)
+9. [Prototype (prototipo)](#9-prototype-prototipo)
+10. [Resumen y cómo elegir](#10-resumen-y-cómo-elegir)
+11. [Errores frecuentes](#11-errores-frecuentes)
+12. [Ejercicios](#12-ejercicios)
+13. [Glosario](#13-glosario)
 
-Además, los patrones son una forma práctica de aplicar los **principios SOLID**, ya que ayudan a estructurar el código de manera clara, mantenible y escalable.
+---
 
-### ¿Por qué aprenderlos?
+## 1. ¿Qué es un patrón de diseño?
 
-Puedes trabajar años como programador sin conocer formalmente ningún patrón; de hecho, a menudo los aplicas sin saberlo. Aun así, merece la pena aprenderlos porque:
+Cuando programas, hay problemas que aparecen una y otra vez en proyectos muy distintos: «necesito que solo exista un objeto de esta clase», «quiero crear objetos sin llenar el código de `if`», «tengo un objeto con demasiados datos para un solo constructor»…
 
-- Son una **caja de herramientas** con soluciones probadas.
-- Te ayudan a **pensar mejor el diseño** aplicando principios de la orientación a objetos.
-- **Facilitan la comunicación**: decir "esto lo resolvemos con una Factory" se entiende al momento.
-- **Mejoran la calidad** del código: más mantenible, escalable y flexible ante cambios.
+Un **patrón de diseño** es una **solución ya probada** para uno de esos problemas repetidos. Tiene un nombre, explica el problema que resuelve y describe una forma de organizar las clases para resolverlo.
 
-### Clasificación por intención
+> **Analogía:** un patrón es como una **receta de cocina**. La receta de la tortilla no es *tu* tortilla: te dice los pasos, y tú la adaptas a los ingredientes que tienes. Del mismo modo, un patrón no es código para copiar y pegar, sino una idea que adaptas a tu programa.
 
-| Categoría | Propósito | Ejemplos |
+### ¿Por qué merece la pena aprenderlos?
+
+- **No reinventas la rueda:** otras personas ya pensaron una buena solución.
+- **Hablas el mismo idioma que tu equipo:** decir «aquí usamos un *Builder*» se entiende al momento, sin explicar todo el código.
+- **Reconoces el código que lees:** muchas librerías de Java usan estos patrones. Si los conoces, entiendes antes cómo funcionan.
+
+### Los tres grupos de patrones
+
+Los patrones más conocidos se recogieron en el libro *Design Patterns* (1994), escrito por cuatro autores a los que se suele llamar *Gang of Four* (GoF, «la banda de los cuatro»). Los clasificaron según **para qué sirven**:
+
+| Grupo | Para qué sirven | Ejemplos |
 |---|---|---|
-| **Creacionales** | Crear objetos de forma flexible y controlada | Singleton, Factory Method, Abstract Factory, Builder, Prototype |
-| **Estructurales** | Combinar clases y objetos en estructuras mayores | Adapter, Composite, Decorator, Facade, Proxy |
-| **De comportamiento** | Comunicación y reparto de responsabilidades entre objetos | Observer, Strategy, Command, State, Template Method |
-
-Este documento trata los **patrones creacionales**.
-
-> **Nota sobre Java moderno.** Muchos patrones clásicos (del libro *Design Patterns* de la "Gang of Four", 1994) se escribieron pensando en un Java/C++ sin lambdas, `record`, `sealed` ni *pattern matching*. En Java 21+ varios patrones se simplifican mucho. Aquí se muestra la forma clásica cuando ayuda a entender la idea, y la forma moderna recomendada.
+| **Creacionales** (este documento) | **Crear objetos** de forma ordenada y flexible | Singleton, Factory Method, Abstract Factory, Builder, Prototype |
+| **Estructurales** | **Combinar** clases y objetos para formar estructuras más grandes | Adapter, Composite, Decorator, Facade, Proxy |
+| **De comportamiento** | Organizar **cómo se comunican** los objetos y quién hace cada cosa | Strategy, Observer, Command, State, Template Method |
 
 ---
 
-## ¿Qué resuelven los patrones creacionales?
+## 2. Antes de empezar: cómo probar los ejemplos
 
-Usar `new` directamente acopla tu código a una **clase concreta**. Si mañana necesitas otra implementación, tienes que tocar todos los sitios donde se hace `new`. Los patrones creacionales **encapsulan la creación** de objetos para que:
+Cada patrón incluye un **programa completo** que puedes ejecutar. Para probarlo:
 
-- El código cliente dependa de **abstracciones** (interfaces), no de clases concretas → principio de **Inversión de Dependencias (D de SOLID)**.
-- Añadir nuevos tipos no obligue a modificar código existente → principio **Abierto/Cerrado (O de SOLID)**.
-- La lógica de construcción compleja esté en **un único sitio** → **Responsabilidad Única (S de SOLID)**.
+1. Instala un JDK 25 o superior (comprueba la versión con `java -version`).
+2. Copia el código en un fichero de texto con extensión `.java`, por ejemplo `Singleton.java`.
+3. Ejecútalo desde la terminal, en la misma carpeta:
+
+```bash
+java Singleton.java
+```
+
+Java compila y ejecuta el fichero en un solo paso.
+
+Los ejemplos usan dos facilidades de **Java 25** pensadas para programas pequeños:
+
+- **`void main()`**: el programa empieza aquí. No hace falta escribir `public static void main(String[] args)` ni declarar una clase alrededor.
+- **`IO.println(...)`**: escribe un texto en la consola. Es lo mismo que `System.out.println(...)`, pero más corto.
+
+> En un proyecto real (con Maven, Gradle o un IDE), cada clase iría en su propio fichero y el `main` estaría dentro de una clase. Las ideas de los patrones son exactamente las mismas.
 
 ---
 
-## 1. Singleton
+## 3. Vocabulario mínimo
 
-### Intención
-Garantizar que una clase tenga **una única instancia** y ofrecer un punto de acceso global a ella.
+Estos son los términos de Java que aparecen en el documento. Si ya los conoces, puedes saltarte esta sección.
+
+| Término | Qué significa | Ejemplo |
+|---|---|---|
+| **Clase** | El «molde» que describe cómo son unos objetos. | `class Coche { ... }` |
+| **Objeto** (o instancia) | Una cosa concreta creada a partir de una clase. | `new Coche()` |
+| **`new`** | Palabra que crea un objeto nuevo. | `Coche c = new Coche();` |
+| **Constructor** | Código que se ejecuta al hacer `new` para preparar el objeto. | `Coche(String color) { ... }` |
+| **Interfaz** | Una lista de métodos que una clase **promete** tener, sin decir cómo los hace. | `interface Vehiculo { void arrancar(); }` |
+| **`implements`** | Indica que una clase cumple una interfaz. | `class Coche implements Vehiculo` |
+| **`static`** | Algo que pertenece a la clase, no a cada objeto. Se usa sin crear objetos. | `Math.max(2, 3)` |
+| **`final`** | Algo que no se puede cambiar una vez asignado. | `final int edad = 30;` |
+| **`private`** | Solo se puede usar dentro de la propia clase. | `private String clave;` |
+| **`enum`** | Un tipo con una lista **cerrada** de valores. | `enum Color { ROJO, VERDE }` |
+| **`record`** | Una forma corta de crear una clase que solo guarda datos que no cambian. Java genera el constructor y los métodos para leer cada dato. | `record Punto(int x, int y) {}` → `p.x()` |
+| **`switch` con flechas** | Elige un resultado según un valor. Con `->` no hace falta `break`. | `case ROJO -> "parar";` |
+| **`List.of(...)`** | Crea una lista que no se puede modificar. | `List.of("a", "b")` |
+
+---
+
+## 4. ¿Qué problema resuelven los patrones creacionales?
+
+En Java, los objetos se crean con `new`:
+
+```java
+Email aviso = new Email("ana@ejemplo.es");
+```
+
+Esto está bien en programas pequeños. Pero cuando el programa crece, aparecen problemas:
+
+- **El `new` está repartido por todas partes.** Si mañana quieres cambiar `Email` por otra clase, tienes que buscar y modificar todos los sitios donde se crea.
+- **Crear el objeto es complicado.** A veces hay que elegir entre varias clases, validar datos o pasar diez parámetros al constructor.
+- **Necesitas controlar cuántos objetos existen.** Por ejemplo, que solo haya una configuración en toda la aplicación.
+
+Los patrones creacionales **reúnen la creación de objetos en un único sitio** y la hacen más clara.
+
+> **Analogía:** en una cafetería no entras a la cocina a preparar tu café: lo **pides** («un café con leche») y alguien que sabe hacerlo te lo entrega. Los patrones creacionales hacen lo mismo: tu código *pide* un objeto y otra pieza se encarga de *fabricarlo*.
+
+---
+
+## 5. Singleton
+
+### En una frase
+
+Garantiza que de una clase **solo exista un objeto** en todo el programa, y da una forma sencilla de llegar a él.
+
+### Analogía
+
+En un partido de baloncesto hay **un único marcador**. Todos (jugadores, árbitros y público) miran el mismo. Si hubiera dos marcadores con resultados distintos, nadie sabría cómo va el partido.
+
+### El problema
+
+Imagina una clase con la configuración de la aplicación. Si cada parte del programa hace su propio `new`, cada una tiene **su propia copia**, y los cambios de una no los ve la otra:
+
+```java
+Configuracion a = new Configuracion();
+Configuracion b = new Configuracion();
+a.cambiar("idioma", "en");
+b.leer("idioma");   // sigue en "es": b es otro objeto distinto
+```
+
+### La solución en Java: un `enum` con un solo valor
+
+Un `enum` tiene una lista cerrada de valores, y **Java no permite crear más con `new`**. Si el `enum` tiene un único valor, ese valor es, por definición, el único objeto que existe. Es la forma más sencilla y segura de hacer un Singleton en Java.
+
+### Programa completo
+
+```java
+// Fichero: Singleton.java
+import java.util.HashMap;
+import java.util.Map;
+
+enum Configuracion {
+    INSTANCIA;   // el único objeto que existirá
+
+    private final Map<String, String> valores = new HashMap<>();
+
+    Configuracion() {   // se ejecuta una sola vez, la primera vez que se usa
+        valores.put("idioma", "es");
+        valores.put("moneda", "EUR");
+    }
+
+    String leer(String clave) {
+        return valores.get(clave);
+    }
+
+    void cambiar(String clave, String valor) {
+        valores.put(clave, valor);
+    }
+}
+
+void main() {
+    Configuracion a = Configuracion.INSTANCIA;
+    Configuracion b = Configuracion.INSTANCIA;
+
+    a.cambiar("idioma", "en");
+
+    IO.println("Idioma leído desde b: " + b.leer("idioma"));
+    IO.println("¿a y b son el mismo objeto? " + (a == b));
+}
+```
+
+Salida:
+
+```text
+Idioma leído desde b: en
+¿a y b son el mismo objeto? true
+```
+
+### Qué ha pasado
+
+- `Configuracion.INSTANCIA` es siempre **el mismo objeto**, la uses desde donde la uses.
+- Por eso, el cambio hecho a través de `a` se ve a través de `b`.
+- `a == b` compara si dos variables apuntan **al mismo objeto**, y da `true`.
+- Si intentas escribir `new Configuracion()`, el compilador lo rechaza: los `enum` no se pueden crear con `new`.
+
+### La versión que verás en código antiguo
+
+En muchos proyectos encontrarás el Singleton hecho con una clase normal: un constructor `private` (para que nadie haga `new` desde fuera) y un método `static` llamado `getInstance()` que devuelve siempre el mismo objeto. Funciona, pero es fácil equivocarse cuando varios hilos lo usan a la vez. En código nuevo, el `enum` es más simple y seguro.
 
 ### Cuándo usarlo
-Recursos compartidos de verdad únicos: configuración de la aplicación, registro de *logs*, una caché global.
 
-### Implementación recomendada: `enum`
+- Cuando de verdad solo debe haber **uno**: la configuración, el registro de mensajes (*log*) o una caché compartida.
 
-Es la forma más sencilla y segura: la JVM garantiza una sola instancia, es *thread-safe* y resiste la serialización y la reflexión.
+### Cuándo **no** usarlo
 
-```java
-public enum Configuracion {
-    INSTANCIA;
-
-    private final Properties props = new Properties();
-
-    Configuracion() {
-        try (var in = Configuracion.class.getResourceAsStream("/app.properties")) {
-            if (in != null) props.load(in);
-        } catch (IOException e) {
-            throw new UncheckedIOException(e);
-        }
-    }
-
-    public String get(String clave) {
-        return props.getProperty(clave);
-    }
-}
-
-// Uso
-String url = Configuracion.INSTANCIA.get("db.url");
-```
-
-### Alternativa: inicialización perezosa con *holder*
-
-Si necesitas una clase normal (por ejemplo, porque hereda de otra), el idioma **Initialization-on-demand holder** es perezoso y seguro entre hilos sin usar `synchronized`:
-
-```java
-public final class Registro {
-
-    private Registro() { }
-
-    private static final class Holder {
-        private static final Registro INSTANCIA = new Registro();
-    }
-
-    public static Registro getInstance() {
-        return Holder.INSTANCIA; // la clase Holder se carga solo la primera vez
-    }
-}
-```
-
-### Cuidado
-- El Singleton es **estado global**: dificulta los tests y oculta dependencias. Hoy en día se prefiere crear una única instancia y **inyectarla** (con un framework como Spring o a mano por el constructor).
-- Evita el *double-checked locking* clásico: es fácil equivocarse y el *holder* o el `enum` lo resuelven mejor.
-- Con **hilos virtuales** (Java 21), los bloques `synchronized` podían "anclar" (*pinning*) el hilo virtual a su hilo de plataforma. Esto se corrigió en **Java 24** (JEP 491), pero es otra razón para preferir `enum` o *holder*.
+- Para «tener a mano» cualquier objeto. Un Singleton es, en el fondo, una **variable global**: cualquier parte del programa puede cambiarlo, y eso hace más difícil encontrar errores y escribir pruebas.
+- Alternativa habitual: crear **un** objeto al arrancar el programa y **pasárselo** (por el constructor) a las clases que lo necesiten. Los *frameworks* como Spring hacen exactamente esto de forma automática.
 
 ---
 
-## 2. Factory Method (Método Fábrica)
+## 6. Factory Method (método fábrica)
 
-### Intención
-Definir un método que **crea objetos** sin que el cliente sepa qué clase concreta se instancia.
+### En una frase
 
-### Ejemplo moderno con `sealed` y `switch`
+Un **método que crea objetos por ti**: tú dices *qué* quieres y él decide *qué clase* usar.
 
-En Java 21, las **interfaces selladas** (`sealed`) y los **records** permiten modelar familias cerradas de tipos, y el `switch` con *pattern matching* comprueba en compilación que se cubren todos los casos.
+### Analogía
+
+En una pizzería pides «una margarita». No necesitas saber qué ingredientes lleva ni en qué orden se ponen: el pizzero lo sabe y te entrega la pizza correcta.
+
+### El problema
+
+Una tienda envía avisos a sus clientes por correo electrónico, SMS o notificación en el móvil. Sin patrón, cada vez que hay que enviar un aviso aparece el mismo bloque:
 
 ```java
-public sealed interface Notificacion permits Email, Sms, Push {
+if (canal.equals("EMAIL")) {
+    aviso = new Email(destino);
+} else if (canal.equals("SMS")) {
+    aviso = new Sms(destino);
+} else if ...
+```
+
+Si este bloque está copiado en diez sitios y se añade un canal nuevo (por ejemplo, WhatsApp), hay que cambiar los diez. Y si alguien escribe `"Emial"`, el error no se descubre hasta que el programa falla.
+
+### La solución paso a paso
+
+1. Define una **interfaz** con lo que todos los avisos saben hacer: `enviar(...)`.
+2. Crea una clase para cada tipo de aviso que **implemente** esa interfaz.
+3. Usa un **`enum`** para los canales posibles, en lugar de textos sueltos: así no hay errores de escritura.
+4. Escribe **un único método** que reciba el canal y devuelva el objeto adecuado. Ese método es la «fábrica».
+
+### Programa completo
+
+```java
+// Fichero: FactoryMethod.java
+
+// 1. Lo que todos los avisos saben hacer
+interface Notificacion {
     void enviar(String mensaje);
 }
 
-public record Email(String destinatario) implements Notificacion {
+// 2. Un tipo de aviso por clase
+record Email(String direccion) implements Notificacion {
     public void enviar(String mensaje) {
-        System.out.println("Email a " + destinatario + ": " + mensaje);
+        IO.println("Email a " + direccion + ": " + mensaje);
     }
 }
 
-public record Sms(String telefono) implements Notificacion {
+record Sms(String telefono) implements Notificacion {
     public void enviar(String mensaje) {
-        System.out.println("SMS a " + telefono + ": " + mensaje);
+        IO.println("SMS a " + telefono + ": " + mensaje);
     }
 }
 
-public record Push(String dispositivo) implements Notificacion {
+record Push(String dispositivo) implements Notificacion {
     public void enviar(String mensaje) {
-        System.out.println("Push a " + dispositivo + ": " + mensaje);
+        IO.println("Push a " + dispositivo + ": " + mensaje);
     }
 }
 
-public enum Canal { EMAIL, SMS, PUSH }
+// 3. Los canales posibles: una lista cerrada
+enum Canal { EMAIL, SMS, PUSH }
 
-public final class NotificacionFactory {
-
-    private NotificacionFactory() { }
-
-    // Método fábrica: el cliente solo conoce Notificacion
-    public static Notificacion crear(Canal canal, String destino) {
-        return switch (canal) {          // switch exhaustivo: sin 'default'
+// 4. La fábrica: el ÚNICO sitio donde se decide qué clase se crea
+class FabricaNotificaciones {
+    static Notificacion crear(Canal canal, String destino) {
+        return switch (canal) {
             case EMAIL -> new Email(destino);
             case SMS   -> new Sms(destino);
             case PUSH  -> new Push(destino);
@@ -150,207 +278,556 @@ public final class NotificacionFactory {
     }
 }
 
-// Uso
-Notificacion n = NotificacionFactory.crear(Canal.SMS, "600123456");
-n.enviar("Tu pedido ha salido");
+void main() {
+    Notificacion aviso1 = FabricaNotificaciones.crear(Canal.SMS, "600123456");
+    Notificacion aviso2 = FabricaNotificaciones.crear(Canal.EMAIL, "ana@ejemplo.es");
+
+    aviso1.enviar("Tu pedido ha salido");
+    aviso2.enviar("Gracias por tu compra");
+}
 ```
 
-Si añades un nuevo valor a `Canal` y olvidas el `case`, **el código no compila**. Es una gran ventaja frente al `default` clásico.
+Salida:
 
-### Forma clásica (GoF)
+```text
+SMS a 600123456: Tu pedido ha salido
+Email a ana@ejemplo.es: Gracias por tu compra
+```
 
-En la versión original, una clase abstracta declara el método fábrica y las subclases deciden qué crean:
+### Qué ha pasado
+
+- El código de `main` **no hace ningún `new`** de `Email` o `Sms`. Solo pide un aviso a la fábrica y trabaja con la interfaz `Notificacion`.
+- Si mañana se añade WhatsApp, solo cambian dos sitios: el `enum` y la fábrica. El resto del programa no se entera.
+- **Ventaja extra del `switch` sobre un `enum`:** si añades `WHATSAPP` al `enum` y olvidas añadir su `case`, **el programa no compila**. El compilador te avisa del olvido antes de ejecutar nada.
+
+### Dónde lo verás en Java
+
+El propio Java está lleno de métodos fábrica. Fíjate en que se llaman con el nombre de la clase y no con `new`:
 
 ```java
-abstract class Aplicacion {
-    protected abstract Documento crearDocumento(); // método fábrica
-
-    public void nuevoDocumento() {
-        Documento d = crearDocumento();
-        d.abrir();
-    }
-}
-
-class AplicacionTexto extends Aplicacion {
-    protected Documento crearDocumento() { return new DocumentoTexto(); }
-}
+List<String> nombres = List.of("Ana", "Luis");
+LocalDate fecha      = LocalDate.of(2026, 11, 9);
+Path ruta            = Path.of("datos", "clientes.txt");
 ```
 
-### Fábricas estáticas en el JDK
-El propio JDK usa mucho este patrón: `List.of(...)`, `Optional.of(...)`, `Path.of(...)`, `LocalDate.of(...)`, `Executors.newVirtualThreadPerTaskExecutor()`.
+`List.of` decide por ti qué clase de lista crear; tú solo sabes que es una `List`.
+
+### La variante clásica
+
+En el libro original, el método fábrica no es `static`: se declara `abstract` en una clase padre y cada clase hija decide qué objeto crea. La idea es la misma (separar *pedir* un objeto de *fabricarlo*), así que no te preocupes si la ves escrita de otra manera.
+
+### Cuándo usarlo
+
+- Cuando hay que elegir entre **varias clases** según un dato (un tipo, una opción del usuario, un fichero de configuración).
+- Cuando quieres que el resto del código dependa de una **interfaz** y no de clases concretas.
+
+### Cuándo **no** usarlo
+
+- Si solo existe una clase y no hay nada que elegir, un `new` normal es más claro.
 
 ---
 
-## 3. Abstract Factory (Fábrica Abstracta)
+## 7. Abstract Factory (fábrica abstracta)
 
-### Intención
-Crear **familias de objetos relacionados** sin especificar sus clases concretas, garantizando que los objetos de una familia sean compatibles entre sí.
+### En una frase
 
-### Ejemplo: componentes de interfaz para distintos temas
+Una fábrica que crea **familias de objetos que combinan entre sí**, para que nunca mezcles piezas de familias distintas.
+
+### Analogía
+
+En una tienda de muebles eliges un **estilo**: nórdico o clásico. Si eliges nórdico, la mesa, las sillas y la estantería son todas nórdicas. No te llevarías una mesa nórdica con sillas clásicas, porque no combinan.
+
+### El problema
+
+Una aplicación tiene **modo claro** y **modo oscuro**. Cada pantalla usa botones y casillas de verificación. Si cada pantalla decide por su cuenta qué botón y qué casilla crear, es fácil acabar con un botón oscuro junto a una casilla clara.
+
+### La solución paso a paso
+
+1. Define una interfaz para cada tipo de pieza: `Boton` y `Casilla`.
+2. Define una **interfaz de fábrica** con un método para crear cada pieza: `crearBoton()` y `crearCasilla()`.
+3. Crea **una fábrica por familia**: `FabricaClara` y `FabricaOscura`. Cada una crea solo piezas de su estilo.
+4. Las pantallas reciben **una fábrica** y le piden las piezas. Así, todas las piezas de una pantalla son siempre de la misma familia.
+
+### Programa completo
 
 ```java
-// Productos
-public interface Boton { void pintar(); }
-public interface Casilla { void pintar(); }
+// Fichero: AbstractFactory.java
 
-// Fábrica abstracta
-public interface FabricaUI {
+// 1. Las piezas
+interface Boton   { void pintar(); }
+interface Casilla { void pintar(); }
+
+record BotonClaro()    implements Boton   { public void pintar() { IO.println("[ Botón claro ]"); } }
+record BotonOscuro()   implements Boton   { public void pintar() { IO.println("[ Botón oscuro ]"); } }
+record CasillaClara()  implements Casilla { public void pintar() { IO.println("[x] Casilla clara"); } }
+record CasillaOscura() implements Casilla { public void pintar() { IO.println("[x] Casilla oscura"); } }
+
+// 2. La fábrica abstracta: qué piezas se pueden pedir
+interface FabricaInterfaz {
     Boton crearBoton();
     Casilla crearCasilla();
 }
 
-// Familia "clara"
-public final class FabricaClara implements FabricaUI {
-    public Boton crearBoton()     { return () -> System.out.println("Botón claro"); }
-    public Casilla crearCasilla() { return () -> System.out.println("Casilla clara"); }
+// 3. Una fábrica por familia
+class FabricaClara implements FabricaInterfaz {
+    public Boton crearBoton()     { return new BotonClaro(); }
+    public Casilla crearCasilla() { return new CasillaClara(); }
 }
 
-// Familia "oscura"
-public final class FabricaOscura implements FabricaUI {
-    public Boton crearBoton()     { return () -> System.out.println("Botón oscuro"); }
-    public Casilla crearCasilla() { return () -> System.out.println("Casilla oscura"); }
+class FabricaOscura implements FabricaInterfaz {
+    public Boton crearBoton()     { return new BotonOscuro(); }
+    public Casilla crearCasilla() { return new CasillaOscura(); }
 }
 
-// Cliente: solo depende de la abstracción
-public class Formulario {
+// 4. Una pantalla: solo conoce la fábrica abstracta
+class Formulario {
     private final Boton boton;
     private final Casilla casilla;
 
-    public Formulario(FabricaUI fabrica) {
+    Formulario(FabricaInterfaz fabrica) {
         this.boton = fabrica.crearBoton();
         this.casilla = fabrica.crearCasilla();
     }
 
-    public void mostrar() {
-        boton.pintar();
+    void mostrar() {
         casilla.pintar();
+        boton.pintar();
     }
 }
 
-// Uso
-FabricaUI fabrica = modoOscuro ? new FabricaOscura() : new FabricaClara();
-new Formulario(fabrica).mostrar();
+void main() {
+    boolean modoOscuro = true;   // podría venir de las preferencias del usuario
+
+    FabricaInterfaz fabrica = modoOscuro ? new FabricaOscura() : new FabricaClara();
+
+    new Formulario(fabrica).mostrar();
+}
 ```
 
-> Como `Boton` y `Casilla` tienen un único método abstracto, son **interfaces funcionales** y se pueden implementar con *lambdas*.
+Salida:
 
-### Factory Method vs. Abstract Factory
+```text
+[x] Casilla oscura
+[ Botón oscuro ]
+```
+
+### Qué ha pasado
+
+- La decisión «claro u oscuro» se toma **una sola vez**, al elegir la fábrica.
+- `Formulario` no sabe qué familia está usando. Solo sabe pedir «un botón» y «una casilla», y recibe siempre piezas que combinan.
+- Para añadir un tercer tema (por ejemplo, «alto contraste») basta con crear sus piezas y su fábrica. `Formulario` no cambia.
+
+### Factory Method frente a Abstract Factory
 
 | | Factory Method | Abstract Factory |
 |---|---|---|
-| Crea | **Un** producto | Una **familia** de productos |
-| Mecanismo | Un método (a menudo estático o sobrescrito) | Un objeto fábrica con varios métodos |
-| Ejemplo JDK | `List.of()` | `DocumentBuilderFactory`, JDBC (`Connection` crea `Statement`, etc.) |
+| ¿Qué crea? | **Un** objeto | Una **familia** de objetos relacionados |
+| ¿Cómo? | Con un método | Con un objeto fábrica que tiene varios métodos |
+| Ejemplo | «Dame una notificación por SMS» | «Dame todas las piezas del tema oscuro» |
+
+### Cuándo usarlo
+
+- Cuando tienes **varias familias** de objetos y las piezas de una familia deben ir siempre juntas: temas visuales, bases de datos distintas, versiones de un producto para distintos países…
+
+### Cuándo **no** usarlo
+
+- Si solo hay una familia, o las piezas no dependen unas de otras, es demasiada estructura. Un Factory Method o un `new` bastan.
 
 ---
 
-## 4. Builder (Constructor)
+## 8. Builder (constructor paso a paso)
 
-### Intención
-Construir objetos complejos **paso a paso**, separando la construcción de la representación. Evita los "constructores telescópicos" con muchos parámetros.
+### En una frase
 
-### Ejemplo con `record`
+Permite crear un objeto con muchos datos **paso a paso**, dando nombre a cada dato, en lugar de pasarlos todos de golpe a un constructor.
+
+### Analogía
+
+En una tienda de bocadillos a la carta vas indicando: «pan integral», «con pollo», «sin cebolla», «con salsa». Al final dices «ya está» y te dan el bocadillo. Cada paso tiene nombre, y te saltas los que no quieres.
+
+### El problema
+
+Un pedido tiene cliente, productos, dirección, si es urgente y unas notas. Con un constructor normal se escribe así:
 
 ```java
-public record Pedido(String cliente, List<String> productos,
-                     String direccion, boolean urgente, String notas) {
+new Pedido("Ana", productos, "C/ Mayor 1", true, "");
+```
 
-    // Constructor compacto: validación y copia defensiva
-    public Pedido {
-        Objects.requireNonNull(cliente, "cliente obligatorio");
-        productos = List.copyOf(productos);
-    }
+¿Qué significa ese `true`? ¿Y la cadena vacía? Hay que ir a mirar el constructor para saberlo. Además, si el orden de dos `String` se cambia por error, el programa compila igual y guarda la dirección en las notas. Este problema se llama **constructor telescópico** (un constructor con demasiados parámetros).
 
-    public static Builder builder(String cliente) {
+### La solución paso a paso
+
+1. El objeto final (`Pedido`) es un `record`: guarda los datos y no cambia.
+2. Se crea una clase auxiliar, **`Builder`**, que va acumulando los datos.
+3. `Builder` tiene un método por dato (`producto(...)`, `direccion(...)`, `urgente()`…). Cada método **devuelve el propio `Builder`**, para poder encadenar las llamadas.
+4. Un método final, **`build()`**, comprueba que todo sea correcto y crea el `Pedido`.
+5. Los datos opcionales tienen un **valor por defecto**, así que no hace falta indicarlos.
+
+### Programa completo
+
+```java
+// Fichero: BuilderDemo.java
+import java.util.ArrayList;
+import java.util.List;
+
+record Pedido(String cliente, List<String> productos, String direccion,
+              boolean urgente, String notas) {
+
+    // Punto de entrada: Pedido.builder("Ana")
+    static Builder builder(String cliente) {
         return new Builder(cliente);
     }
 
-    public static final class Builder {
+    static class Builder {
         private final String cliente;
         private final List<String> productos = new ArrayList<>();
-        private String direccion = "Recogida en tienda";
-        private boolean urgente;
-        private String notas = "";
+        private String direccion = "Recogida en tienda";   // valor por defecto
+        private boolean urgente = false;                    // valor por defecto
+        private String notas = "";                          // valor por defecto
 
-        private Builder(String cliente) { this.cliente = cliente; }
+        Builder(String cliente) {
+            this.cliente = cliente;
+        }
 
-        public Builder producto(String p)    { productos.add(p); return this; }
-        public Builder direccion(String d)   { this.direccion = d; return this; }
-        public Builder urgente()             { this.urgente = true; return this; }
-        public Builder notas(String n)       { this.notas = n; return this; }
+        Builder producto(String producto) {
+            productos.add(producto);
+            return this;   // devolver 'this' permite encadenar llamadas
+        }
 
-        public Pedido build() {
-            if (productos.isEmpty()) throw new IllegalStateException("Pedido vacío");
-            return new Pedido(cliente, productos, direccion, urgente, notas);
+        Builder direccion(String direccion) {
+            this.direccion = direccion;
+            return this;
+        }
+
+        Builder urgente() {
+            this.urgente = true;
+            return this;
+        }
+
+        Builder notas(String notas) {
+            this.notas = notas;
+            return this;
+        }
+
+        Pedido build() {
+            if (productos.isEmpty()) {
+                throw new IllegalStateException("Un pedido necesita al menos un producto");
+            }
+            return new Pedido(cliente, List.copyOf(productos), direccion, urgente, notas);
         }
     }
 }
 
-// Uso: legible y sin ambigüedades
-Pedido p = Pedido.builder("Ana")
-        .producto("Teclado")
-        .producto("Ratón")
-        .direccion("C/ Mayor 1, Madrid")
-        .urgente()
-        .build();
-```
+void main() {
+    Pedido completo = Pedido.builder("Ana")
+            .producto("Teclado")
+            .producto("Ratón")
+            .direccion("C/ Mayor 1, Madrid")
+            .urgente()
+            .build();
 
-### ¿Cuándo NO hace falta?
-Si el objeto tiene pocos campos, un `record` con su constructor canónico suele bastar. Para crear variantes de un record se puede añadir un método *wither*:
+    Pedido sencillo = Pedido.builder("Luis")
+            .producto("Monitor")
+            .build();   // usa los valores por defecto
 
-```java
-public record Punto(int x, int y) {
-    public Punto conX(int nuevoX) { return new Punto(nuevoX, y); }
+    IO.println(completo);
+    IO.println(sencillo);
+
+    try {
+        Pedido.builder("Eva").build();   // sin productos
+    } catch (IllegalStateException e) {
+        IO.println("Error: " + e.getMessage());
+    }
 }
 ```
 
-Ejemplos en el JDK: `StringBuilder`, `HttpClient.newBuilder()`, `HttpRequest.newBuilder()`, `Thread.ofVirtual()`.
+Salida:
+
+```text
+Pedido[cliente=Ana, productos=[Teclado, Ratón], direccion=C/ Mayor 1, Madrid, urgente=true, notas=]
+Pedido[cliente=Luis, productos=[Monitor], direccion=Recogida en tienda, urgente=false, notas=]
+Error: Un pedido necesita al menos un producto
+```
+
+### Qué ha pasado
+
+- Al leer `.urgente()` o `.direccion("...")` se entiende cada dato **sin mirar el constructor**.
+- El pedido de Luis no indica dirección ni urgencia, y recibe los valores por defecto.
+- `build()` es el lugar perfecto para **validar**: es imposible crear un pedido vacío.
+- `List.copyOf(productos)` guarda una copia que no se puede modificar, para que nadie cambie los productos del pedido después de crearlo.
+
+### Dónde lo verás en Java
+
+- `StringBuilder`: construye un texto poco a poco con `append(...)` y lo termina con `toString()`.
+- `HttpClient.newBuilder()` y `HttpRequest.newBuilder()`: configuran conexiones web paso a paso y terminan con `build()`.
+
+```java
+String saludo = new StringBuilder()
+        .append("Hola, ")
+        .append("Ana")
+        .append("!")
+        .toString();   // "Hola, Ana!"
+```
+
+### Cuándo usarlo
+
+- Objetos con **muchos datos**, sobre todo si varios son **opcionales** o del mismo tipo (y por tanto fáciles de confundir).
+- Cuando quieres **validar** el objeto antes de crearlo.
+
+### Cuándo **no** usarlo
+
+- Si el objeto tiene dos o tres datos obligatorios, un `record` con su constructor normal es suficiente: `new Punto(3, 4)` se entiende perfectamente.
 
 ---
 
-## 5. Prototype (Prototipo)
+## 9. Prototype (prototipo)
 
-### Intención
-Crear nuevos objetos **copiando** uno existente (el prototipo), en lugar de construirlos desde cero.
+### En una frase
 
-### Recomendación en Java moderno
-Evita `Cloneable` y `Object.clone()`: su diseño es frágil (copia superficial, excepciones comprobadas, no funciona bien con campos `final`). Usa un **constructor de copia** o un método de copia explícito:
+Crea objetos nuevos **copiando uno que ya existe** (el prototipo) y cambiando solo lo necesario.
+
+### Analogía
+
+Cuando tienes que enviar el mismo formulario a varias personas, rellenas **uno** con los datos comunes, haces **fotocopias** y en cada copia solo cambias el nombre. Es más rápido que rellenar cada formulario desde el principio.
+
+### El problema
+
+Una aplicación tiene una plantilla de informe con un título y una lista de secciones. Para cada informe nuevo quieres partir de la plantilla y añadirle secciones. Si «copias» así:
 
 ```java
-public final class Plantilla {
+Plantilla copia = original;   // ¡esto NO copia nada!
+```
+
+`copia` y `original` son **dos nombres para el mismo objeto**. Lo que añadas a la copia aparecerá también en el original.
+
+### La solución: un constructor de copia
+
+Se añade a la clase un constructor que recibe otro objeto del mismo tipo y copia sus datos. Hay que tener cuidado con los datos que son **objetos modificables**, como las listas: hay que crear **una lista nueva** con los mismos elementos. A esto se le llama **copia profunda**.
+
+### Programa completo
+
+```java
+// Fichero: Prototype.java
+import java.util.ArrayList;
+import java.util.List;
+
+class Plantilla {
     private final String titulo;
     private final List<String> secciones;
 
-    public Plantilla(String titulo, List<String> secciones) {
+    Plantilla(String titulo, List<String> secciones) {
         this.titulo = titulo;
         this.secciones = new ArrayList<>(secciones);
     }
 
-    // Constructor de copia (copia profunda de la lista)
-    public Plantilla(Plantilla otra) {
+    // Constructor de copia: crea una lista NUEVA con los mismos elementos
+    Plantilla(Plantilla otra) {
         this(otra.titulo, otra.secciones);
     }
 
-    public Plantilla copiar() { return new Plantilla(this); }
+    Plantilla copiar() {
+        return new Plantilla(this);
+    }
+
+    void anadirSeccion(String seccion) {
+        secciones.add(seccion);
+    }
+
+    @Override
+    public String toString() {
+        return titulo + " " + secciones;
+    }
+}
+
+void main() {
+    Plantilla original = new Plantilla("Informe mensual", List.of("Resumen", "Ventas"));
+
+    // ❌ Esto no es una copia: las dos variables apuntan al mismo objeto
+    Plantilla mismaCosa = original;
+    mismaCosa.anadirSeccion("Gastos");
+    IO.println("Original tras el error: " + original);
+
+    // ✅ Copia de verdad
+    Plantilla copia = original.copiar();
+    copia.anadirSeccion("Previsiones");
+    IO.println("Original: " + original);
+    IO.println("Copia:    " + copia);
 }
 ```
 
-> Con objetos **inmutables** (como los `record` con campos inmutables) el patrón casi desaparece: no hace falta copiar algo que no puede cambiar; basta con compartirlo.
+Salida:
+
+```text
+Original tras el error: Informe mensual [Resumen, Ventas, Gastos]
+Original: Informe mensual [Resumen, Ventas, Gastos]
+Copia:    Informe mensual [Resumen, Ventas, Gastos, Previsiones]
+```
+
+### Qué ha pasado
+
+- `mismaCosa = original` **no crea ningún objeto**: solo da otro nombre al mismo. Por eso «Gastos» aparece en el original.
+- `original.copiar()` crea un objeto nuevo **con su propia lista**. Lo que se añade a la copia («Previsiones») no afecta al original.
+
+### Copia superficial y copia profunda
+
+| Tipo de copia | Qué hace | Riesgo |
+|---|---|---|
+| **Superficial** | Copia el objeto, pero sus listas y objetos internos se **comparten** con el original. | Cambiar la lista de la copia cambia también la del original. |
+| **Profunda** | Copia el objeto **y** crea copias nuevas de sus listas y objetos internos. | Ninguno de ese tipo; cada objeto es independiente. |
+
+En el ejemplo, la línea `this.secciones = new ArrayList<>(secciones);` es la que convierte la copia en profunda.
+
+### ¿Y el método `clone()`?
+
+Java tiene un método `clone()` heredado de la clase `Object`, pensado para esto. **Evítalo**: hace copias superficiales por defecto, obliga a capturar excepciones y tiene reglas poco intuitivas. Un constructor de copia (o un método `copiar()`) es más claro.
+
+### Un atajo: objetos que no cambian
+
+Si un objeto **no se puede modificar** (por ejemplo, un `record` cuyos datos son textos y números), no hace falta copiarlo: se puede compartir sin peligro, porque nadie puede cambiarlo. Para «modificar» un dato se crea un objeto nuevo:
+
+```java
+record Punto(int x, int y) {
+    Punto conX(int nuevoX) {
+        return new Punto(nuevoX, y);   // objeto nuevo; el original no cambia
+    }
+}
+```
+
+### Cuándo usarlo
+
+- Cuando crear un objeto desde cero es **costoso o largo**, y es más cómodo partir de uno ya preparado.
+- Cuando tienes **plantillas** o configuraciones base que se repiten con pequeñas diferencias.
 
 ---
 
-## Resumen
+## 10. Resumen y cómo elegir
 
-| Patrón | Problema que resuelve | Herramienta Java 21+ clave |
+| Patrón | Problema que resuelve | Idea clave | En Java |
+|---|---|---|---|
+| **Singleton** | Debe existir un único objeto | Un solo objeto compartido | `enum` con un único valor |
+| **Factory Method** | Elegir qué clase crear sin llenar el código de `if` | Un método decide qué objeto crear | Método `static` con `switch`; `List.of`, `LocalDate.of` |
+| **Abstract Factory** | Crear piezas que deben combinar entre sí | Una fábrica por familia | Interfaz de fábrica con varios métodos |
+| **Builder** | Constructores con demasiados parámetros | Construir paso a paso y terminar con `build()` | `record` + clase `Builder`; `StringBuilder` |
+| **Prototype** | Crear objetos parecidos a uno existente | Copiar y modificar | Constructor de copia; objetos que no cambian |
+
+### Preguntas para elegir
+
+1. **¿Solo puede haber uno?** → Singleton (y piensa antes si basta con crear uno y pasarlo).
+2. **¿Tengo que elegir entre varias clases según un dato?** → Factory Method.
+3. **¿Tengo varias familias de piezas que deben ir juntas?** → Abstract Factory.
+4. **¿El constructor tiene tantos parámetros que no se entiende?** → Builder.
+5. **¿Quiero un objeto casi igual a otro que ya tengo?** → Prototype.
+6. **¿Nada de lo anterior?** → Usa `new`. No hace falta ningún patrón.
+
+---
+
+## 11. Errores frecuentes
+
+| Error | Por qué es un problema | Qué hacer |
 |---|---|---|
-| Singleton | Una sola instancia global | `enum` |
-| Factory Method | Ocultar qué clase concreta se crea | `sealed` + `switch` exhaustivo |
-| Abstract Factory | Crear familias de objetos compatibles | Interfaces + *lambdas* |
-| Builder | Construir objetos con muchos parámetros | `record` + builder anidado |
-| Prototype | Crear copias de objetos existentes | Constructor de copia / inmutabilidad |
+| Usar Singleton para todo | Se convierte en una variable global: cualquiera lo cambia y cuesta encontrar errores. | Crear el objeto una vez y pasarlo por el constructor a quien lo necesite. |
+| Usar textos (`"EMAIL"`) para elegir en una fábrica | Un error de escritura (`"Emial"`) no se detecta hasta ejecutar. | Usar un `enum`: el compilador detecta los errores. |
+| Poner `default` en el `switch` de la fábrica | Si se añade un valor nuevo al `enum`, el compilador ya no avisa de que falta su `case`. | Cubrir todos los valores del `enum` sin `default`. |
+| Crear un Builder para un objeto de dos datos | Mucho código para nada. | Usar un `record` con su constructor. |
+| Pensar que `b = a` copia un objeto | Solo crea otro nombre para el mismo objeto. | Usar un constructor de copia. |
+| Copiar una lista con `this.lista = otra.lista` | Las dos copias comparten la misma lista (copia superficial). | `this.lista = new ArrayList<>(otra.lista)`. |
+| Aplicar un patrón «por si acaso» | Añade clases y complica el código sin necesidad. | Aplicarlo solo cuando aparece el problema que resuelve. |
 
-### Consejos finales
-1. **No fuerces un patrón**: si un `new` simple funciona y no va a cambiar, úsalo.
-2. **Programa contra interfaces**, no contra implementaciones.
-3. **Prefiere la inmutabilidad** (`record`, `List.of`, `List.copyOf`): simplifica muchos patrones creacionales.
-4. En aplicaciones reales, la **inyección de dependencias** (Spring, Jakarta CDI, etc.) cubre gran parte de lo que antes resolvían Singleton y Factory.
+---
+
+## 12. Ejercicios
+
+**Ejercicio 1 (Factory Method).** Añade un canal `WHATSAPP` al ejemplo de la sección 6. Comprueba primero qué ocurre si lo añades al `enum` pero no a la fábrica.
+
+<details>
+<summary>Solución</summary>
+
+Al añadir `WHATSAPP` al `enum` sin tocar la fábrica, el programa **no compila**: el compilador indica que el `switch` no cubre todos los valores posibles. Para arreglarlo:
+
+```java
+record WhatsApp(String telefono) implements Notificacion {
+    public void enviar(String mensaje) {
+        IO.println("WhatsApp a " + telefono + ": " + mensaje);
+    }
+}
+
+enum Canal { EMAIL, SMS, PUSH, WHATSAPP }
+
+// En la fábrica:
+case WHATSAPP -> new WhatsApp(destino);
+```
+
+</details>
+
+**Ejercicio 2 (Builder).** Crea un `record Ordenador(String procesador, int memoriaGb, int discoGb, boolean tarjetaGrafica)` con un `Builder`. La memoria por defecto es 16 GB y el disco 512 GB. `build()` debe lanzar una excepción si no se ha indicado procesador.
+
+<details>
+<summary>Solución</summary>
+
+```java
+record Ordenador(String procesador, int memoriaGb, int discoGb, boolean tarjetaGrafica) {
+
+    static Builder builder() { return new Builder(); }
+
+    static class Builder {
+        private String procesador;
+        private int memoriaGb = 16;
+        private int discoGb = 512;
+        private boolean tarjetaGrafica = false;
+
+        Builder procesador(String p)  { this.procesador = p; return this; }
+        Builder memoriaGb(int gb)     { this.memoriaGb = gb; return this; }
+        Builder discoGb(int gb)       { this.discoGb = gb; return this; }
+        Builder conTarjetaGrafica()   { this.tarjetaGrafica = true; return this; }
+
+        Ordenador build() {
+            if (procesador == null) {
+                throw new IllegalStateException("Falta el procesador");
+            }
+            return new Ordenador(procesador, memoriaGb, discoGb, tarjetaGrafica);
+        }
+    }
+}
+
+void main() {
+    IO.println(Ordenador.builder().procesador("Ryzen 7").conTarjetaGrafica().build());
+    // Ordenador[procesador=Ryzen 7, memoriaGb=16, discoGb=512, tarjetaGrafica=true]
+}
+```
+
+</details>
+
+**Ejercicio 3 (Prototype).** En el ejemplo de la sección 9, sustituye el constructor de copia por este:
+
+```java
+Plantilla(Plantilla otra) {
+    this.titulo = otra.titulo;
+    this.secciones = otra.secciones;   // ¿copia la lista?
+}
+```
+
+Ejecuta el programa. ¿Qué muestra ahora la línea `Original:` y por qué?
+
+<details>
+<summary>Solución</summary>
+
+Muestra `Original: Informe mensual [Resumen, Ventas, Gastos, Previsiones]`. La copia y el original **comparten la misma lista**, así que «Previsiones» aparece también en el original. Es una copia superficial. La solución es crear siempre una lista nueva: `new ArrayList<>(otra.secciones)`.
+
+</details>
+
+---
+
+## 13. Glosario
+
+| Término | Significado |
+|---|---|
+| **Patrón de diseño** | Solución conocida y con nombre para un problema de diseño que se repite. |
+| **GoF (*Gang of Four*)** | Los cuatro autores del libro *Design Patterns* (1994), que dio nombre a los patrones clásicos. |
+| **Fábrica** | Pieza de código (método u objeto) cuya única tarea es crear otros objetos. |
+| **Familia de objetos** | Grupo de objetos pensados para usarse juntos (por ejemplo, todas las piezas del tema oscuro). |
+| **Constructor telescópico** | Constructor con tantos parámetros que es difícil saber qué es cada uno. |
+| **Encadenar llamadas** | Escribir `objeto.a().b().c()`: es posible cuando cada método devuelve el propio objeto. |
+| **Copia superficial** | Copia que comparte con el original las listas y objetos internos. |
+| **Copia profunda** | Copia que también duplica las listas y objetos internos. |
+| **Variable global** | Dato accesible y modificable desde cualquier parte del programa. |
+| **Compilador** | Programa que traduce tu código a algo que la máquina puede ejecutar, y que detecta muchos errores antes de ejecutarlo. |
