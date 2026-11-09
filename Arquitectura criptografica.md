@@ -1,8 +1,8 @@
-# Arquitectura Criptográfica de Java (JCA) — Guía de referencia (Java 21+)
+# Arquitectura Criptográfica de Java (JCA) — Guía de referencia (Java 25+)
 
 > **Fuente de referencia:** *Java Cryptography Architecture (JCA) Reference Guide* (Oracle).
 > **Destinatario:** programador Java.
-> **Versión objetivo:** Java 21 (LTS) y posteriores.
+> **Versión objetivo:** Java 25 (LTS) y posteriores. Los ejemplos completos se han compilado y ejecutado con OpenJDK 25.
 
 ---
 
@@ -163,7 +163,7 @@ Security.removeProvider("MiProveedor");           // lo elimina
 Notas:
 
 - No es persistente: solo vale para esa ejecución de la JVM.
-- Hoy en día solo es posible si el código es de confianza, ya que el control de permisos mediante *Security Manager* está obsoleto (véase el fichero `01`).
+- Hoy en día solo es posible si el código es de confianza, ya que el control de permisos mediante *Security Manager* está desactivado de forma permanente desde Java 24 (véase la [Guía de seguridad](<Guia de seguridad.md>)).
 - Para cambiar la preferencia de un proveedor, hay que quitarlo y volver a insertarlo.
 
 ### 4.4. Consultar los proveedores instalados
@@ -225,11 +225,12 @@ Propiedades relevantes:
 | `AlgorithmParameterGenerator` | Genera parámetros para un algoritmo |
 | `CertificateFactory` | Crea certificados y CRL |
 | `CertPathBuilder` / `CertPathValidator` / `CertStore` | Construcción, validación y búsqueda de cadenas de certificados |
-| `KEM` | Mecanismo de encapsulación de claves (nuevo en Java 21) |
+| `KEM` | Mecanismo de encapsulación de claves (desde Java 21) |
+| `KDF` | Función de derivación de claves, como HKDF (desde Java 25) |
 
 ### 6.1. Generador frente a factoría
 
-Es una confusión muy común entre novatos:
+Es una confusión muy común:
 
 - **Generador** (*generator*): crea objetos **nuevos** con contenido aleatorio. Ej.: `KeyGenerator`, `KeyPairGenerator`.
 - **Factoría** (*factory*): **convierte** datos que ya existen en otro tipo de objeto. Ej.: `KeyFactory`, `CertificateFactory`.
@@ -599,9 +600,56 @@ byte[] secretoCompartido = ka.generateSecret();
 // Pasa este secreto por una función de derivación (HKDF) antes de usarlo como clave.
 ```
 
-### 12.8. Novedad: API `KEM` (Java 21)
+### 12.8. API `KEM` (Java 21) y ML-KEM post-cuántico (Java 24)
 
-La clase `javax.crypto.KEM` permite el **encapsulado de claves** (*Key Encapsulation Mechanism*), técnica de las que usarán los algoritmos post-cuánticos. Un lado «encapsula» un secreto con la clave pública del otro, y este lo «desencapsula» con su clave privada.
+La clase `javax.crypto.KEM` (desde Java 21) permite el **encapsulado de claves** (*Key Encapsulation Mechanism*). Un lado «encapsula» un secreto con la clave pública del otro, y este lo «desencapsula» con su clave privada. Desde Java 24 (JEP 496) el JDK incluye **ML-KEM**, un algoritmo resistente a ordenadores cuánticos estandarizado por el NIST (FIPS 203), así que en Java 25 se puede usar directamente:
+
+```java
+import java.security.*;
+import java.util.Arrays;
+import javax.crypto.KEM;
+import javax.crypto.SecretKey;
+
+public class EjemploKem {
+    public static void main(String[] args) throws Exception {
+        // Receptor: genera su par de claves ML-KEM (post-cuántico, Java 24+)
+        KeyPair receptor = KeyPairGenerator.getInstance("ML-KEM-768").generateKeyPair();
+
+        // Emisor: encapsula un secreto con la clave pública del receptor
+        KEM kem = KEM.getInstance("ML-KEM");
+        KEM.Encapsulator enc = kem.newEncapsulator(receptor.getPublic());
+        KEM.Encapsulated encapsulado = enc.encapsulate();
+        SecretKey secretoEmisor = encapsulado.key();
+        byte[] mensajeAlReceptor = encapsulado.encapsulation();   // se envía por la red
+
+        // Receptor: recupera el mismo secreto con su clave privada
+        KEM.Decapsulator dec = kem.newDecapsulator(receptor.getPrivate());
+        SecretKey secretoReceptor = dec.decapsulate(mensajeAlReceptor);
+
+        System.out.println("¿Mismo secreto? "
+                + Arrays.equals(secretoEmisor.getEncoded(), secretoReceptor.getEncoded()));
+    }
+}
+```
+
+Salida: `¿Mismo secreto? true`. En la práctica, ese secreto se pasa por una función de derivación (sección 12.9) para obtener las claves de cifrado.
+
+> Para **firmas** post-cuánticas, Java 24 añadió **ML-DSA** (JEP 497, FIPS 204): `KeyPairGenerator.getInstance("ML-DSA-65")` y `Signature.getInstance("ML-DSA")`, con el mismo flujo que el ejemplo de la sección 9.2.
+
+### 12.9. API `KDF`: derivación de claves (Java 25)
+
+Java 25 hace definitiva la clase `javax.crypto.KDF` (JEP 510). Sirve para derivar una o varias claves a partir de un secreto inicial (por ejemplo, el de un `KeyAgreement` o un `KEM`). El JDK incluye **HKDF** (`HKDF-SHA256`, `HKDF-SHA384`, `HKDF-SHA512`):
+
+```java
+KDF hkdf = KDF.getInstance("HKDF-SHA256");
+AlgorithmParameterSpec params = HKDFParameterSpec.ofExtract()
+        .addIKM(secretoCompartido)        // material de clave inicial
+        .addSalt(sal)
+        .thenExpand("cifrado-v1".getBytes(StandardCharsets.UTF_8), 32);   // contexto y longitud
+SecretKey claveAes = hkdf.deriveKey("AES", params);   // clave AES de 256 bits
+```
+
+> HKDF **no** es adecuado para contraseñas (es rápido a propósito). Para contraseñas sigue usando PBKDF2 u otro algoritmo lento con sal (sección 8).
 
 ---
 
