@@ -1,6 +1,7 @@
 # Resumen: Colecciones en Java (Java Collections Framework)
 
-> Basado en la documentación oficial de Oracle, W3Schools y fuentes actualizadas sobre las novedades introducidas hasta Java 21+.
+> Basado en la documentación oficial de Oracle, W3Schools y fuentes actualizadas.
+> **Versión de referencia: Java 25 (LTS) o superior.** Se indica la versión en la que apareció cada novedad posterior a Java 8.
 
 ## 1. ¿Qué es una colección?
 
@@ -20,7 +21,7 @@ Todo esto forma parte del paquete `java.util`, y sirve para almacenar, buscar, o
 
 Reduce el esfuerzo de programación, aumenta la velocidad y calidad del programa gracias a implementaciones de alto rendimiento, permite interoperabilidad entre APIs no relacionadas, reduce el esfuerzo de aprender nuevas APIs y de diseñarlas, y fomenta la reutilización de software.
 
-> ⚠️ **Nota importante**: el tutorial oficial de Oracle (`docs.oracle.com/javase/tutorial/...`) está escrito para **JDK 8** y no refleja las mejoras introducidas en versiones posteriores. Oracle recomienda consultar [dev.java](https://dev.java/learn/) o las notas de cada JDK para contenido actualizado — por eso este resumen añade lo introducido en Java 9–21+.
+> ⚠️ **Nota importante**: el tutorial oficial de Oracle (`docs.oracle.com/javase/tutorial/...`) está escrito para **JDK 8** y no refleja las mejoras introducidas en versiones posteriores. Oracle recomienda consultar [dev.java](https://dev.java/learn/) o las notas de cada JDK para contenido actualizado — por eso este resumen añade lo introducido entre Java 9 y Java 25.
 
 ---
 
@@ -290,7 +291,7 @@ Map<String, Integer> mapa = Map.of("a", 1, "b", 2);
 
 ---
 
-## 9. Novedad clave: Sequenced Collections (Java 21 — JEP 431)
+## 9. Sequenced Collections (desde Java 21 — JEP 431)
 
 Desde **Java 21**, el framework incorpora tres nuevas interfaces que resuelven una inconsistencia histórica: antes no existía una forma uniforme de acceder al primer/último elemento ni de iterar en orden inverso en toda la jerarquía. Se introducen nuevas interfaces para representar colecciones con un orden de encuentro (*encounter order*) bien definido: cada colección tiene un primer elemento, un segundo, y así sucesivamente hasta el último, además de operaciones uniformes para acceder a sus extremos y procesar los elementos en orden inverso.
 
@@ -407,6 +408,13 @@ Las colecciones modernas siempre se usan con **genéricos** (`List<String>`, no 
 var mapa = new HashMap<String, List<Integer>>(); // el tipo se infiere
 ```
 
+Si conoces de antemano cuántos elementos vas a guardar, desde Java 19 existen fábricas que calculan la capacidad inicial por ti (el constructor `new HashMap<>(n)` recibe la capacidad de la tabla, no el número de elementos):
+
+```java
+Map<String, Integer> stock = HashMap.newHashMap(100);       // preparado para 100 entradas sin redimensionar
+Set<String> etiquetas     = HashSet.newHashSet(100);
+```
+
 ---
 
 ## 14. Colecciones y el Stream API (Java 8+)
@@ -414,15 +422,20 @@ var mapa = new HashMap<String, List<Integer>>(); // el tipo se infiere
 Aunque no es parte del *Collections Framework* en sí, es fundamental para trabajar con colecciones hoy en día:
 
 ```java
+// Forma recomendada (desde Java 16): toList() devuelve una lista no modificable
 List<String> mayores = nombres.stream()
         .filter(n -> n.length() > 3)
         .map(String::toUpperCase)
         .sorted()
-        .collect(Collectors.toList());
+        .toList();
 
-// Desde Java 16: toList() como atajo (inmutable)
-List<String> resultado = nombres.stream().map(String::toUpperCase).toList();
+// Solo si necesitas una lista modificable concreta
+List<String> modificable = nombres.stream()
+        .map(String::toUpperCase)
+        .collect(Collectors.toCollection(ArrayList::new));
 ```
+
+> `Collectors.toList()` sigue existiendo, pero no garantiza si la lista resultante es modificable; en código nuevo usa `toList()` o `Collectors.toCollection(...)` para dejar clara la intención. Desde Java 24 también existen los *gatherers* (`Stream.gather`) para operaciones intermedias a medida, como agrupar en ventanas: ver [Lambdas y Streams](<Lambdas y Streams.md>).
 
 ---
 
@@ -489,21 +502,23 @@ Usada en escenarios productor-consumidor: `take()` y `put()` bloquean el hilo si
 ```java
 BlockingQueue<String> buffer = new LinkedBlockingQueue<>(10); // capacidad máxima 10
 
-// Hilo productor
-new Thread(() -> {
+// Hilo productor (desde Java 21 puede ser un hilo virtual)
+Thread.ofVirtual().start(() -> {
     try {
         buffer.put("dato"); // espera si el buffer está lleno
     } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
-}).start();
+});
 
 // Hilo consumidor
-new Thread(() -> {
+Thread.ofVirtual().start(() -> {
     try {
         String dato = buffer.take(); // espera si el buffer está vacío
         System.out.println(dato);
     } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
-}).start();
+});
 ```
+
+> Los hilos virtuales son hilos *daemon*: si este código está en un `main`, guarda los `Thread` que devuelve `start(...)` y llama a `join()` para que el programa no termine antes de que acaben.
 
 ---
 
@@ -513,7 +528,7 @@ new Thread(() -> {
 - Usa clases de `Set` cuando necesitas almacenar solo valores únicos.
 - Usa clases de `Map` cuando necesitas almacenar pares de clave y valor, como un nombre y su número de teléfono.
 - Usa `Deque`/`Queue` para pilas, colas o algoritmos tipo BFS/DFS.
-- Desde Java 21, si necesitas primer/último elemento o vista invertida de forma uniforme, apóyate en las interfaces `Sequenced*`.
+- Si necesitas primer/último elemento o vista invertida de forma uniforme, apóyate en las interfaces `Sequenced*`.
 - Para inmutabilidad rápida, usa `List.of()`, `Set.of()`, `Map.of()` (Java 9+).
 - Para concurrencia, usa el paquete `java.util.concurrent` en lugar de sincronizar manualmente.
 
