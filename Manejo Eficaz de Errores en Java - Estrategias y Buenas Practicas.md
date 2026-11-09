@@ -45,6 +45,29 @@ Las excepciones personalizadas ayudan a distinguir tipos de error específicos c
 - **Diagnóstico sistemático:** identificar la primera aparición del problema y buscar patrones comunes (mismo módulo, mismas acciones de usuario, mismos datos de entrada) para llegar a la causa raíz.
 - **Herramientas de análisis de logs:** especialmente útiles en aplicaciones distribuidas o en la nube, donde el volumen de logs es muy grande; permiten buscar, generar alertas y visualizar tendencias.
 
+## Complemento: qué aporta Java moderno (hasta Java 25)
+
+> Esta sección **no forma parte del artículo original**. Recoge herramientas del lenguaje, disponibles en Java 25 (LTS), que ayudan a aplicar las buenas prácticas anteriores.
+
+- **Mensajes de `NullPointerException` útiles (activados por defecto desde Java 15):** el mensaje indica qué expresión era `null`, por ejemplo `Cannot invoke "String.length()" because "nombre" is null`. Facilita mucho el diagnóstico. (Para variables locales, el nombre solo aparece si el código se compila con información de depuración, `javac -g`, como hacen Maven y Gradle por defecto; si no, se muestra algo como `"<local3>"`.)
+- **Excepciones suprimidas en `try-with-resources`:** si el bloque `try` lanza una excepción y, además, falla el `close()` del recurso, la segunda no oculta a la primera: queda guardada y se consulta con `getSuppressed()`. Es una ventaja sobre cerrar recursos a mano en `finally` (que provoca el «ocultamiento» descrito arriba).
+- **`try-with-resources` con variables ya declaradas (Java 9):** `try (lector) { ... }`, si `lector` es *effectively final*.
+- **Variables sin nombre en `catch` (Java 22):** `catch (NumberFormatException _)` deja claro que se ignora la excepción **a propósito**. Úsalo solo cuando ignorarla sea correcto (por ejemplo, devolver un valor por defecto), nunca para ocultar errores.
+- **Resultados como tipos sellados (Java 21):** para errores **esperados** de negocio, una alternativa a las excepciones es devolver un tipo `sealed` (por ejemplo, `sealed interface Resultado permits Exito, Error`) y tratarlo con un `switch` exhaustivo. El compilador obliga a considerar el caso de error.
+
+```java
+sealed interface Resultado permits Exito, Fallo {}
+record Exito(double saldo) implements Resultado {}
+record Fallo(String motivo) implements Resultado {}
+
+String mensaje = switch (cuenta.retirar(100)) {
+    case Exito(var saldo)  -> "Saldo restante: " + saldo;
+    case Fallo(var motivo) -> "No se pudo retirar: " + motivo;
+};
+```
+
+Para más detalle sobre los tipos de excepción y ejemplos actualizados, consulta [Excepciones checked y unchecked](<Excepciones checked y unchecked.md>).
+
 ## Conclusión
 Un manejo eficaz de errores en Java combina el buen uso de los mecanismos de excepciones, las buenas prácticas descritas, las excepciones personalizadas y un logging cuidadoso. Esto mejora la estabilidad y mantenibilidad de las aplicaciones, y ayuda no solo a paliar los síntomas de un error, sino a diagnosticar su causa real.
 
