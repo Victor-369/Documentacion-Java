@@ -1,6 +1,6 @@
-# Test Driven Development (TDD) en Java: guía paso a paso desde cero
+# Test Driven Development (TDD) en Java: guía paso a paso
 
-> Guía pensada para quien está empezando. Solo necesitas saber lo básico de Java (clases, métodos, `if`, bucles `for`). Todo lo demás se explica por el camino.
+> **Conocimientos previos:** lo básico de Java (clases, métodos, `if`, bucles `for`). Todo lo demás se explica por el camino.
 >
 > Inspirada en el artículo [*Test-Driven Development (TDD) in Java: A Comprehensive Guide with Examples*](https://medium.com/@berrachdim/test-driven-development-tdd-in-java-a-comprehensive-guide-with-examples-c66a77afe036), de Berrachdi Mohamed, ampliada con más explicaciones y ejemplos completos.
 
@@ -11,12 +11,12 @@
 1. [¿Qué es TDD?](#1-qué-es-tdd)
 2. [El ciclo Rojo → Verde → Refactor](#2-el-ciclo-rojo--verde--refactor)
 3. [¿Por qué merece la pena?](#3-por-qué-merece-la-pena)
-4. [Preparar el proyecto (Maven + JUnit 5)](#4-preparar-el-proyecto-maven--junit-5)
+4. [Preparar el proyecto (Maven + JUnit 6)](#4-preparar-el-proyecto-maven--junit-6)
 5. [Anatomía de un test](#5-anatomía-de-un-test)
 6. [Ejemplo 1: calcular el factorial, paso a paso](#6-ejemplo-1-calcular-el-factorial-paso-a-paso)
 7. [Ejemplo 2: validador de contraseñas](#7-ejemplo-2-validador-de-contraseñas)
 8. [Buenas prácticas](#8-buenas-prácticas)
-9. [Errores típicos de quien empieza](#9-errores-típicos-de-quien-empieza)
+9. [Errores típicos](#9-errores-típicos)
 10. [Ejercicios para practicar](#10-ejercicios-para-practicar)
 11. [Mini glosario](#11-mini-glosario)
 12. [Conclusión](#12-conclusión)
@@ -81,13 +81,13 @@ Y una advertencia honesta: al principio parece que vas más lento. Es normal. Co
 
 ---
 
-## 4. Preparar el proyecto (Maven + JUnit 5)
+## 4. Preparar el proyecto (Maven + JUnit 6)
 
-Para escribir tests en Java necesitamos un *framework* de pruebas. El más extendido es **JUnit 5** (también llamado *JUnit Jupiter*). Para gestionar el proyecto y sus dependencias usaremos **Maven**.
+Para escribir tests en Java necesitamos un *framework* de pruebas. El más extendido es **JUnit** (en concreto su modelo de programación *JUnit Jupiter*, el de JUnit 5 y JUnit 6). Aquí usaremos **JUnit 6.1.3**. Para gestionar el proyecto y sus dependencias usaremos **Maven**.
 
 ### Requisitos
 
-- **JDK 17 o superior** instalado (`java -version` para comprobarlo).
+- **JDK 25 o superior** instalado (`java -version` para comprobarlo). JUnit 6 funciona desde Java 17, pero esta guía usa Java 25 (LTS) como el resto de la documentación.
 - **Maven** instalado (`mvn -version`) o un IDE como IntelliJ IDEA, Eclipse o VS Code, que ya lo incluyen.
 
 ### Estructura de carpetas
@@ -121,28 +121,27 @@ La regla de oro: **el código real en `src/main`, los tests en `src/test`**, y l
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.release>25</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
-        <!-- JUnit 5: incluye las anotaciones, las aserciones y el motor de ejecución -->
+        <!-- JUnit Jupiter: incluye las anotaciones, las aserciones, los tests parametrizados y el motor de ejecución -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>5.10.2</version>
+            <version>6.1.3</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
 
     <build>
         <plugins>
-            <!-- Necesario para que Maven ejecute los tests de JUnit 5 -->
+            <!-- Necesario para que Maven ejecute los tests de JUnit -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.2.5</version>
+                <version>3.5.5</version>
             </plugin>
         </plugins>
     </build>
@@ -163,7 +162,7 @@ En un IDE también puedes hacer clic derecho sobre la clase de test y elegir *Ru
 
 ## 5. Anatomía de un test
 
-Antes de empezar con el ejemplo, veamos las piezas de un test con JUnit 5:
+Antes de empezar con el ejemplo, veamos las piezas de un test con JUnit:
 
 ```java
 import org.junit.jupiter.api.Test;
@@ -418,7 +417,7 @@ De momento el código está limpio. Seguimos.
 
 ### Iteración 4: probar muchos valores a la vez
 
-Ya tenemos la base. Ahora conviene comprobar más casos: `1`, `2`, `3`, `10`... Escribir un test por cada uno sería repetitivo. JUnit 5 ofrece **tests parametrizados**, que ejecutan el mismo test con distintos datos.
+Ya tenemos la base. Ahora conviene comprobar más casos: `1`, `2`, `3`, `10`... Escribir un test por cada uno sería repetitivo. JUnit ofrece **tests parametrizados**, que ejecutan el mismo test con distintos datos.
 
 Necesitamos importar unas anotaciones más (ya vienen incluidas en la dependencia `junit-jupiter` que pusimos en el `pom.xml`):
 
@@ -728,7 +727,7 @@ Ejecutamos todos los tests: siguen en verde. Gracias a ellos hemos podido reorga
 
 ---
 
-## 9. Errores típicos de quien empieza
+## 9. Errores típicos
 
 | Error | Por qué es un problema | Qué hacer |
 |-------|------------------------|-----------|
@@ -794,7 +793,7 @@ Al principio te parecerá lento y antinatural. Es completamente normal. Practica
 
 ### Para seguir aprendiendo
 
-- Documentación oficial de JUnit 5: <https://junit.org/junit5/docs/current/user-guide/>
+- Documentación oficial de JUnit: <https://docs.junit.org/6.1.3/overview.html> (y, en este repositorio, las guías de [JUnit](<JUnit: Aprende a escribir pruebas paso a paso.md>) y [AssertJ](<AssertJ - Guia para empezar desde cero.md>)).
 - Cuando domines lo básico, investiga **Mockito** (para simular dependencias en los tests) y **AssertJ** (aserciones más expresivas).
 - Libro recomendado: *Test-Driven Development: By Example*, de Kent Beck, quien popularizó esta técnica.
 
