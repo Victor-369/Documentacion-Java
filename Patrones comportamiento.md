@@ -38,6 +38,25 @@ Los patrones clásicos se recogieron en el libro *Design Patterns* (1994), de cu
 | **Estructurales** | **Combinar** clases y objetos para formar estructuras más grandes | Adapter, Composite, Decorator |
 | **De comportamiento** (este documento) | Organizar **cómo se comunican** los objetos y quién hace cada cosa | Strategy, Observer, Command, State, Template Method, Iterator |
 
+### ¿Por qué merece la pena aprenderlos?
+
+- **No reinventas la rueda:** otras personas ya pensaron una buena solución.
+- **Hablas el mismo idioma que tu equipo:** decir «aquí usamos un *Strategy*» se entiende al momento, sin explicar todo el código.
+- **Reconoces el código que lees:** muchas librerías de Java usan estos patrones. Si los conoces, entiendes antes cómo funcionan.
+- **Tu código aguanta mejor los cambios:** cada pieza tiene un papel claro, así que añadir algo nuevo no obliga a reescribir lo que ya funciona.
+
+### Patrones y principios SOLID
+
+**SOLID** son cinco principios para escribir código orientado a objetos fácil de mantener. **No necesitas conocerlos para seguir este documento**, pero si ya los conoces verás que muchos patrones son, en la práctica, una forma concreta de aplicarlos. Los tienes explicados en [Principios SOLID](<Principio SOLID.md>).
+
+| Patrón | Principio que refuerza | Por qué |
+|---|---|---|
+| **Strategy** | Abierto/cerrado (OCP) | Para añadir una forma nueva de hacer algo se crea otra estrategia, sin tocar el código existente ni alargar un `if`. |
+| **Observer** | Inversión de dependencias (DIP) | Quien avisa solo conoce una interfaz, no las clases concretas que reciben el aviso. |
+| **Command** | Responsabilidad única (SRP) | Cada acción vive en su propio objeto, separada de quien la lanza. |
+| **State** | Abierto/cerrado (OCP) y responsabilidad única (SRP) | Cada estado es una clase con su propio comportamiento; desaparecen los `if (estado == ...)` repartidos por el código. |
+| **Template Method** | Abierto/cerrado (OCP) | Los pasos fijos del algoritmo no cambian; las subclases solo rellenan los pasos variables. |
+
 ---
 
 ## 2. Antes de empezar: cómo probar los ejemplos
