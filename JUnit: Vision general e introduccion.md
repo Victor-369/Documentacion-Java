@@ -7,7 +7,7 @@
 > **Cómo está organizado este documento**
 >
 > - **Parte 1** es la traducción fiel de la página oficial.
-> - **Parte 2** es un complemento pensado para quien parte de cero con JUnit: conceptos básicos, puesta en marcha y buenas prácticas. **No forma parte de la documentación oficial**; está basado en el modelo de programación de JUnit Jupiter, y para cualquier detalle conviene consultar siempre la guía oficial enlazada en cada apartado.
+> - **Parte 2** es un complemento práctico: conceptos básicos, puesta en marcha y buenas prácticas. **No forma parte de la documentación oficial**; está basado en el modelo de programación de JUnit Jupiter, y para cualquier detalle conviene consultar siempre la guía oficial enlazada en cada apartado.
 
 ---
 
@@ -19,7 +19,7 @@
   - [Versiones de Java compatibles](#versiones-de-java-compatibles)
   - [Obtener ayuda](#obtener-ayuda)
   - [Primeros pasos](#primeros-pasos)
-- [Parte 2. Complemento para principiantes](#parte-2-complemento-para-principiantes)
+- [Parte 2. Complemento práctico](#parte-2-complemento-práctico)
   - [1. Conceptos previos](#1-conceptos-previos)
   - [2. Cuál de las tres piezas necesito](#2-cuál-de-las-tres-piezas-necesito)
   - [3. Puesta en marcha con Maven](#3-puesta-en-marcha-con-maven)
@@ -33,7 +33,7 @@
   - [11. Desactivar, etiquetar y limitar el tiempo](#11-desactivar-etiquetar-y-limitar-el-tiempo)
   - [12. Ejecutar los tests](#12-ejecutar-los-tests)
   - [13. Buenas prácticas profesionales](#13-buenas-prácticas-profesionales)
-  - [14. Errores frecuentes de principiantes](#14-errores-frecuentes-de-principiantes)
+  - [14. Errores frecuentes](#14-errores-frecuentes)
   - [15. Hoja de ruta para seguir aprendiendo](#15-hoja-de-ruta-para-seguir-aprendiendo)
   - [Glosario](#glosario)
 
@@ -127,9 +127,9 @@ Para ver ejemplos completos y funcionales de proyectos que puedes copiar y con l
 
 ---
 
-# Parte 2. Complemento para principiantes
+# Parte 2. Complemento práctico
 
-> Esta parte **no pertenece a la página oficial**. Es una introducción práctica para quien nunca ha usado JUnit. Todos los ejemplos usan JUnit Jupiter (paquete `org.junit.jupiter.api`) y Java 17 o superior.
+> Esta parte **no pertenece a la página oficial**. Es una introducción práctica al uso de JUnit. Todos los ejemplos usan JUnit Jupiter (paquete `org.junit.jupiter.api`) y Java 17 o superior.
 
 ## 1. Conceptos previos
 
@@ -181,11 +181,13 @@ mi-proyecto/
     └── test/java/...     ← tus tests
 ```
 
+> JUnit 6 necesita **Java 17 o superior**, pero los proyectos de ejemplo de esta guía usan **Java 25 (LTS)**, la versión de referencia de toda la documentación.
+
 Fragmento del `pom.xml`:
 
 ```xml
 <properties>
-    <maven.compiler.release>17</maven.compiler.release>
+    <maven.compiler.release>25</maven.compiler.release>
     <junit.version>6.1.3</junit.version>
 </properties>
 
@@ -204,7 +206,7 @@ Fragmento del `pom.xml`:
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <!-- Usa una versión 3.x reciente del plugin -->
-            <version>3.5.2</version>
+            <version>3.5.5</version>
         </plugin>
     </plugins>
 </build>
@@ -225,6 +227,12 @@ mvn test
 ```kotlin
 plugins {
     java
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)   // compila y prueba con Java 25
+    }
 }
 
 repositories {
@@ -512,7 +520,7 @@ Más detalle en [IDE Support](https://docs.junit.org/6.1.3/running-tests/ide-sup
 12. **No comentes ni ignores tests fallidos** sin motivo: usa `@Disabled` con una explicación y un enlace a la incidencia.
 13. **Un test que nunca ha fallado no se ha demostrado útil.** Al escribir uno nuevo, comprueba que falla cuando el código es incorrecto.
 
-## 14. Errores frecuentes de principiantes
+## 14. Errores frecuentes
 
 | Error | Solución |
 |---|---|
