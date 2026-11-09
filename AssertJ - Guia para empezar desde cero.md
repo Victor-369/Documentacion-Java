@@ -99,7 +99,7 @@ Todo empieza igual: escribes `assertThat(loQueSeaQueEstasProbando).` y el autoco
 
 ## 3. Módulos de AssertJ
 
-AssertJ está dividido en varios módulos. Como principiante, **solo necesitas el módulo Core**.
+AssertJ está dividido en varios módulos. Para empezar, **solo necesitas el módulo Core**.
 
 | Módulo | Para qué sirve |
 | --- | --- |
@@ -116,7 +116,7 @@ AssertJ está dividido en varios módulos. Como principiante, **solo necesitas e
 
 ### Requisitos
 
-- **Java 8 o superior** para AssertJ Core.
+- **Java 8 o superior** para AssertJ Core (requisito mínimo de la librería). Los ejemplos de esta guía usan **Java 25 (LTS)** y **JUnit 6**, como el resto de la documentación.
 - Compatible con **Kotlin 1.9 o superior**.
 - **Android**: no está oficialmente soportado, pero es compatible con API Level 26+ (excepto *soft assertions* y *assumptions*).
 
@@ -569,7 +569,7 @@ Multiple Failures (3 failures)
 | Enfoque | Descripción |
 | --- | --- |
 | **Regla de JUnit 4** | `JUnitSoftAssertions` llama a `assertAll()` al terminar cada test. |
-| **Extensión de JUnit 5** | `SoftAssertionsExtension` inyecta el objeto y llama a `assertAll()` por ti. |
+| **Extensión de JUnit Jupiter (JUnit 5 y 6)** | `SoftAssertionsExtension` inyecta el objeto y llama a `assertAll()` por ti. |
 | **`AutoCloseableSoftAssertions`** | Usable con `try-with-resources`. |
 | **`assertSoftly`** | Método estático que recibe una lambda. |
 
