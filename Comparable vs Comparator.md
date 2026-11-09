@@ -1,11 +1,11 @@
 # Comparable y Comparator en Java
 
-### Guía de estudio para programadores (Java 21 en adelante)
+### Guía de estudio para programadores (Java 25 en adelante)
 
 > **Cómo se ha elaborado esta guía**
 >
-> - Contenido contrastado con la documentación oficial de Oracle (Javadoc de Java SE 21) y con el artículo de GeeksforGeeks [Java Comparable vs Comparator](https://www.geeksforgeeks.org/java/comparable-vs-comparator-in-java/).
-> - **Todos los ejemplos de código se han compilado y ejecutado** con OpenJDK 21.0.10. Las salidas que ves son las salidas reales, no inventadas.
+> - Contenido contrastado con la documentación oficial de Oracle (Javadoc de Java SE 25) y con el artículo de GeeksforGeeks [Java Comparable vs Comparator](https://www.geeksforgeeks.org/java/comparable-vs-comparator-in-java/).
+> - **Todos los ejemplos de código se han compilado y ejecutado** con OpenJDK 25.0.5. Las salidas que ves son las salidas reales, no inventadas.
 > - Los nombres de clases, variables y métodos están en inglés británico (`Film`, `forename`, `surname`, `mark`…). Las explicaciones están en castellano.
 > - Cuando algo procede de mi conocimiento del lenguaje y no de una página consultada, se indica en la sección de [fuentes](#14-fuentes-y-cómo-se-ha-verificado).
 
@@ -19,7 +19,7 @@
 - [5. Dónde se usan](#5-dónde-se-usan)
 - [6. Comparable frente a Comparator](#6-comparable-frente-a-comparator)
 - [7. Errores típicos](#7-errores-típicos)
-- [8. Novedades y estado en Java 21](#8-novedades-y-estado-en-java-21)
+- [8. Java moderno: estado en Java 25 y novedades](#8-java-moderno-estado-en-java-25-y-novedades)
 - [9. Ejemplo completo](#9-ejemplo-completo)
 - [10. Ejercicios](#10-ejercicios)
 - [11. Chuleta de repaso](#11-chuleta-de-repaso)
@@ -31,7 +31,7 @@
 
 ## 0. Cómo ejecutar los ejemplos
 
-Cada ejemplo es **un único fichero** `.java`. Solo necesitas un JDK 21 o superior:
+Cada ejemplo es **un único fichero** `.java`. Solo necesitas un JDK 25 o superior:
 
 1. Guarda el código en un fichero con el nombre de la clase principal (por ejemplo, `ComparableFilmDemo.java`).
 2. Ejecútalo con:
@@ -549,7 +549,7 @@ By title:        [Star Wars, The Empire Strikes Back, The Force Awakens]
 
 ### 4.3 Métodos de fábrica y composición
 
-Desde Java 8, `Comparator` incluye métodos que evitan escribir `compare` a mano (todos aparecen en la documentación de Java 21):
+Desde Java 8, `Comparator` incluye métodos que evitan escribir `compare` a mano (todos aparecen en la documentación de Java 25):
 
 **Métodos estáticos**
 
@@ -1233,7 +1233,7 @@ record Film(String title, int releaseYear) { }
 Salida:
 
 ```text
-ClassCastException: class Film cannot be cast to class java.lang.Comparable (Film is in unnamed module of loader com.sun.tools.javac.launcher.Main$MemoryClassLoader @161479c6; java.lang.Comparable is in module java.base of loader 'bootstrap')
+ClassCastException: class Film cannot be cast to class java.lang.Comparable (Film is in unnamed module of loader com.sun.tools.javac.launcher.MemoryClassLoader @4c1d9d4b; java.lang.Comparable is in module java.base of loader 'bootstrap')
 With Comparator: [Film[title=Star Wars, releaseYear=1977]]
 ```
 
@@ -1268,7 +1268,7 @@ public class ContractViolationDemo {
 }
 ```
 
-Salida (en mi prueba con OpenJDK 21.0.10):
+Salida (en mi prueba con OpenJDK 25.0.5):
 
 ```text
 IllegalArgumentException: Comparison method violates its general contract!
@@ -1282,9 +1282,9 @@ En las pruebas que hice, con la misma técnica y listas de 50 a 1000 elementos *
 
 ---
 
-## 8. Novedades y estado en Java 21
+## 8. Java moderno: estado en Java 25 y novedades
 
-- **El contrato de `Comparable` y `Comparator` descrito en la Javadoc de Java 21 es el que se ha usado en esta guía.** `Comparator.comparing`, `thenComparing`, `reversed`, `nullsFirst` y compañía siguen vigentes.
+- **El contrato de `Comparable` y `Comparator` descrito en la Javadoc de Java 25 es el que se ha usado en esta guía.** `Comparator.comparing`, `thenComparing`, `reversed`, `nullsFirst` y compañía siguen vigentes.
 - **Records** (Java 16): permiten definir clases de datos en una línea y se llevan muy bien con `Comparator.comparing(Film::title)`.
 - **Colecciones secuenciadas (Java 21, JEP 431):** `List` y los conjuntos ordenados como `TreeSet` disponen de `getFirst()`, `getLast()` y `reversed()`. Combinados con un buen orden, dan código muy legible:
 
@@ -1294,7 +1294,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.TreeSet;
 
-public class Java21FeaturesDemo {
+public class SequencedFeaturesDemo {
 
     public static void main(String[] args) {
         List<Film> films = new ArrayList<>(List.of(
@@ -1305,12 +1305,12 @@ public class Java21FeaturesDemo {
 
         films.sort(Comparator.comparingDouble(Film::rating).reversed());
 
-        // Java 21: List tiene getFirst(), getLast() y reversed()
+        // Desde Java 21: List tiene getFirst(), getLast() y reversed()
         System.out.println("Best rated:  " + films.getFirst().title());
         System.out.println("Worst rated: " + films.getLast().title());
         System.out.println("Reversed view: " + films.reversed().stream().map(Film::title).toList());
 
-        // Java 21: los conjuntos ordenados también tienen getFirst(), getLast() y reversed()
+        // Desde Java 21: los conjuntos ordenados también tienen getFirst(), getLast() y reversed()
         TreeSet<Film> byYear = new TreeSet<>(Comparator.comparingInt(Film::releaseYear));
         byYear.addAll(films);
         System.out.println("\nOldest: " + byYear.getFirst().title());
@@ -1334,7 +1334,9 @@ Newest: The Force Awakens
 Newest first: [The Force Awakens, Return of the Jedi, The Empire Strikes Back, Star Wars]
 ```
 
-Estas novedades **no sustituyen** a `Comparable` ni a `Comparator`: son un complemento para trabajar con el resultado de la ordenación. No he contrastado esta guía con versiones posteriores a Java 21 ejemplo por ejemplo.
+Estas novedades **no sustituyen** a `Comparable` ni a `Comparator`: son un complemento para trabajar con el resultado de la ordenación.
+
+- **Después de Java 25 (Java 26):** `Comparator` incorpora los métodos por defecto `min(a, b)` y `max(a, b)` (JDK-8356995), equivalentes a `Math.min`/`Math.max` para objetos; en caso de empate devuelven el primer argumento. En Java 25 todavía no existen; la alternativa es `BinaryOperator.minBy(comparador).apply(a, b)` o un ternario con `compare`.
 
 ---
 
@@ -1644,11 +1646,11 @@ Al contrastar el artículo con la documentación y con la ejecución de los ejem
 **Fuentes consultadas**
 
 - GeeksforGeeks, *Java Comparable vs Comparator*: <https://www.geeksforgeeks.org/java/comparable-vs-comparator-in-java/> (página leída completa).
-- Oracle, Javadoc de `java.util.Comparator` (Java SE 21): <https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Comparator.html> (página leída completa).
-- Oracle, Javadoc de `java.lang.Comparable` (Java SE 21): <https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Comparable.html> (consultada mediante fragmentos devueltos por la búsqueda, junto con las versiones 8, 15 y 23 de la misma página, que mencionan la misma excepción de `BigDecimal`).
-- Oracle, Javadoc de `java.util.Collections` (Java SE 21): <https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Collections.html> (consultada mediante fragmentos de la búsqueda; de ahí proceden la estabilidad de `sort`, el significado del comparador `null` y la excepción opcional `IllegalArgumentException`).
+- Oracle, Javadoc de `java.util.Comparator` (Java SE 25): <https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Comparator.html> (página leída completa).
+- Oracle, Javadoc de `java.lang.Comparable` (Java SE 25): <https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Comparable.html> (consultada mediante fragmentos devueltos por la búsqueda, junto con las versiones 8, 15 y 23 de la misma página, que mencionan la misma excepción de `BigDecimal`).
+- Oracle, Javadoc de `java.util.Collections` (Java SE 25): <https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Collections.html> (consultada mediante fragmentos de la búsqueda; de ahí proceden la estabilidad de `sort`, el significado del comparador `null` y la excepción opcional `IllegalArgumentException`).
 
-**Comprobado ejecutando código** (OpenJDK 21.0.10): todas las salidas mostradas, el error de compilación de la sección 1 y de la 4.4, el desbordamiento de la resta, el comportamiento de `TreeSet`, `BigDecimal`, `reversed()`, el `ClassCastException`, la excepción de contrato roto y los métodos `getFirst`, `getLast` y `reversed` de Java 21.
+**Comprobado ejecutando código** (OpenJDK 25.0.5): todas las salidas mostradas, el error de compilación de la sección 1 y de la 4.4, el desbordamiento de la resta, el comportamiento de `TreeSet`, `BigDecimal`, `reversed()`, el `ClassCastException`, la excepción de contrato roto y los métodos `getFirst`, `getLast` y `reversed` de Java 21.
 
 **Datos que proceden de mi conocimiento del lenguaje** y que no he contrastado con una página concreta en esta sesión:
 
