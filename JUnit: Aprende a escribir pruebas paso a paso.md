@@ -64,7 +64,7 @@ JUnit 6.1.3 = JUnit Platform + JUnit Jupiter + JUnit Vintage
 
 ### Requisitos
 
-- **Java 17 o superior** en tiempo de ejecución. Puedes probar código compilado con versiones anteriores del JDK.
+- **Java 17 o superior** en tiempo de ejecución (requisito de JUnit 6). Los ejemplos de esta guía usan **Java 25 (LTS)**, la versión de referencia de toda la documentación.
 - Una herramienta de construcción (**Maven** o **Gradle**) o un IDE con soporte para JUnit (IntelliJ IDEA, Eclipse, NetBeans y Visual Studio Code lo tienen).
 
 ### Estructura de carpetas estándar
@@ -86,6 +86,10 @@ La clase de prueba se coloca en el **mismo paquete** que la clase que prueba, pe
 Añade la dependencia de JUnit Jupiter y el plugin Surefire (para JUnit 6 la versión mínima de Surefire es la 3.0.0):
 
 ```xml
+<properties>
+    <maven.compiler.release>25</maven.compiler.release>
+</properties>
+
 <dependencies>
     <dependency>
         <groupId>org.junit.jupiter</groupId>
@@ -110,6 +114,12 @@ Añade la dependencia de JUnit Jupiter y el plugin Surefire (para JUnit 6 la ver
 ### Configuración con Gradle
 
 ```groovy
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
+}
+
 dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:6.1.3")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
@@ -683,8 +693,8 @@ class PruebasCondicionalesTest {
     void noEnWindows() { /* ... */ }
 
     @Test
-    @EnabledOnJre(JRE.JAVA_21)
-    void soloConJava21() { /* ... */ }
+    @EnabledOnJre(JRE.JAVA_25)
+    void soloConJava25() { /* ... */ }
 
     @Test
     @EnabledIfEnvironmentVariable(named = "ENTORNO", matches = "staging")
