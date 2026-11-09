@@ -1,6 +1,6 @@
-# Lambdas y Streams en Java 21+
+# Lambdas y Streams en Java 25+
 
-Guía de estudio. Versión de referencia: **Java 21 (LTS)**, con notas sobre lo que aportan versiones posteriores (22 a 25).
+Guía de estudio. Versión de referencia: **Java 25 (LTS)** o superior. Se indica la versión en la que apareció cada característica posterior a Java 8.
 
 > Este documento resume y reorganiza el contenido de seis fuentes (listadas al final) y lo amplía con material actual que esas fuentes no recogen: `record`, `Stream.toList()`, `SequencedCollection`, hilos virtuales, *pattern matching*, `Gatherers`, errores típicos y ejercicios. Varias de las fuentes están escritas para Java 8, así que aquí se han actualizado los ejemplos al estilo moderno.
 
@@ -27,7 +27,7 @@ Guía de estudio. Versión de referencia: **Java 21 (LTS)**, con notas sobre lo 
 17. [Optional](#17-optional)
 18. [Streams paralelos](#18-streams-paralelos)
 19. [Rendimiento: ¿stream o bucle?](#19-rendimiento-stream-o-bucle)
-20. [Novedades de Java 21 en adelante](#20-novedades-de-java-21-en-adelante)
+20. [Java moderno: de Java 16 a Java 25](#20-java-moderno-de-java-16-a-java-25)
 21. [Errores típicos](#21-errores-típicos)
 22. [Aclaraciones sobre las fuentes](#22-aclaraciones-sobre-las-fuentes)
 23. [Ejercicios](#23-ejercicios)
@@ -46,6 +46,8 @@ import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
 ```
+
+> En Java 25 basta con una sola línea, `import module java.base;` (JEP 511), que importa todos los paquetes exportados por el módulo `java.base`, incluidos los tres anteriores. Ver [sección 20.8](#208-java-25-probar-ejemplos-con-menos-ceremonia).
 
 Y este dominio, que se reutiliza en todo el documento:
 
@@ -1019,9 +1021,9 @@ Una analogía: `2*2*2*2` frente a `2^4`. Para cuatro dos da igual; para 2⁶⁴ 
 
 ---
 
-## 20. Novedades de Java 21 en adelante
+## 20. Java moderno: de Java 16 a Java 25
 
-Esta sección no aparece en las fuentes (que se centran en Java 8) y es lo que diferencia el Java actual.
+Esta sección no aparece en las fuentes (que se centran en Java 8) y es lo que diferencia el Java actual. Todo lo que se muestra aquí es definitivo en Java 25.
 
 ### 20.1. `record` + streams: modelos de datos concisos
 
@@ -1045,7 +1047,7 @@ nombres.reversed().stream().toList();    // [Eva, Luis, Ana]   (vista invertida,
 
 Cuando solo necesitas el primer elemento de una lista, `getFirst()` es más directo que `stream().findFirst()`. (Lanza `NoSuchElementException` si la lista está vacía.)
 
-### 20.4. *Pattern matching* para `switch` y *record patterns* (Java 21, definitivos)
+### 20.4. *Pattern matching* para `switch` y *record patterns* (Java 21)
 
 Se combinan estupendamente con lambdas y streams:
 
@@ -1064,7 +1066,7 @@ double areaTotal = formas.stream()
 
 Al ser `Forma` una interfaz `sealed`, el `switch` es exhaustivo y no necesita `default`: si añades una forma nueva y olvidas tratarla, el compilador avisa.
 
-### 20.5. Hilos virtuales (Java 21, definitivos)
+### 20.5. Hilos virtuales (Java 21)
 
 Los **hilos virtuales** permiten lanzar miles o millones de tareas concurrentes baratas, ideales para código que espera entrada/salida. Las lambdas son la forma natural de definir cada tarea:
 
@@ -1087,17 +1089,17 @@ Distinción clave con los streams paralelos:
 
 No los confundas ni uses un `parallelStream()` para peticiones de red.
 
-### 20.6. Variables sin nombre `_` (preview en 21, definitivo en Java 22)
+### 20.6. Variables sin nombre `_` (Java 22)
 
 Cuando un parámetro de lambda no se usa, se puede escribir `_`:
 
 ```java
-mapa.forEach((_, valor) -> System.out.println(valor));   // Java 22+
+mapa.forEach((_, valor) -> System.out.println(valor));
 ```
 
-En Java 21 solo está disponible como característica en vista previa (hay que activar `--enable-preview`).
+Deja claro que el parámetro se ignora a propósito y evita inventar nombres como `k` o `ignorado`.
 
-### 20.7. `Gatherers`: operaciones intermedias personalizadas (definitivo en Java 24)
+### 20.7. `Gatherers`: operaciones intermedias personalizadas (Java 24)
 
 Hasta ahora, el conjunto de operaciones intermedias era fijo. La API `Stream Gatherers` permite definirlas propias y trae algunas ya hechas:
 
@@ -1107,11 +1109,40 @@ List<List<Integer>> ventanas = Stream.of(1, 2, 3, 4, 5, 6, 7)
     .toList();                              // [[1, 2, 3], [4, 5, 6], [7]]
 
 Stream.of(1, 2, 3, 4).gather(Gatherers.windowSliding(2)).toList();   // [[1, 2], [2, 3], [3, 4]]
+
+Stream.of(1, 2, 3, 4).gather(Gatherers.scan(() -> 0, Integer::sum)).toList();  // [1, 3, 6, 10] (acumulados)
 ```
 
-No existe en Java 21. Está disponible sin *flags* desde Java 24 y, por tanto, en Java 25 (LTS).
+Los *gatherers* predefinidos de la clase `Gatherers` son `windowFixed`, `windowSliding`, `fold`, `scan` y `mapConcurrent` (este último aplica una función de forma concurrente usando hilos virtuales). Son definitivos desde Java 24 (JEP 485) y, por tanto, están disponibles en Java 25 sin opciones adicionales.
 
-### 20.8. Resumen de "desde qué versión" de lo relevante
+### 20.8. Java 25: probar ejemplos con menos ceremonia
+
+Java 25 hace definitivos los **ficheros fuente compactos y métodos `main` de instancia** (JEP 512) y la **importación de módulos** (JEP 511). Para practicar con lambdas y streams ya no hace falta declarar una clase ni `public static void main(String[] args)`:
+
+```java
+// Fichero Demo.java — se ejecuta con: java Demo.java
+import module java.base;
+
+record Empleado(String nombre, String departamento, double salario, int edad) {}
+
+void main() {
+    List<Empleado> empleados = List.of(
+        new Empleado("Lucía", "Ingeniería", 48_000, 34),
+        new Empleado("Pablo", "Ventas",     27_500, 23));
+
+    Map<String, Double> mediaPorDepto = empleados.stream()
+        .collect(Collectors.groupingBy(Empleado::departamento,
+                 Collectors.averagingDouble(Empleado::salario)));
+
+    IO.println(mediaPorDepto);   // {Ventas=27500.0, Ingeniería=48000.0}
+}
+```
+
+- `import module java.base;` sustituye a los `import` de `java.util`, `java.util.function` y `java.util.stream`. En un fichero compacto, además, `java.base` se importa de forma implícita, así que esa línea es opcional.
+- `IO.println(...)` (clase `java.lang.IO`, nueva en Java 25) es un atajo de `System.out.println(...)`.
+- Para código de producción se siguen usando clases normales; esta forma está pensada para aprender, prototipar y escribir pequeños *scripts*.
+
+### 20.9. Resumen de "desde qué versión" de lo relevante
 
 | Característica | Desde |
 |---|---|
@@ -1123,6 +1154,7 @@ No existe en Java 21. Está disponible sin *flags* desde Java 24 y, por tanto, e
 | `SequencedCollection`, hilos virtuales, *pattern matching* en `switch`, *record patterns* | 21 |
 | Variables sin nombre `_` | 22 |
 | `Stream Gatherers` | 24 |
+| Ficheros fuente compactos, `void main()` de instancia, `IO.println`, `import module` | 25 |
 
 ---
 
@@ -1300,7 +1332,7 @@ var extremos = empleados.stream().collect(Collectors.teeing(
 
 **Java moderno**
 
-- `record` para datos, `toList()`, `getFirst()/getLast()/reversed()`, `switch` con patrones sobre tipos `sealed`, hilos virtuales para E/S concurrente, `Gatherers` desde Java 24.
+- `record` para datos, `toList()`, `getFirst()/getLast()/reversed()`, `switch` con patrones sobre tipos `sealed`, hilos virtuales para E/S concurrente, `Gatherers` y, para practicar, ficheros fuente compactos con `void main()`.
 
 ---
 
