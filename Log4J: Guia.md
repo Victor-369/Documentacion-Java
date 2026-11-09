@@ -1,6 +1,8 @@
 # Gestión de registros (logging) con Log4j 2 en Java
 
-Guía práctica para configurar y usar **Apache Log4j 2** en un proyecto Java, pensada para quien parte de cero.
+Guía práctica para configurar y usar **Apache Log4j 2** en un proyecto Java, desde la instalación hasta la configuración avanzada.
+
+> Versión de referencia: **Java 25 (LTS)** o superior y **Log4j 2.26.1**. Log4j 2 funciona en cualquier JDK moderno; no hace falta ninguna configuración especial para Java 25.
 
 ---
 
@@ -61,14 +63,14 @@ Log4j 2 se divide en dos módulos principales:
 - **`log4j-api`**: las interfaces que usas en tu código.
 - **`log4j-core`**: la implementación real (appenders, layouts, configuración…).
 
-> Comprueba siempre la última versión estable en <https://logging.apache.org/log4j/2.x/> o en Maven Central. En el momento de escribir esta guía la última es la **2.25.2**.
-> Usa siempre una versión reciente: las anteriores a la 2.17.1 tienen la vulnerabilidad crítica **Log4Shell** (CVE-2021-44228).
+> Comprueba siempre la última versión estable en <https://logging.apache.org/log4j/2.x/> o en Maven Central. En la última revisión de esta guía (noviembre de 2026) la última es la **2.26.1**.
+> Usa siempre la versión más reciente: las anteriores a la 2.17.1 tienen la vulnerabilidad crítica **Log4Shell** (CVE-2021-44228), y a lo largo de 2026 se han publicado nuevos CVE que corrigen las versiones 2.25.x y 2.26.x más recientes.
 
 ### Maven (`pom.xml`)
 
 ```xml
 <properties>
-    <log4j.version>2.25.2</log4j.version>
+    <log4j.version>2.26.1</log4j.version>
 </properties>
 
 <dependencies>
@@ -89,8 +91,8 @@ Log4j 2 se divide en dos módulos principales:
 
 ```groovy
 dependencies {
-    implementation 'org.apache.logging.log4j:log4j-api:2.25.2'
-    implementation 'org.apache.logging.log4j:log4j-core:2.25.2'
+    implementation 'org.apache.logging.log4j:log4j-api:2.26.1'
+    implementation 'org.apache.logging.log4j:log4j-core:2.26.1'
 }
 ```
 
@@ -98,8 +100,8 @@ dependencies {
 
 ```kotlin
 dependencies {
-    implementation("org.apache.logging.log4j:log4j-api:2.25.2")
-    implementation("org.apache.logging.log4j:log4j-core:2.25.2")
+    implementation("org.apache.logging.log4j:log4j-api:2.26.1")
+    implementation("org.apache.logging.log4j:log4j-core:2.26.1")
 }
 ```
 
