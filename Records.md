@@ -1,11 +1,11 @@
 # Records en Java
 
-Guía basada en el artículo de KeepCoding «¿Qué son los records en Java y cómo te ayudan a manipular datos?», ampliada y contrastada con la especificación oficial (JEP 395) y con las novedades desde Java 21.
+Guía basada en el artículo de KeepCoding «¿Qué son los records en Java y cómo te ayudan a manipular datos?», ampliada y contrastada con la especificación oficial (JEP 395). **Versión de referencia: Java 25 (LTS) o superior.**
 
 **Convenciones de este documento**
 
-- ✅ = ejemplo compilado y ejecutado con OpenJDK 21.
-- ⚠️ = requiere una versión posterior a 21 y **no se ha podido compilar en local**; se toma de la especificación oficial (JEP).
+- ✅ = ejemplo compilado y ejecutado con OpenJDK 25.
+- 🧪 = característica en vista previa en Java 25: requiere `--enable-preview` y no debe usarse en producción.
 - Las secciones 1 a 5 recogen el contenido del artículo. A partir de la 6 son ampliaciones.
 
 ---
@@ -16,7 +16,7 @@ Un *record* es una clase diseñada para **reducir el código repetitivo** (*boil
 
 Cuando se trabaja con datos, sobre todo en aplicaciones con grandes volúmenes, hay que crear clases que representen esas entidades sin escribir a mano constructores, `getters`, `equals()`, `hashCode()` y `toString()`. Con un record, Java genera automáticamente todo ese código y te deja centrarte en la manipulación de los datos.
 
-> **Precisión sobre la versión.** El artículo dice que los records llegaron «junto a Java 14». Según el JEP 395 oficial, en Java 14 fueron una **vista previa** (JEP 359), en Java 15 una segunda vista previa (JEP 384) y se hicieron **definitivos en Java 16**. Por tanto, en cualquier JDK moderno (incluido Java 21 o superior) están disponibles sin ninguna opción especial.
+> **Precisión sobre la versión.** El artículo dice que los records llegaron «junto a Java 14». Según el JEP 395 oficial, en Java 14 fueron una **vista previa** (JEP 359), en Java 15 una segunda vista previa (JEP 384) y se hicieron **definitivos en Java 16**. Por tanto, en cualquier JDK moderno (incluido Java 25) están disponibles sin ninguna opción especial.
 
 ## 2. Declaración y uso básico
 
@@ -147,7 +147,7 @@ El [JEP 395](https://openjdk.org/jeps/395) define los records como «clases que 
 
 ### 6.1. Qué restricciones tienen respecto a una clase normal
 
-Comprobado con el compilador de Java 21 ✅:
+Comprobado con el compilador de Java 25 ✅:
 
 | Intento | Resultado del compilador |
 |---|---|
@@ -253,9 +253,9 @@ record Neg(Expr e) implements Expr {}
 
 ---
 
-## 7. Novedades desde Java 21: patrones de record (JEP 440)
+## 7. Patrones de record (JEP 440)
 
-**Java 21** convierte en definitivos los *record patterns* ([JEP 440](https://openjdk.org/jeps/440)). Permiten **deconstruir** un record directamente en sus componentes.
+Los *record patterns* son definitivos desde **Java 21** ([JEP 440](https://openjdk.org/jeps/440)). Permiten **deconstruir** un record directamente en sus componentes.
 
 ### 7.1. Con `instanceof` ✅
 
@@ -363,12 +363,11 @@ Respecto a la vista previa de Java 20, el JEP 440 **eliminó** la posibilidad de
 
 ---
 
-## 8. Patrones y variables sin nombre (`_`): Java 22
+## 8. Patrones y variables sin nombre (`_`)
 
-- Vista previa en **Java 21** ([JEP 443](https://openjdk.org/jeps/443)).
-- Definitivo en **Java 22** ([JEP 456](https://openjdk.org/jeps/456)).
+Definitivos desde **Java 22** ([JEP 456](https://openjdk.org/jeps/456)), así que en Java 25 se usan sin ninguna opción especial.
 
-Con records permite ignorar componentes que no necesitas ✅ (probado en Java 21 con `--enable-preview --release 21`):
+Con records permiten ignorar componentes que no necesitas ✅:
 
 ```java
 if (o instanceof PuntoColor(Punto(int x, _), _)) {
@@ -379,8 +378,6 @@ if (o instanceof PuntoColor(Punto(int x, _), _)) {
 - `_` como **patrón sin nombre** coincide con cualquier cosa y no declara variable. Solo puede usarse **anidado** dentro de un patrón de record, no como patrón de nivel superior.
 - `_` como **variable sin nombre** (`var _`, `catch (X _)`, parámetros de lambda) indica «no se usará».
 - Equivale al patrón `var _`, pero más ligero visualmente.
-
-Sin `--enable-preview`, Java 21 rechaza este código con `unnamed variables are a preview feature and are disabled by default`.
 
 ---
 
@@ -393,7 +390,7 @@ Para los records, el JEP indica que se **mantienen** estas restricciones:
 - Un constructor **canónico** no puede contener una invocación explícita a otro constructor.
 - Un constructor **no canónico** debe contener una invocación `this(...)` (y no `super(...)`).
 
-Lo nuevo es que los constructores no canónicos **pueden llevar sentencias antes de `this(...)`** ⚠️ (no compilado; requiere JDK 25):
+Lo nuevo es que los constructores no canónicos **pueden llevar sentencias antes de `this(...)`** ✅:
 
 ```java
 record Rango(int min, int max) {
@@ -402,13 +399,16 @@ record Rango(int min, int max) {
         this(unico, unico);
     }
 }
+
+new Rango(5);    // Rango[min=5, max=5]
+new Rango(-1);   // IllegalArgumentException: valor negativo
 ```
 
 ---
 
-## 10. En preparación: tipos primitivos en patrones (Java 25, vista previa)
+## 10. En preparación: tipos primitivos en patrones 🧪
 
-El [JEP 507](https://openjdk.org/jeps/507) está en su **tercera vista previa** en Java 25 y extiende los patrones a todos los tipos primitivos (en `instanceof`, `switch` y patrones). Al ser solo vista previa, evita usarlo en producción.
+El [JEP 507](https://openjdk.org/jeps/507) está en su **tercera vista previa** en Java 25 (y sigue en vista previa en Java 26, JEP 530). Extiende los patrones a todos los tipos primitivos (en `instanceof`, `switch` y patrones de record). Al ser solo vista previa, hay que compilar con `--enable-preview --release 25` y conviene evitarlo en producción.
 
 ---
 
@@ -418,7 +418,7 @@ El [JEP 507](https://openjdk.org/jeps/507) está en su **tercera vista previa** 
 - Valida y normaliza en el **constructor compacto**; no modifiques el significado de los accesores.
 - Si un componente es una colección, haz una **copia defensiva** (`List.copyOf`).
 - Combina records con interfaces `sealed` y `switch` con patrones para modelar y procesar jerarquías cerradas **sin `default`**.
-- Con Java 22+, usa `_` para ignorar componentes que no necesites.
+- Usa `_` para ignorar componentes que no necesites.
 - No uses un record cuando necesites **mutabilidad** o herencia de clases.
 
 ### Tabla de versiones
@@ -430,9 +430,9 @@ El [JEP 507](https://openjdk.org/jeps/507) está en su **tercera vista previa** 
 | `switch` con patrones | Java 21 | Definitivo (JEP 441) |
 | Patrones y variables sin nombre `_` | 21 (preview) → 22 | Definitivo en 22 (JEP 456) |
 | Sentencias antes de `this(...)` en constructores no canónicos | 22 (preview) → 25 | Definitivo en 25 (JEP 513) |
-| Tipos primitivos en patrones | Java 25 | Vista previa (JEP 507) |
+| Tipos primitivos en patrones | 23 → 26 | Vista previa (JEP 455, 488, 507, 530) |
 
-> Java 25 es la última versión LTS vigente (septiembre de 2025); la anterior es Java 21 (septiembre de 2023).
+> Java 25 (septiembre de 2025) es la versión LTS de referencia de esta guía. Todo lo marcado como definitivo en la tabla funciona en Java 25 sin opciones adicionales.
 
 ## Fuentes
 
