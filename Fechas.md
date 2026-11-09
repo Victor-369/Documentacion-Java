@@ -1,11 +1,10 @@
 # Fechas y horas en Java (`java.time`)
 
-Guía basada en el tutorial de W3Schools «Java Date and Time», corregida y ampliada con la documentación oficial de Oracle (Javadoc de Java 21 y 25) y con los cambios relevantes desde Java 21.
+Guía basada en el tutorial de W3Schools «Java Date and Time», corregida y ampliada con la documentación oficial de Oracle (Javadoc de Java 25). **Versión de referencia: Java 25 (LTS) o superior.**
 
 **Convenciones de este documento**
 
-- ✅ = ejemplo compilado y ejecutado con OpenJDK 21.
-- ⚠️ = requiere una versión posterior a 21 y **no se ha podido compilar en local**; se toma de las notas de versión oficiales.
+- ✅ = ejemplo compilado y ejecutado con OpenJDK 25.
 - Las secciones 1 a 6 resumen W3Schools. A partir de la 7 son ampliaciones.
 - Los ejemplos usan **fechas fijas** para que la salida sea reproducible. Con `now()` el resultado depende del momento y de la zona horaria del sistema.
 
@@ -116,7 +115,7 @@ Después de formatear: 29-09-1988 14:30:15
 | `dd-MMM-yyyy` | `29-Sep-1988` | `29-sept-1988` |
 | `E, MMM dd yyyy` | `Thu, Sep 29 1988` | `jue, sept 29 1988` |
 
-> Los patrones que incluyen **nombres** de mes o de día dependen del *locale*. Las salidas en español de esta tabla son las observadas en OpenJDK 21 (con los datos CLDR); la abreviatura del mes («sept») puede variar entre versiones del JDK.
+> Los patrones que incluyen **nombres** de mes o de día dependen del *locale*. Las salidas en español de esta tabla son las observadas en OpenJDK 25 (con los datos CLDR); la abreviatura del mes («sept») puede variar entre versiones del JDK.
 
 ---
 
@@ -227,7 +226,7 @@ antiguo.toInstant();                  // de vuelta a Instant
 
 ## 11. Probar código que depende de la hora: `Clock` e `InstantSource` ✅
 
-Llamar a `now()` directamente hace el código difícil de probar. `Clock` (y `InstantSource`, que aparece en el Javadoc de Java 21) permiten inyectar una fuente de tiempo:
+Llamar a `now()` directamente hace el código difícil de probar. `Clock` (y `InstantSource`, disponible desde Java 17) permiten inyectar una fuente de tiempo:
 
 ```java
 Clock reloj = Clock.fixed(Instant.parse("2026-10-16T08:00:00Z"), ZoneId.of("Europe/Madrid"));
@@ -389,11 +388,11 @@ f.parseBest("2026-10-16 10.30", ZonedDateTime::from, LocalDateTime::from);      
 
 ---
 
-## 14. Novedades y cambios relevantes desde Java 21
+## 14. Cambios recientes que afectan a Java 25
 
-> **Dato honesto:** en las fuentes oficiales consultadas (Javadoc de Java 21 y 25 y notas de versión) **no aparecen clases nuevas en `java.time`** posteriores a Java 21. Los cambios importantes son de **comportamiento y de datos de localización**. Si ves en algún sitio una «gran novedad de la API de fechas en Java 22–25», verifícala con el Javadoc oficial.
+> **Dato honesto:** en las fuentes oficiales consultadas (Javadoc de Java 25 y notas de versión) **no aparecen clases nuevas en `java.time`** en las últimas versiones. Los cambios importantes son de **comportamiento y de datos de localización**. Si ves en algún sitio una «gran novedad de la API de fechas en Java 22–25», verifícala con el Javadoc oficial.
 
-### 14.1. Datos CLDR 42 (Java 20) y su efecto en Java 21
+### 14.1. Datos CLDR 42 (Java 20) y el espacio estrecho
 
 Desde **Java 20** el JDK usa la versión 42 de los datos de localización Unicode CLDR. Como consecuencia, en algunos *locales* el espacio entre la hora y el marcador AM/PM pasó de ser un espacio ASCII normal (U+0020) a un **espacio estrecho sin salto (NNBSP, U+202F)**. Efectos:
 
@@ -410,15 +409,17 @@ Recomendaciones (fuente: Inside.java, Oracle, y la wiki de Spring):
 
 Según las notas de versión de JDK 22, los nombres de las eras gregorianas que devuelven las API de `java.time.format` se obtienen ahora de los datos **CLDR** y no de los antiguos datos `COMPAT`. Por ejemplo, para el *locale* `ROOT` se devuelve «BCE»/«CE» en lugar de «BC»/«AD».
 
-### 14.3. Interpretación «laxa» de espacios (Java 23) ⚠️
+### 14.3. Interpretación «laxa» de espacios (Java 23) ✅
 
-Desde **Java 23**, al interpretar textos de fecha/hora se permite una **coincidencia laxa de espacios**, para paliar el problema del NNBSP. Solo se aplica en el estilo *lenient*; en el estilo por defecto (*strict*) los espacios se siguen considerando distintos. En `java.time.format` hay que activarlo explícitamente con `parseLenient()`. Ejemplo de las notas de versión de JDK 23 ⚠️ (no compilado en local):
+Desde **Java 23**, al interpretar textos de fecha/hora se permite una **coincidencia laxa de espacios**, para paliar el problema del NNBSP. Solo se aplica en el estilo *lenient*; en el estilo por defecto (*strict*) los espacios se siguen considerando distintos. En `java.time.format` hay que activarlo explícitamente con `parseLenient()`. Ejemplo de las notas de versión de JDK 23:
 
 ```java
 var dtf = new DateTimeFormatterBuilder()
     .parseLenient()
     .append(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT))
     .toFormatter(Locale.ENGLISH);
+
+LocalTime.parse("3:30 PM", dtf);   // 15:30 (acepta un espacio normal)
 ```
 
 ### 14.4. Corrección de un error de serialización en Java 25.0.x
@@ -427,9 +428,9 @@ Las notas de versión de Java SE 25.0.3 (29 de mayo de 2026) indican que se corr
 
 ### 14.5. Contexto de versiones
 
-- **Java 21** (septiembre de 2023) es una versión LTS.
-- **Java 25** (septiembre de 2025) es la **última LTS vigente**.
-- Versiones intermedias como Java 22, 23, 24 y 26 no son LTS.
+- **Java 25** (septiembre de 2025) es la versión LTS de referencia de esta guía.
+- Versiones como Java 26 (marzo de 2026) o 27 (septiembre de 2026) no son LTS; la siguiente LTS prevista es Java 29.
+- Si trabajas con una versión posterior a la 25, revisa sus notas de versión por si hay cambios de datos de localización.
 
 ---
 
@@ -448,7 +449,6 @@ Las notas de versión de Java SE 25.0.3 (29 de mayo de 2026) indican que se corr
 - W3Schools, [Java Date and Time](https://www.w3schools.com/java/java_date.asp)
 - Oracle, [Paquete `java.time` (Java SE 25)](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/time/package-summary.html)
 - Oracle, [`DateTimeFormatter` (Java SE 25)](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/time/format/DateTimeFormatter.html)
-- Oracle, [Paquete `java.time` (Java SE 21)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/package-summary.html)
 - Oracle, [Notas de versión de JDK 22](https://www.oracle.com/java/technologies/javase/22-relnote-issues.html)
 - Oracle, [Notas de versión consolidadas de JDK 23](https://www.oracle.com/java/technologies/javase/23all-relnotes.html)
 - Oracle, [Notas de versión consolidadas de JDK 25](https://www.oracle.com/java/technologies/javase/25all-relnotes.html)
