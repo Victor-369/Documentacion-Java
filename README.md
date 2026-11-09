@@ -2,6 +2,10 @@
 
 Repositorio de documentación, apuntes, ejemplos y guías sobre **Java**, creado con el objetivo de recopilar y organizar diferentes conceptos relacionados con el desarrollo en este lenguaje.
 
+> ☕ **Versión de referencia: Java 25 (LTS) o superior.**
+>
+> Toda la documentación está enfocada en Java 25 en adelante. Cuando una característica apareció en una versión anterior se indica desde cuál está disponible, y lo que solo existe en vista previa (*preview*) o en versiones posteriores (Java 26+) se señala de forma explícita. Los programas de ejemplo completos se han compilado y ejecutado con OpenJDK 25.0.5 (y las guías de pruebas, con JUnit 6.1.3 y AssertJ 3.27.7).
+
 > 🚧 **Proyecto en desarrollo**
 >
 > Esta documentación se encuentra actualmente **en pleno proceso de desarrollo y ampliación**. Se irán incorporando progresivamente nuevos temas, conceptos, ejemplos y buenas prácticas relacionados con Java.
@@ -34,12 +38,12 @@ Actualmente, el repositorio cuenta con documentación sobre diferentes conceptos
 
 | Documento | Qué encontrarás                                                                                                                                                                                                                                  |
 | --- | --- |
-| [Abstract Class vs Interface](https://github.com/Victor-369/Documentacion-Java/blob/main/Abstract%20Class%20vs%20Interface.md) | Chuleta comparativa: constructores, estado, modificadores de acceso, herencia, métodos `final`, polimorfismo y acoplamiento. Incluye cuándo usar cada una, cómo combinarlas, errores frecuentes, reglas mentales y una chuleta ultra rápida.     |
-| [Colecciones](https://github.com/Victor-369/Documentacion-Java/blob/main/Colecciones.md) | Resumen del *Java Collections Framework*: jerarquía de interfaces, `List`, `Set`, `Map`, `Queue` y `Deque`, colecciones inmutables, *Sequenced Collections* (Java 21), la clase `Collections`, genéricos, Stream API y colecciones concurrentes. |
-| [Comparable vs Comparator](https://github.com/Victor-369/Documentacion-Java/blob/main/Comparable%20vs%20Comparator.md) | Guía de estudio para programadores (Java 21 o superior), con ejemplos compilados y ejecutados, errores típicos, novedades de Java 21, ejercicios, chuleta de repaso y autoevaluación.                                                                                                     |
+| [Abstract Class vs Interface](https://github.com/Victor-369/Documentacion-Java/blob/main/Abstract%20Class%20vs%20Interface.md) | Chuleta comparativa: constructores, estado, modificadores de acceso, herencia, métodos `final`, polimorfismo y acoplamiento. Incluye cuándo usar cada una, cómo combinarlas, lo que aporta Java moderno (tipos `sealed`, *records* que implementan interfaces y código antes de `super(...)` en Java 25), errores frecuentes, reglas mentales y una chuleta ultra rápida. |
+| [Colecciones](https://github.com/Victor-369/Documentacion-Java/blob/main/Colecciones.md) | Resumen del *Java Collections Framework*: jerarquía de interfaces, `List`, `Set`, `Map`, `Queue` y `Deque`, colecciones inmutables, *Sequenced Collections* (Java 21), la clase `Collections`, genéricos (con `HashMap.newHashMap`), Stream API (`toList()` y *gatherers*) y colecciones concurrentes con hilos virtuales. |
+| [Comparable vs Comparator](https://github.com/Victor-369/Documentacion-Java/blob/main/Comparable%20vs%20Comparator.md) | Guía de estudio para programadores (Java 25 o superior), con ejemplos compilados y ejecutados en OpenJDK 25, errores típicos, colecciones secuenciadas, `Comparator.min`/`max` (Java 26), ejercicios, chuleta de repaso y autoevaluación. |
 | [Generics](https://github.com/Victor-369/Documentacion-Java/blob/main/Generics.md) | Guía de genéricos: clases, interfaces y métodos genéricos, *raw types*, inferencia de tipos, tipos acotados, comodines (*wildcards*), borrado de tipos (*type erasure*), restricciones, uso con características modernas de Java, errores habituales, chuleta y ejercicios. |
-| [Enums](https://github.com/Victor-369/Documentacion-Java/blob/main/Enums.md) | Enumeraciones (`enum`): declaración, uso dentro de clases y en `switch`, recorrido de constantes, diferencias con las clases y cuándo usarlas. Ampliación con enums «con cuerpo» (atributos, constructor, interfaces), `EnumMap` y `EnumSet`, y novedades desde Java 21 (`switch` con patrones, exhaustividad, `case null`, variables sin nombre `_`, constructores flexibles de Java 25). |
-| [Records](https://github.com/Victor-369/Documentacion-Java/blob/main/Records.md) | Clases de datos inmutables: declaración, constructor compacto, métodos y miembros estáticos, interfaces, cuándo usarlos y reglas (JEP 395). Ampliación con copia defensiva, records locales, anotaciones, reflexión, interfaces `sealed`, patrones de record (Java 21), variables sin nombre (`_`) y constructores flexibles (Java 25). |
+| [Enums](https://github.com/Victor-369/Documentacion-Java/blob/main/Enums.md) | Enumeraciones (`enum`): declaración, uso dentro de clases y en `switch`, recorrido de constantes, diferencias con las clases y cuándo usarlas. Ampliación con enums «con cuerpo» (atributos, constructor, interfaces), `EnumMap` y `EnumSet`, y Java moderno (`switch` con patrones, exhaustividad, `case null`, variables sin nombre `_`, constructores flexibles de Java 25 y tipos primitivos en patrones en vista previa). |
+| [Records](https://github.com/Victor-369/Documentacion-Java/blob/main/Records.md) | Clases de datos inmutables: declaración, constructor compacto, métodos y miembros estáticos, interfaces, cuándo usarlos y reglas (JEP 395). Ampliación con copia defensiva, records locales, anotaciones, reflexión, interfaces `sealed`, patrones de record (Java 21), variables sin nombre (`_`), constructores flexibles (Java 25) y tipos primitivos en patrones (vista previa). |
 | [Calistenia de objetos](https://github.com/Victor-369/Documentacion-Java/blob/main/Calistenia%20de%20objetos.md) | Las nueve reglas de *Object Calisthenics* (Jeff Bay) actualizadas a Java 25: un nivel de indentación, sin `else`, encapsular primitivos, colecciones de primera clase, un punto por línea, no abreviar, entidades pequeñas, dos variables de instancia y sin *getters*/*setters*. Cada regla con ejemplos antes/después apoyados en *records*, `sealed`, `switch` con patrones, *gatherers* y ficheros fuente compactos, más un ejemplo completo (carrito de la compra), tabla resumen y cómo aplicarlas en katas y en producción. |
 
 ### 🏛️ Principios de diseño
@@ -56,15 +60,15 @@ Actualmente, el repositorio cuenta con documentación sobre diferentes conceptos
 
 | Documento | Qué encontrarás |
 | --- | --- |
-| [Patrones creacionales](https://github.com/Victor-369/Documentacion-Java/blob/main/Patrones%20creacionales.md) | Qué es un patrón de diseño, por qué aprenderlos y su clasificación por intención. Patrones para crear objetos de forma flexible en Java 21+: Singleton (con `enum` y *holder* perezoso), Factory Method (con `sealed` y `switch`, forma clásica GoF y fábricas estáticas del JDK), Abstract Factory, Factory Method frente a Abstract Factory, Builder con `record` (y cuándo no hace falta) y Prototype, con resumen y consejos finales. |
-| [Patrones estructurales](https://github.com/Victor-369/Documentacion-Java/blob/main/Patrones%20estructurales.md) | Patrones para combinar clases y objetos en estructuras mayores en Java 21+: Adapter (también con *lambdas*), Composite (con `sealed` + `record` y forma clásica), Decorator (y decoración funcional), Facade y Proxy (proxy de caché, proxy dinámico del JDK y diferencias con Decorator), con resumen y consejos finales. |
-| [Patrones de comportamiento](https://github.com/Victor-369/Documentacion-Java/blob/main/Patrones%20comportamiento.md) | Patrones de comunicación y reparto de responsabilidades en Java 21+: Strategy (clásico y con *lambdas*), Observer con eventos tipados (`sealed` + `record`), Command con deshacer y `Runnable`, State con estados como tipos sellados, Template Method (y alternativa con composición) y una mención a Iterator, con resumen y consejos finales. |
+| [Patrones creacionales](https://github.com/Victor-369/Documentacion-Java/blob/main/Patrones%20creacionales.md) | Qué es un patrón de diseño (con analogías), cómo probar los ejemplos con Java 25 y vocabulario mínimo. Patrones para crear objetos: Singleton (con `enum`), Factory Method, Abstract Factory, Builder (con `record`) y Prototype (copia superficial y profunda). Cada patrón con analogía de la vida real, problema, solución paso a paso, programa completo ejecutable con su salida, cuándo usarlo y cuándo no. Incluye cómo elegir, errores frecuentes, ejercicios con soluciones y glosario |
+| [Patrones estructurales](https://github.com/Victor-369/Documentacion-Java/blob/main/Patrones%20estructurales.md) | La idea común de envolver objetos (composición frente a herencia) y los patrones Adapter (sensor en Fahrenheit), Composite (carpetas y ficheros), Decorator (café con extras), Facade (proceso de compra) y Proxy (caché), cada uno con analogía, problema, solución paso a paso y programa completo ejecutable. Incluye una tabla para distinguir los patrones que se parecen, errores frecuentes, ejercicios con soluciones y glosario |
+| [Patrones de comportamiento](https://github.com/Victor-369/Documentacion-Java/blob/main/Patrones%20comportamiento.md) | Introducción a las *lambdas* y los patrones Strategy (gastos de envío), Observer (suscripciones), Command (editor con deshacer), State (ciclo de vida de un pedido con `enum`), Template Method (preparar bebidas) e Iterator (`Iterable` y *for-each*), cada uno con analogía, problema, solución paso a paso y programa completo ejecutable. Incluye cómo elegir, errores frecuentes, ejercicios con soluciones y glosario |
 
 ### λ Programación funcional: lambdas y streams
 
 | Documento | Qué encontrarás |
 | --- | --- |
-| [Lambdas y Streams](https://github.com/Victor-369/Documentacion-Java/blob/main/Lambdas%20y%20Streams.md) | Guía de estudio de Java 21+: sintaxis de lambdas, interfaces funcionales, inferencia de tipos, captura de variables y referencias a métodos; *pipelines* de `Stream` (operaciones intermedias y terminales), `Collectors`, streams de primitivos, `Optional`, streams paralelos y rendimiento. Incluye novedades de Java 21 a 25 (`record`, `Stream.toList()`, *pattern matching*, hilos virtuales, `Gatherers`), errores típicos, ejercicios con soluciones y chuleta final. |
+| [Lambdas y Streams](https://github.com/Victor-369/Documentacion-Java/blob/main/Lambdas%20y%20Streams.md) | Guía de estudio de Java 25+: sintaxis de lambdas, interfaces funcionales, inferencia de tipos, captura de variables y referencias a métodos; *pipelines* de `Stream` (operaciones intermedias y terminales), `Collectors`, streams de primitivos, `Optional`, streams paralelos y rendimiento. Incluye Java moderno de la 16 a la 25 (`record`, `Stream.toList()`, *pattern matching*, hilos virtuales, `Gatherers`, ficheros fuente compactos con `void main()` e `import module`), errores típicos, ejercicios con soluciones y chuleta final. |
 
 ### 🧬 Anotaciones y reflexión
 
@@ -77,37 +81,37 @@ Actualmente, el repositorio cuenta con documentación sobre diferentes conceptos
 
 | Documento | Qué encontrarás |
 | --- | --- |
-| [Entrada - Salida básica](https://github.com/Victor-369/Documentacion-Java/blob/main/Entrada%20-%20Salida%20basica.md) | Guía de E/S en Java 21+: flujos de bytes y de caracteres, flujos con búfer, `Scanner` y `printf`, E/S desde la línea de comandos, *Data Streams*, serialización de objetos y ficheros con NIO.2, además de errores frecuentes, ejercicios y recursos para seguir aprendiendo. |
-| [Rutas relativas](https://github.com/Victor-369/Documentacion-Java/blob/main/Rutas%20relativas.md) | Qué es una ruta relativa, notación especial (`.` y `..`), directorio de trabajo actual, `java.io.File` frente a `java.nio.file.Path`, rutas relativas al proyecto y al *classpath*, diferencias entre sistemas operativos, *Path Traversal* y errores comunes. |
+| [Entrada - Salida básica](https://github.com/Victor-369/Documentacion-Java/blob/main/Entrada%20-%20Salida%20basica.md) | Guía de E/S en Java 25+: flujos de bytes y de caracteres, flujos con búfer, `Scanner` y `printf`, E/S desde la línea de comandos (`Console.isTerminal()` y la clase `IO` de Java 25), *Data Streams*, serialización de objetos, ficheros con NIO.2 y E/S con hilos virtuales, además de errores frecuentes, ejercicios y recursos para seguir aprendiendo. |
+| [Rutas relativas](https://github.com/Victor-369/Documentacion-Java/blob/main/Rutas%20relativas.md) | Qué es una ruta relativa, notación especial (`.` y `..`), directorio de trabajo actual, `java.io.File` frente a `java.nio.file.Path`, rutas relativas al proyecto y al *classpath*, diferencias entre sistemas operativos, *Path Traversal* y errores comunes (Java 25+). |
 
 ### 🕒 Fechas y horas
 
 | Documento | Qué encontrarás |
 | --- | --- |
-| [Fechas](https://github.com/Victor-369/Documentacion-Java/blob/main/Fechas.md) | API `java.time`: fecha y hora actuales, `DateTimeFormatter` y patrones, qué clase usar en cada caso, inmutabilidad, `Period`, `Duration` y `ChronoUnit`, zonas horarias e instantes, `Clock` para pruebas, *parsing* y modos de resolución, y novedades desde Java 21 (CLDR, eras, espacios laxos). |
+| [Fechas](https://github.com/Victor-369/Documentacion-Java/blob/main/Fechas.md) | API `java.time`: fecha y hora actuales, `DateTimeFormatter` y patrones, qué clase usar en cada caso, inmutabilidad, `Period`, `Duration` y `ChronoUnit`, zonas horarias e instantes, `Clock` para pruebas, *parsing* y modos de resolución, y cambios recientes que afectan a Java 25 (CLDR, eras, espacios laxos). Ejemplos verificados con OpenJDK 25. |
 
 ### ⚠️ Excepciones y gestión de errores
 
 | Documento | Qué encontrarás |
 | --- | --- |
-| [Excepciones checked y unchecked](https://github.com/Victor-369/Documentacion-Java/blob/main/Excepciones%20checked%20y%20unchecked.md) | Diferencias entre excepciones comprobadas y no comprobadas, ejemplos con `throws` y `try-catch`, excepciones personalizadas y cuándo usar cada tipo. |
-| [Manejo eficaz de errores en Java: estrategias y buenas prácticas](https://github.com/Victor-369/Documentacion-Java/blob/main/Manejo%20Eficaz%20de%20Errores%20en%20Java%20-%20Estrategias%20y%20Buenas%20Practicas.md) | Resumen de un artículo sobre buenas prácticas, técnicas de manejo (`try-catch-finally`, *multi-catch*, `try-with-resources`), diseño de excepciones personalizadas y registro de errores. |
+| [Excepciones checked y unchecked](https://github.com/Victor-369/Documentacion-Java/blob/main/Excepciones%20checked%20y%20unchecked.md) | Diferencias entre excepciones comprobadas y no comprobadas, ejemplos con `throws`, `try-catch` y `try-with-resources`, excepciones personalizadas, cuándo usar cada tipo y Java moderno (*multi-catch*, `catch (X _)`, encadenamiento, excepciones en lambdas y la rama `Error`). |
+| [Manejo eficaz de errores en Java: estrategias y buenas prácticas](https://github.com/Victor-369/Documentacion-Java/blob/main/Manejo%20Eficaz%20de%20Errores%20en%20Java%20-%20Estrategias%20y%20Buenas%20Practicas.md) | Resumen de un artículo sobre buenas prácticas, técnicas de manejo (`try-catch-finally`, *multi-catch*, `try-with-resources`), diseño de excepciones personalizadas y registro de errores, con un complemento sobre Java 25 (mensajes de `NullPointerException`, excepciones suprimidas, `_` en `catch` y resultados con tipos `sealed`). |
 
 ### 🧪 Testing y pruebas automatizadas
 
 | Documento | Qué encontrarás |
 | --- | --- |
-| [JUnit: visión general e introducción para principiantes](https://github.com/Victor-369/Documentacion-Java/blob/main/JUnit%3A%20Vision%20general%20e%20introduccion.md) | Traducción al castellano de la página oficial de JUnit 6.1.3, más un complemento para principiantes: puesta en marcha con Maven y Gradle, anotaciones, aserciones, errores frecuentes y glosario. |
-| [JUnit: aprende a escribir pruebas paso a paso](https://github.com/Victor-369/Documentacion-Java/blob/main/JUnit%3A%20Aprende%20a%20escribir%20pruebas%20paso%20a%20paso.md) | Guía práctica: primera prueba, ciclo de vida, aserciones, excepciones, pruebas parametrizadas, anidadas, repetidas y dinámicas, etiquetas, *timeouts* y buenas prácticas. |
+| [JUnit: visión general e introducción](https://github.com/Victor-369/Documentacion-Java/blob/main/JUnit%3A%20Vision%20general%20e%20introduccion.md) | Traducción al castellano de la página oficial de JUnit 6.1.3, más un complemento práctico: puesta en marcha con Maven y Gradle (proyectos en Java 25), anotaciones, aserciones, errores frecuentes y glosario. |
+| [JUnit: aprende a escribir pruebas paso a paso](https://github.com/Victor-369/Documentacion-Java/blob/main/JUnit%3A%20Aprende%20a%20escribir%20pruebas%20paso%20a%20paso.md) | Guía práctica con JUnit 6.1.3 y Java 25: primera prueba, ciclo de vida, aserciones, excepciones, pruebas parametrizadas, anidadas, repetidas y dinámicas, etiquetas, *timeouts* y buenas prácticas. |
 | [AssertJ: guía para empezar desde cero](https://github.com/Victor-369/Documentacion-Java/blob/main/AssertJ%20-%20Guia%20para%20empezar%20desde%20cero.md) | Aserciones fluidas con `assertThat(...)`: tipos de dato, colecciones, excepciones, mensajes de error, *soft assertions*, comparación recursiva y estilo BDD. |
-| [Test-Driven Development (TDD)](https://github.com/Victor-369/Documentacion-Java/blob/main/Test-Driven%20Development%20%28TDD%29.md) | Guía paso a paso del ciclo Rojo → Verde → Refactor, con dos ejemplos completos (factorial y validador de contraseñas), buenas prácticas, errores típicos y ejercicios. |
+| [Test-Driven Development (TDD)](https://github.com/Victor-369/Documentacion-Java/blob/main/Test-Driven%20Development%20%28TDD%29.md) | Guía paso a paso del ciclo Rojo → Verde → Refactor (Maven, JUnit 6 y Java 25), con dos ejemplos completos (factorial y validador de contraseñas), buenas prácticas, errores típicos y ejercicios. |
 
 ### 🔐 Seguridad y criptografía
 
 | Documento | Qué encontrarás |
 | --- | --- |
-| [Guía de seguridad](https://github.com/Victor-369/Documentacion-Java/blob/main/Guia%20de%20seguridad.md) | Introducción a la *Security Developer's Guide* de Java SE (Java 21+): mapa de la seguridad en Java (JCA/JCE, PKI, JSSE, JAAS, SASL, firma de código, serialización segura), cambios desde Java 17, herramientas de línea de comandos (`keytool`, `jarsigner`), buenas prácticas y un ejemplo mínimo de hash SHA-256. |
-| [Arquitectura criptográfica](https://github.com/Victor-369/Documentacion-Java/blob/main/Arquitectura%20criptografica.md) | Guía de referencia de la JCA (Java 21+): principios de diseño, proveedores, clase `Security`, clases *engine*, `SecureRandom`, `MessageDigest`, `Signature`, `Cipher`, `Mac`, claves, `KeyStore`, certificados, excepciones habituales, buenas prácticas y glosario. |
+| [Guía de seguridad](https://github.com/Victor-369/Documentacion-Java/blob/main/Guia%20de%20seguridad.md) | Introducción a la *Security Developer's Guide* de Java SE (Java 25+): mapa de la seguridad en Java (JCA/JCE, PKI, JSSE, JAAS, SASL, firma de código, serialización segura), cambios de Java 17 a Java 25 (fin del *Security Manager*, ML-KEM, ML-DSA y API `KDF`), herramientas de línea de comandos (`keytool`, `jarsigner`), buenas prácticas y un ejemplo mínimo de hash SHA-256. |
+| [Arquitectura criptográfica](https://github.com/Victor-369/Documentacion-Java/blob/main/Arquitectura%20criptografica.md) | Guía de referencia de la JCA (Java 25+): principios de diseño, proveedores, clase `Security`, clases *engine*, `SecureRandom`, `MessageDigest`, `Signature`, `Cipher`, `Mac`, claves, `KEM` con ML-KEM post-cuántico, derivación de claves con `KDF`/HKDF, `KeyStore`, certificados, excepciones habituales, buenas prácticas y glosario. |
 
 ### 🗄️ Bases de datos
 
@@ -117,15 +121,15 @@ Actualmente, el repositorio cuenta con documentación sobre diferentes conceptos
 | [Entidad-Relación: diagrama](https://github.com/Victor-369/Documentacion-Java/blob/main/Entidad%20-%20Relacion%3A%20Diagrama.md) | Diagrama Entidad-Relación: entidades, relaciones y atributos, cardinalidad, notaciones de Chen y *Crow's Foot*, creación paso a paso, buenas prácticas, comparación con UML, preguntas frecuentes y paso del diagrama a tablas MySQL. |
 | [Entidad-Relación: PlantUML](https://github.com/Victor-369/Documentacion-Java/blob/main/Entidad%20-%20Relacion%3A%20PlantUML.md) | Guía para dibujar diagramas E/R como código con PlantUML: instalación y herramientas, entidades, clases y enums, cardinalidad en notación pata de gallo, relaciones de diagrama de clases, casos típicos (1:1, 1:N, N:M, reflexiva, jerarquía, ternaria), notación de Chen, paquetes y notas, estilos y temas, macros del preprocesador, ejemplo completo de tienda online con su SQL, buenas prácticas, errores frecuentes y chuleta. |
 | [NoSQL y diferencias con SQL](https://github.com/Victor-369/Documentacion-Java/blob/main/Diferencias%20entre%20nosql%20y%20sql.md) | Qué es NoSQL y sus tipos (documentales, clave-valor, columnas anchas, grafos y multimodelo), breve historia, características, ACID frente a BASE y teorema CAP, ejemplo relacional frente a documental, diferencias entre RDBMS y NoSQL, equivalencias de conceptos y consultas SQL ↔ MongoDB (MQL), cuándo elegir cada opción, mitos habituales y preguntas frecuentes (revisado para MongoDB 9.0). |
-| [MongoDB: modelado de datos y diseño](https://github.com/Victor-369/Documentacion-Java/blob/main/MongoDB%3A%20modelado%20de%20datos%20y%20diseno.md) | Modelado de datos en MongoDB pensado para principiantes: vocabulario básico (embeber, referenciar, cardinalidad…), diferencias con el diseño relacional con ejemplos SQL ↔ MongoDB, proceso de diseño del esquema en 4 pasos, relaciones (1:1, 1:pocos, 1:N, N:M y `$lookup`), embeber o referenciar, duplicación y coherencia, validación de esquemas, índices, atomicidad y *sharding*, patrones de diseño explicados como problema → solución (*Computed*, *Bucket*, *Outlier*, *Subset*, *Extended Reference*, versionado…), antipatrones, estructuras de árbol, ejemplo de tienda en línea y lista de comprobación. |
-| [MongoDB: tutoriales](https://github.com/Victor-369/Documentacion-Java/blob/main/MongoDB%3A%20tutoriales.md) | Índice organizado de los tutoriales oficiales del manual (MongoDB 9.0) con guía rápida en `mongosh` y explicación de cada comando para principiantes (equivalencias SQL, respuestas esperadas y errores típicos): CRUD, índices y `explain()`, agregación y transacciones; conjuntos de réplicas, *sharding*, administración y copias de seguridad, seguridad, patrones de desarrollo y de búsqueda de texto, novedades de la 9.0 y ruta de aprendizaje recomendada. |
+| [MongoDB: modelado de datos y diseño](https://github.com/Victor-369/Documentacion-Java/blob/main/MongoDB%3A%20modelado%20de%20datos%20y%20diseno.md) | Modelado de datos en MongoDB: vocabulario básico (embeber, referenciar, cardinalidad…), diferencias con el diseño relacional con ejemplos SQL ↔ MongoDB, proceso de diseño del esquema en 4 pasos, relaciones (1:1, 1:pocos, 1:N, N:M y `$lookup`), embeber o referenciar, duplicación y coherencia, validación de esquemas, índices, atomicidad y *sharding*, patrones de diseño explicados como problema → solución (*Computed*, *Bucket*, *Outlier*, *Subset*, *Extended Reference*, versionado…), antipatrones, estructuras de árbol, ejemplo de tienda en línea y lista de comprobación. |
+| [MongoDB: tutoriales](https://github.com/Victor-369/Documentacion-Java/blob/main/MongoDB%3A%20tutoriales.md) | Índice organizado de los tutoriales oficiales del manual (MongoDB 9.0) con guía rápida en `mongosh` y explicación de cada comando (equivalencias SQL, respuestas esperadas y errores típicos): CRUD, índices y `explain()`, agregación y transacciones; conjuntos de réplicas, *sharding*, administración y copias de seguridad, seguridad, patrones de desarrollo y de búsqueda de texto, novedades de la 9.0 y ruta de aprendizaje recomendada. |
 
 ### 📝 Logging y registro de información
 
 | Documento | Qué encontrarás |
 | --- | --- |
 | [Log4J: gestión de registros](https://github.com/Victor-369/Documentacion-Java/blob/main/Log4J%3A%20Gestion%20de%20Registros.md) | Resumen conceptual: niveles de *logging* y cuándo usar cada uno, configuración, *appenders* y *layouts*. |
-| [Log4J: guía](https://github.com/Victor-369/Documentacion-Java/blob/main/Log4J%3A%20Guia.md) | Guía práctica de Log4j 2: instalación con Maven y Gradle, `log4j2.xml`, mensajes parametrizados, escritura en ficheros (`RollingFile`), `ThreadContext`, integración con SLF4J y problemas frecuentes. |
+| [Log4J: guía](https://github.com/Victor-369/Documentacion-Java/blob/main/Log4J%3A%20Guia.md) | Guía práctica de Log4j 2 (2.26.1, Java 25): instalación con Maven y Gradle, `log4j2.xml`, mensajes parametrizados, escritura en ficheros (`RollingFile`), `ThreadContext`, integración con SLF4J y problemas frecuentes. |
 
 ### 🔧 Herramientas y buenas prácticas
 
@@ -201,7 +205,7 @@ Los principales objetivos de este repositorio son:
 - 📈 Ampliar progresivamente los contenidos.
 - 🗂️ Mantener la información organizada y fácilmente accesible.
 
-La intención es que el repositorio pueda servir tanto para **aprender Java desde cero** como para **consultar conceptos concretos durante el desarrollo de proyectos**.
+La intención es que el repositorio pueda servir tanto para **aprender Java** como para **consultar conceptos concretos durante el desarrollo de proyectos**.
 
 ---
 
@@ -304,18 +308,18 @@ La documentación del repositorio incluye material más detallado sobre [JUnit](
 
 Actualmente, el repositorio contiene documentación relacionada con:
 
-- ☕ Java (colecciones, genéricos, lambdas y streams, excepciones, clases abstractas e interfaces, ordenación, enums, records, fechas y horas, entrada/salida y rutas de ficheros)
+- ☕ Java 25 LTS como versión de referencia (colecciones, genéricos, lambdas y streams, excepciones, clases abstractas e interfaces, ordenación, enums, records, fechas y horas, entrada/salida y rutas de ficheros)
 - 🏋️ Diseño orientado a objetos (calistenia de objetos, principios SOLID, DRY, KISS y *Tell, Don't Ask*, cohesión y acoplamiento con Java 25)
-- 🧱 Patrones de diseño GoF (creacionales, estructurales y de comportamiento con Java 21+)
+- 🧱 Patrones de diseño GoF (creacionales, estructurales y de comportamiento con Java 25+)
 - 🧬 Anotaciones y *Reflection* (metaprogramación en Java)
 - 🗄️ Bases de datos relacionales (tipos de datos de MySQL y diagramas Entidad-Relación)
 - 🍃 Bases de datos NoSQL y MongoDB (diferencias con SQL, modelado de datos, `mongosh`, CRUD, índices y agregación)
 - 🌱 PlantUML (diagramas Entidad-Relación como código)
 - 🔐 Seguridad y criptografía en Java (JCA/JCE)
-- 🧪 JUnit
+- 🧪 JUnit 6
 - 🔍 AssertJ
 - 🔄 Test-Driven Development (TDD)
-- 📝 Log4j 2
+- 📝 Log4j 2 (2.26.x)
 - 🌿 Git (convención de *commits* con Conventional Commits)
 - 📦 Maven y 🏗️ Gradle (configuración de dependencias dentro de las guías de JUnit, AssertJ, TDD y Log4j)
 
@@ -337,7 +341,7 @@ Después puedes abrir los archivos `.md` con cualquier editor compatible con Mar
 
 ## 📚 ¿Por dónde empezar?
 
-Si estás comenzando a aprender Java, puedes utilizar esta documentación como material de consulta e ir avanzando progresivamente.
+Puedes utilizar esta documentación como material de consulta e ir avanzando progresivamente.
 
 No es necesario seguir un orden concreto, ya que cada documento está pensado para poder consultarse de manera independiente. Aun así, si no sabes por dónde empezar, esta ruta puede servirte de orientación:
 
@@ -347,7 +351,7 @@ No es necesario seguir un orden concreto, ya que cada documento está pensado pa
 4. [Lambdas y Streams](https://github.com/Victor-369/Documentacion-Java/blob/main/Lambdas%20y%20Streams.md): programación funcional y procesamiento de datos.
 5. [Calistenia de objetos](https://github.com/Victor-369/Documentacion-Java/blob/main/Calistenia%20de%20objetos.md): reglas para practicar un diseño orientado a objetos más limpio (se apoya en *records*, `sealed` y *streams*).
 6. [Cohesión y acoplamiento](https://github.com/Victor-369/Documentacion-Java/blob/main/Cohesion%20y%20acoplamiento.md), [Principios SOLID](https://github.com/Victor-369/Documentacion-Java/blob/main/Principio%20SOLID.md), [DRY](https://github.com/Victor-369/Documentacion-Java/blob/main/Principio%20DRY.md), [KISS](https://github.com/Victor-369/Documentacion-Java/blob/main/Principio%20KISS.md) y [Tell, Don't Ask](https://github.com/Victor-369/Documentacion-Java/blob/main/Tell%20dont%20ask.md): principios de diseño para escribir código mantenible.
-7. [Patrones creacionales](https://github.com/Victor-369/Documentacion-Java/blob/main/Patrones%20creacionales.md), [Patrones estructurales](https://github.com/Victor-369/Documentacion-Java/blob/main/Patrones%20estructurales.md) y [Patrones de comportamiento](https://github.com/Victor-369/Documentacion-Java/blob/main/Patrones%20comportamiento.md): soluciones reutilizables a problemas de diseño habituales (conviene leerlas en este orden, después de SOLID).
+7. [Patrones creacionales](https://github.com/Victor-369/Documentacion-Java/blob/main/Patrones%20creacionales.md), [Patrones estructurales](https://github.com/Victor-369/Documentacion-Java/blob/main/Patrones%20estructurales.md) y [Patrones de comportamiento](https://github.com/Victor-369/Documentacion-Java/blob/main/Patrones%20comportamiento.md): soluciones reutilizables a problemas de diseño habituales (conviene leerlas en este orden; no hace falta conocer SOLID previamente).
 8. [Excepciones checked y unchecked](https://github.com/Victor-369/Documentacion-Java/blob/main/Excepciones%20checked%20y%20unchecked.md) y [Manejo eficaz de errores](https://github.com/Victor-369/Documentacion-Java/blob/main/Manejo%20Eficaz%20de%20Errores%20en%20Java%20-%20Estrategias%20y%20Buenas%20Practicas.md): gestión de errores.
 9. [Fechas](https://github.com/Victor-369/Documentacion-Java/blob/main/Fechas.md): fechas y horas con `java.time`.
 10. [Entrada - Salida básica](https://github.com/Victor-369/Documentacion-Java/blob/main/Entrada%20-%20Salida%20basica.md) y [Rutas relativas](https://github.com/Victor-369/Documentacion-Java/blob/main/Rutas%20relativas.md): trabajo con datos y ficheros.
