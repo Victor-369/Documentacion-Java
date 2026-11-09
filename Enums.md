@@ -1,11 +1,11 @@
 # Enumeraciones (`enum`) en Java
 
-Guía basada en el tutorial de W3Schools sobre enums, ampliada con las novedades del lenguaje desde Java 21 en adelante.
+Guía basada en el tutorial de W3Schools sobre enums, ampliada con lo que aporta el lenguaje moderno. **Versión de referencia: Java 25 (LTS) o superior.**
 
 **Convenciones de este documento**
 
-- Los ejemplos marcados con ✅ se han compilado y ejecutado con OpenJDK 21.
-- Los ejemplos marcados con ⚠️ requieren una versión posterior a 21 y **no se han podido compilar en local**; se han tomado de la especificación oficial (JEP) y se indica la fuente.
+- Los ejemplos marcados con ✅ se han compilado y ejecutado con OpenJDK 25.
+- Los marcados con 🧪 usan una característica en vista previa en Java 25: requieren `--enable-preview` y no deben usarse en producción.
 - Las secciones 1 a 6 resumen el contenido de W3Schools. Las secciones 7 a 10 son ampliaciones.
 
 ---
@@ -125,7 +125,7 @@ class C extends E {}        // error: cannot inherit from final E
 
 ## 7. Ampliación: lo esencial de un enum «con cuerpo»
 
-> Estas características no son novedades de Java 21, pero son la base necesaria para entender lo que viene después. W3Schools las trata en una página aparte («Enum Constructor»).
+> Estas características existen desde Java 5, pero son la base necesaria para entender lo que viene después. W3Schools las trata en una página aparte («Enum Constructor»).
 
 ### 7.1. Atributos, constructor y métodos
 
@@ -206,9 +206,9 @@ EnumSet.complementOf(EnumSet.of(Nivel.BAJO));   // [MEDIO, ALTO]
 
 ---
 
-## 8. Novedades desde Java 21: `switch` con patrones y enums (JEP 441)
+## 8. `switch` con patrones y enums (JEP 441)
 
-**Java 21** convierte en definitivo el *pattern matching* para `switch` ([JEP 441](https://openjdk.org/jeps/441), estado «Closed / Delivered», versión 21). Estos son los cambios que afectan a los enums.
+El *pattern matching* para `switch` es definitivo desde **Java 21** ([JEP 441](https://openjdk.org/jeps/441)), así que en Java 25 se usa sin opciones especiales. Estos son los cambios que afectan a los enums.
 
 ### 8.1. `switch` exhaustivo sin `default`
 
@@ -324,14 +324,13 @@ switch (moneda) {
 }
 ```
 
-✅ Compila y funciona en Java 21.
+✅ Compila y funciona en Java 25 (imprime `Cruz` con `moneda = Cara.CRUZ`).
 
 ---
 
 ## 9. Variables y patrones sin nombre (`_`)
 
-- **Java 21:** primera versión preliminar ([JEP 443](https://openjdk.org/jeps/443)).
-- **Java 22:** versión definitiva, sin cambios ([JEP 456](https://openjdk.org/jeps/456)).
+Definitivos desde **Java 22** ([JEP 456](https://openjdk.org/jeps/456)); en Java 25 no requieren ninguna opción.
 
 Un guion bajo `_` indica que una variable o un patrón **no se va a usar**. Es útil con `switch` y enums cuando varias etiquetas comparten acción. Ejemplo del JEP con una jerarquía `sealed`:
 
@@ -349,14 +348,12 @@ Además, JEP 456 permite varios patrones en una misma etiqueta `case` siempre qu
 case Box(RedBall _), Box(BlueBall _) -> processBox(box);
 ```
 
-Otros usos de `_` (variables locales, parámetros de `catch`, parámetros de lambdas) ✅ comprobado en Java 21 con `--enable-preview --release 21`:
+Otros usos de `_` (variables locales, parámetros de `catch`, parámetros de lambdas) ✅:
 
 ```java
 for (var _ : List.of(1, 2, 3)) n++;
 try { Integer.parseInt("x"); } catch (NumberFormatException _) { /* ... */ }
 ```
-
-> En Java 21 es **solo vista previa**: sin `--enable-preview` el compilador responde `unnamed variables are a preview feature and are disabled by default`. A partir de Java 22 no hace falta ninguna opción.
 
 ## 10. Constructores flexibles en enums (Java 25, JEP 513)
 
@@ -364,7 +361,7 @@ try { Integer.parseInt("x"); } catch (NumberFormatException _) { /* ... */ }
 
 Respecto a los enums, el JEP dice textualmente que sus constructores pueden contener invocaciones a otro constructor (`this(...)`), pero **no** invocaciones al constructor de la superclase, y que se benefician del cambio porque ahora pueden llevar sentencias antes de `this(...)`.
 
-Ejemplo ilustrativo ⚠️ (no compilado; requiere JDK 25):
+Ejemplo ✅ (`Prioridad.URGENTE` queda con la etiqueta `"P5"`):
 
 ```java
 enum Prioridad {
@@ -387,16 +384,27 @@ enum Prioridad {
 
 Reglas del JEP para ese código previo: no puede referirse a `this` (salvo asignar campos sin inicializador), puede lanzar excepciones, y **no** puede contener `return`.
 
-## 11. Ya en preparación: tipos primitivos en patrones (Java 25, vista previa)
+## 11. Ya en preparación: tipos primitivos en patrones 🧪
 
-[JEP 507](https://openjdk.org/jeps/507) («Primitive Types in Patterns, instanceof, and switch») está en su **tercera vista previa** en Java 25. Amplía el *pattern matching* a los tipos primitivos. Es solo vista previa, así que no conviene usarlo todavía en código de producción.
+[JEP 507](https://openjdk.org/jeps/507) («Primitive Types in Patterns, instanceof, and switch») está en su **tercera vista previa** en Java 25 (cuarta en Java 26, JEP 530). Amplía el *pattern matching* a los tipos primitivos:
+
+```java
+int x = 200;
+String s = switch (x) {
+    case byte b -> "cabe en byte: " + b;
+    case int i  -> "int: " + i;
+};
+// int: 200
+```
+
+Sin `--enable-preview`, Java 25 lo rechaza con `primitive patterns are a preview feature and are disabled by default`. No conviene usarlo todavía en código de producción.
 
 ---
 
 ## 12. Resumen y buenas prácticas
 
 - Un enum es la forma idiomática de modelar un conjunto cerrado de valores.
-- Con Java 21+, prefiere `switch` **expresión sin `default`** para obtener comprobación de exhaustividad en compilación.
+- Prefiere `switch` **expresión sin `default`** para obtener comprobación de exhaustividad en compilación.
 - Para combinar enums con otros tipos, usa una interfaz `sealed` y etiquetas cualificadas (`Palo.OROS`).
 - Coloca las constantes primero y los patrones genéricos al final para evitar errores de dominancia.
 - Usa `case null` solo cuando `null` sea un valor legítimo de entrada.
@@ -409,9 +417,9 @@ Reglas del JEP para ese código previo: no puede referirse a `this` (salvo asign
 | `switch` con patrones, constantes de enum cualificadas, `case null`, `MatchException` | Java 21 | Definitivo (JEP 441) |
 | Variables y patrones sin nombre `_` | 21 (preview) → 22 | Definitivo en 22 (JEP 456) |
 | Sentencias antes de `this(...)`/`super(...)` en constructores (enums incluidos) | 22 (preview) → 25 | Definitivo en 25 (JEP 513) |
-| Tipos primitivos en patrones | Java 25 | Vista previa (JEP 507) |
+| Tipos primitivos en patrones | 23 → 26 | Vista previa (JEP 455, 488, 507, 530) |
 
-> Java 25 es la última versión LTS vigente (septiembre de 2025); la anterior es Java 21 (septiembre de 2023).
+> Java 25 (septiembre de 2025) es la versión LTS de referencia de esta guía. Todo lo marcado como definitivo en la tabla funciona en Java 25 sin opciones adicionales.
 
 ## Fuentes
 
