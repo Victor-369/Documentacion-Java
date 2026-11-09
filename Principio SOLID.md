@@ -2,7 +2,7 @@
 
 > Versión de referencia: **Java 25 (LTS)** o superior. Todos los ejemplos usan únicamente características definitivas del lenguaje (nada en *preview*).
 >
-> **¿Para quién es esta guía?** Para personas que ya saben escribir clases, interfaces y métodos en Java, pero que **nunca han oído hablar de SOLID**. No hace falta saber nada de diseño de software: los términos técnicos se explican en la sección [Conceptos previos](#2-conceptos-previos).
+> **Conocimientos previos:** saber escribir clases, interfaces y métodos en Java. No hace falta saber nada de diseño de software ni haber oído hablar antes de SOLID: los términos técnicos se explican en la sección [Conceptos previos](#2-conceptos-previos).
 
 ## Índice
 
