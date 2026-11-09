@@ -1,8 +1,8 @@
-# Rutas relativas en Java (Java 21+)
+# Rutas relativas en Java (Java 25+)
 
 > **Fuente de referencia:** artículo «Ruta relativa en Java», DelftStack.
 > **Destinatario:** programador Java.
-> **Versión objetivo:** Java 21 (LTS) y posteriores.
+> **Versión objetivo:** Java 25 (LTS) y posteriores. Todos los ejemplos se han compilado y ejecutado con OpenJDK 25.
 
 ---
 
@@ -60,7 +60,7 @@ public class DirectorioActual {
 }
 ```
 
-> **Error muy frecuente en principiantes:** el programa funciona al ejecutarlo desde el IDE y falla desde la terminal (o al revés), porque el directorio de trabajo es distinto. Comprueba siempre `user.dir`.
+> **Error muy frecuente:** el programa funciona al ejecutarlo desde el IDE y falla desde la terminal (o al revés), porque el directorio de trabajo es distinto. Comprueba siempre `user.dir`.
 
 ---
 
