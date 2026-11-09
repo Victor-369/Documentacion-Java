@@ -1,8 +1,8 @@
-# Guía del desarrollador de seguridad en Java SE (Java 21+)
+# Guía del desarrollador de seguridad en Java SE (Java 25+)
 
 > **Fuente de referencia:** *Java Platform, Standard Edition Security Developer's Guide* (Oracle).
 > **Destinatario:** programador Java.
-> **Versión objetivo:** Java 21 (LTS) y posteriores.
+> **Versión objetivo:** Java 25 (LTS) y posteriores.
 
 ---
 
@@ -10,7 +10,7 @@
 
 La *Security Developer's Guide* de Oracle es el manual oficial que explica la tecnología de seguridad de la plataforma Java SE: las herramientas, los algoritmos, los mecanismos y los protocolos de seguridad más habituales y cómo se implementan en Java.
 
-La página principal solo es un índice. Este documento explica, en castellano y con ejemplos, qué áreas cubre esa guía y qué debes saber de cada una al trabajar con Java 21 o superior.
+La página principal solo es un índice. Este documento explica, en castellano y con ejemplos, qué áreas cubre esa guía y qué debes saber de cada una al trabajar con Java 25 o superior.
 
 ---
 
@@ -28,7 +28,7 @@ Java no tiene un único «módulo de seguridad». Es un conjunto de piezas que s
 | **Autenticación segura (SASL, GSS-API/Kerberos)** | Intercambio de mensajes autenticados entre aplicaciones | `javax.security.sasl`, `org.ietf.jgss` |
 | **Firma de código** | Garantizar el origen y la integridad de un JAR | `jarsigner`, `keytool` |
 | **Serialización segura** | Evitar ataques por deserialización | `ObjectInputFilter` |
-| **Control de acceso (*Security Manager*)** | Restringir permisos de código | **En desuso, ver sección 4** |
+| **Control de acceso (*Security Manager*)** | Restringir permisos de código | **Desactivado de forma permanente, ver sección 4** |
 
 ---
 
@@ -57,15 +57,15 @@ Java no tiene un único «módulo de seguridad». Es un conjunto de piezas que s
 
 ---
 
-## 4. Cambios importantes desde Java 17 hasta Java 21 y posteriores
+## 4. Cambios importantes desde Java 17 hasta Java 25
 
 Esta es la parte donde la documentación antigua puede confundirte.
 
-### 4.1. El *Security Manager* está en desuso
+### 4.1. El *Security Manager* ya no se puede usar
 
 - En **Java 17** (JEP 411) se marcó como obsoleto para su eliminación.
-- En **Java 21** sigue existiendo, pero está **desactivado por defecto**. Para usarlo hay que activarlo explícitamente con `-Djava.security.manager=allow`. Aun así, no se recomienda.
-- A partir de **Java 24** (JEP 486) se ha **desactivado de forma permanente**.
+- Hasta **Java 23** seguía existiendo, desactivado por defecto, y podía activarse con `-Djava.security.manager=allow`.
+- Desde **Java 24** (JEP 486) está **desactivado de forma permanente**: en Java 25 no se puede activar ni al arrancar ni en tiempo de ejecución (`System.setSecurityManager` lanza `UnsupportedOperationException`). Las clases de la API siguen existiendo solo por compatibilidad.
 
 > **Consejo:** no diseñes aplicaciones nuevas pensando en políticas de permisos con `Security Manager`. Usa aislamiento a nivel de contenedor, sistema operativo y mínimos privilegios.
 
@@ -102,8 +102,23 @@ Y el almacén de certificados de confianza por defecto (`cacerts`) está en:
 | Java 15 | Firmas **EdDSA** (Ed25519 y Ed448) |
 | Java 17 | **HexFormat** para convertir bytes ↔ hexadecimal (`java.util.HexFormat`) |
 | Java 21 | API **KEM** (`javax.crypto.KEM`), base para criptografía post-cuántica |
-| Java 24 | Algoritmos post-cuánticos **ML-KEM** y **ML-DSA** |
-| Java 24 | Security Manager deshabilitado de forma permanente |
+| Java 24 | Algoritmos post-cuánticos **ML-KEM** (JEP 496) y **ML-DSA** (JEP 497) |
+| Java 24 | Security Manager deshabilitado de forma permanente (JEP 486) |
+| Java 25 | API de **derivación de claves** `javax.crypto.KDF`, con HKDF (JEP 510, definitiva) |
+| Java 25 | Codificación **PEM** de claves y certificados (JEP 470, solo vista previa) |
+
+> Ejemplo de la API KDF de Java 25 (derivar una clave AES de 256 bits con HKDF):
+>
+> ```java
+> KDF hkdf = KDF.getInstance("HKDF-SHA256");
+> AlgorithmParameterSpec params = HKDFParameterSpec.ofExtract()
+>         .addIKM(secretoInicial)
+>         .addSalt(sal)
+>         .thenExpand("cifrado-v1".getBytes(StandardCharsets.UTF_8), 32);
+> SecretKey claveAes = hkdf.deriveKey("AES", params);
+> ```
+>
+> HKDF sirve para obtener claves a partir de un secreto compartido (por ejemplo, el resultado de un KEM). **No** sirve para contraseñas: para eso se usa PBKDF2 u otro algoritmo lento (ver sección 6).
 
 ---
 
@@ -174,7 +189,7 @@ public class EjemploHash {
 
 ## 8. Cómo seguir aprendiendo
 
-- Fichero `02-arquitectura-criptografica-jca.md`: explica en profundidad la arquitectura JCA.
+- [Arquitectura criptográfica](<Arquitectura criptografica.md>): explica en profundidad la arquitectura JCA.
 - Documentación oficial de Oracle: *Security Developer's Guide* de la versión del JDK que uses.
 - Referencia de nombres estándar de algoritmos: *Java Security Standard Algorithm Names*.
 - Recomendaciones de OWASP (*Cryptographic Storage Cheat Sheet*, *Password Storage Cheat Sheet*).
