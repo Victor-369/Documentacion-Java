@@ -1,9 +1,9 @@
-# Entrada/Salida (E/S) en Java 21+
+# Entrada/Salida (E/S) en Java 25+
 
 > **Fuente de referencia:** lección *Basic I/O* de los [Java Tutorials de Oracle](https://docs.oracle.com/javase/tutorial/essential/io/index.html).
-> Este documento es una reelaboración y ampliación en castellano, con explicaciones propias, ejemplos nuevos, buenas prácticas y ejercicios pensados para quien está empezando.
+> Este documento es una reelaboración y ampliación en castellano, con explicaciones propias, ejemplos nuevos, buenas prácticas y ejercicios.
 >
-> **Versión objetivo:** este manual está pensado para **Java 21 o superior** (21 y 25 son versiones LTS). El tutorial original de Oracle está escrito para JDK 8; aquí los ejemplos usan la API moderna (`Path.of`, `Files.readString`, `var`, `record`, bloques de texto…). Cuando una característica exige una versión posterior a la 21, se indica expresamente.
+> **Versión objetivo:** este manual está pensado para **Java 25 (LTS) o superior**. El tutorial original de Oracle está escrito para JDK 8; aquí los ejemplos usan la API moderna (`Path.of`, `Files.readString`, `var`, `record`, bloques de texto, `IO.println`…). La tabla de la introducción indica desde qué versión existe cada novedad.
 
 ---
 
@@ -37,7 +37,7 @@
     - [10.16 Vigilar cambios en un directorio](#1016-vigilar-cambios-en-un-directorio)
     - [10.17 Otros métodos útiles](#1017-otros-métodos-útiles)
     - [10.18 Código heredado con `java.io.File`](#1018-código-heredado-con-javaiofile)
-    - [10.19 E/S y concurrencia: hilos virtuales (Java 21)](#1019-es-y-concurrencia-hilos-virtuales-java-21)
+    - [10.19 E/S y concurrencia: hilos virtuales](#1019-es-y-concurrencia-hilos-virtuales)
 11. [Resumen](#11-resumen)
 12. [Errores frecuentes y buenas prácticas](#12-errores-frecuentes-y-buenas-prácticas)
 13. [Preguntas y ejercicios](#13-preguntas-y-ejercicios)
@@ -89,9 +89,9 @@ Si has visto tutoriales antiguos, notarás diferencias. Estas son las más relev
 | UTF-8 como codificación por defecto | Java 18 | Sección 4 |
 | Hilos virtuales (versión definitiva) | Java 21 | Sección 10.19 |
 | `System.console()` no nulo sin terminal y `Console.isTerminal()` | Java 22 | Sección 7 |
-| Clase `java.io.IO` (`IO.println`, `IO.readln`) | Java 25 | Sección 7 |
+| Clase `java.lang.IO` (`IO.println`, `IO.readln`) y ficheros fuente compactos | Java 25 | Sección 7 |
 
-> ℹ️ **Sobre el tutorial original:** menciona el `SecurityManager` y los *applets*. Ambos están en desuso: el `SecurityManager` está marcado para eliminación desde Java 17 y desactivado de forma permanente desde Java 24, y la API de *applets* también está marcada para eliminación. Puedes ignorar esas consideraciones.
+> ℹ️ **Sobre el tutorial original:** menciona el `SecurityManager` y los *applets*. Ambos están en desuso: el `SecurityManager` está marcado para eliminación desde Java 17 y desactivado de forma permanente desde Java 24, y la API de *applets* está marcada para eliminación en Java 25 (y eliminada en Java 26, JEP 504). Puedes ignorar esas consideraciones.
 
 ---
 
@@ -232,7 +232,7 @@ while ((leidos = origen.read(bloque)) != -1) {
 
 > ⚠️ Error clásico: escribir `destino.write(bloque)` en lugar de `destino.write(bloque, 0, leidos)`. En la última vuelta el bloque puede no estar lleno y copiarías basura.
 
-En Java 21 no hace falta escribir ese bucle a mano: `transferTo` lo hace por ti de forma eficiente.
+En Java moderno (desde Java 9) no hace falta escribir ese bucle a mano: `transferTo` lo hace por ti de forma eficiente.
 
 ```java
 try (var origen = new FileInputStream("foto.jpg");
@@ -584,8 +584,7 @@ consola.printf("Bienvenido, %s%n", usuario);
 
 Puntos clave:
 
-- **En Java 21**, `System.console()` devuelve **`null`** si la entrada o la salida no están conectadas a un terminal interactivo (por ejemplo, al ejecutar desde muchos IDE o al redirigir con `<` o `>`). Compruébalo siempre.
-- **Desde Java 22**, `System.console()` devuelve normalmente un objeto `Console` aunque no haya terminal. Para saber si es interactivo existe el método `isTerminal()`. Si compilas con JDK 22 o superior, el patrón correcto es:
+- **Desde Java 22**, `System.console()` devuelve normalmente un objeto `Console` aunque no haya terminal (por ejemplo, al ejecutar desde muchos IDE o al redirigir con `<` o `>`). Para saber si es interactivo existe el método `isTerminal()`. En Java 25 el patrón correcto es:
 
   ```java
   Console consola = System.console();
@@ -596,16 +595,21 @@ Puntos clave:
   }
   ```
 
-  (Ese método no existe en JDK 21: si necesitas compilar con 21, usa solo la comprobación de `null`.)
+  (Se mantiene la comprobación de `null` porque la especificación sigue permitiendo que no haya consola disponible.)
 - `readPassword` devuelve un `char[]` (y no un `String`) para poder **borrarlo de memoria** una vez usado. Los `String` son inmutables y pueden permanecer en memoria más tiempo del deseado.
 
-#### La clase `java.io.IO` (Java 25)
+#### La clase `java.lang.IO` (Java 25)
 
-Java 25 ([JEP 512](https://openjdk.org/jeps/512)) incorpora una clase de utilidad con métodos estáticos para la consola, pensada para programas pequeños y de aprendizaje:
+Java 25 ([JEP 512](https://openjdk.org/jeps/512)) incorpora la clase `IO`, con métodos estáticos para la consola (`print`, `println`, `readln`), pensada para programas pequeños y de aprendizaje. Está en el paquete **`java.lang`**, así que no necesita `import` (durante las vistas previas de Java 23 y 24 estaba en `java.io`). Se apoya en `System.out` y `System.in`.
+
+Combinada con los **ficheros fuente compactos** (también JEP 512), un programa completo puede ser tan corto como esto:
 
 ```java
-String nombre = IO.readln("¿Cómo te llamas? ");
-IO.println("Hola, " + nombre);
+// Fichero Saludo.java — se ejecuta con: java Saludo.java
+void main() {
+    String nombre = IO.readln("¿Cómo te llamas? ");
+    IO.println("Hola, " + nombre);
+}
 ```
 
 Para aplicaciones reales, `Scanner`, `BufferedReader` y `Console` siguen siendo las herramientas habituales.
@@ -1478,6 +1482,10 @@ La clase `SimpleFileVisitor` implementa todos los métodos por defecto; solo sob
 **Ejemplo: calcular el tamaño total de un directorio**
 
 ```java
+import java.io.IOException;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
+
 public class TamanoDirectorio extends SimpleFileVisitor<Path> {
     private long total = 0;
 
@@ -1597,6 +1605,10 @@ Ejemplos:
 #### Combinar `walkFileTree` y `PathMatcher`
 
 ```java
+import java.io.IOException;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
+
 public class Buscador extends SimpleFileVisitor<Path> {
     private final PathMatcher matcher;
     private int encontrados = 0;
@@ -1647,6 +1659,7 @@ El **servicio de vigilancia** (`WatchService`) permite que tu programa sea avisa
 5. Llamar a `reset()` sobre la clave para seguir recibiendo avisos.
 
 ```java
+import java.io.IOException;
 import java.nio.file.*;
 import static java.nio.file.StandardWatchEventKinds.*;
 
@@ -1781,7 +1794,7 @@ Esto te permite migrar de forma gradual: acepta `File` en tu API antigua, convi�
 
 ---
 
-### 10.19 E/S y concurrencia: hilos virtuales (Java 21)
+### 10.19 E/S y concurrencia: hilos virtuales
 
 Desde Java 21 ([JEP 444](https://openjdk.org/jeps/444)) los **hilos virtuales** son una característica definitiva. Son hilos muy ligeros que permiten crear, por ejemplo, un hilo por tarea sin preocuparse por el coste. Se crean con `Thread.ofVirtual()` o con `Executors.newVirtualThreadPerTaskExecutor()`.
 
@@ -1829,14 +1842,14 @@ Qué debes saber:
 - Los **flujos de bytes** (`InputStream`/`OutputStream`) manejan datos binarios; los **de caracteres** (`Reader`/`Writer`) manejan texto y convierten según un *charset*.
 - Los **flujos con búfer** reducen el número de accesos al dispositivo y mejoran mucho el rendimiento.
 - `Scanner` divide la entrada en *tokens* y `printf`/`String.format` dan formato a la salida. Cuidado con el **`Locale`**.
-- Desde consola disponemos de `System.in`, `System.out`, `System.err` y la clase `Console` (en Java 21 es `null` sin terminal interactivo; desde Java 22 se usa `isTerminal()`).
+- Desde consola disponemos de `System.in`, `System.out`, `System.err` y la clase `Console` (comprueba `null` y usa `isTerminal()` para saber si hay un terminal interactivo).
 - Los **flujos de datos** guardan primitivos y `String`; los **de objetos** guardan objetos completos mediante **serialización** (`Serializable`, `transient`, `serialVersionUID`). Los `record` también se serializan y los **filtros** (`ObjectInputFilter`) reducen el riesgo al deserializar.
 - **NIO.2** (`java.nio.file`) es la API moderna de ficheros: `Path` representa rutas y `Files` aporta operaciones (comprobar, copiar, mover, borrar, leer, escribir, atributos…).
 - Para recorrer o buscar: `DirectoryStream`, `Files.walk`, `Files.walkFileTree`, `PathMatcher`. Para reaccionar a cambios: `WatchService`.
 - `java.io.File` sigue existiendo por compatibilidad, pero se puede convertir con `toPath()`/`toFile()`.
 - **Siempre** se cierran los recursos, preferentemente con `try-with-resources`.
 - Desde Java 18 la codificación por defecto es **UTF-8**; aun así, indícala explícitamente cuando sea relevante.
-- Los **hilos virtuales** (Java 21) simplifican la E/S concurrente, sobre todo la de red.
+- Los **hilos virtuales** (definitivos desde Java 21) simplifican la E/S concurrente, sobre todo la de red.
 
 ### ¿Qué clase elijo? Guía rápida
 
@@ -1858,7 +1871,7 @@ Qué debes saber:
 
 ## 12. Errores frecuentes y buenas prácticas
 
-### Errores típicos de principiante
+### Errores típicos
 
 1. **No cerrar los flujos.** → Usa `try-with-resources`.
 2. **Capturar la excepción y no hacer nada** (`catch (IOException e) {}`) → Como mínimo, regístrala o muéstrala; mejor, trátala o propágala.
@@ -1867,7 +1880,7 @@ Qué debes saber:
 5. **Confundir bytes leídos con tamaño del búfer** al copiar: usa `write(buf, 0, leidos)`.
 6. **Leer un fichero enorme con `readAllBytes`/`readAllLines`.** → Procesa por líneas o por bloques.
 7. **`nextInt()` seguido de `nextLine()`** en `Scanner` (el salto de línea sobrante).
-8. **Suponer que `System.console()` no es `null`** (en Java 21 lo es sin terminal interactivo) o **no comprobar `isTerminal()`** en Java 22+.
+8. **Suponer que `System.console()` siempre es interactiva**: comprueba que no sea `null` y usa `isTerminal()`.
 9. **Deserializar datos no confiables**, o hacerlo sin un `ObjectInputFilter`.
 10. **Comprobar con `exists()` y luego actuar** (condición de carrera) en lugar de capturar la excepción.
 11. **Rutas relativas y directorio de trabajo:** el IDE y la consola pueden tener directorios de trabajo diferentes. Si algo "no se encuentra", imprime `Path.of("x").toAbsolutePath()` para ver dónde está buscando realmente.
@@ -1987,7 +2000,7 @@ public class Contador {
 
 - Tutorial original (en inglés, escrito para JDK 8): <https://docs.oracle.com/javase/tutorial/essential/io/index.html>
 - Tutoriales actualizados de Java: <https://dev.java/learn/>
-- Documentación de la API de Java 21: `java.io`, `java.nio.file` y `java.nio.channels` en la [Javadoc de Java SE 21](https://docs.oracle.com/en/java/javase/21/docs/api/index.html).
+- Documentación de la API de Java 25: `java.io`, `java.nio.file` y `java.nio.channels` en la [Javadoc de Java SE 25](https://docs.oracle.com/en/java/javase/25/docs/api/index.html).
 - JEP relacionadas: [JEP 400 (UTF-8 por defecto)](https://openjdk.org/jeps/400), [JEP 444 (hilos virtuales)](https://openjdk.org/jeps/444), [JEP 512 (clase `IO`)](https://openjdk.org/jeps/512).
 - Temas relacionados que conviene estudiar a continuación:
   - Excepciones y *try-with-resources* en profundidad.
@@ -2000,4 +2013,4 @@ public class Contador {
 
 ---
 
-*Documento elaborado con fines didácticos a partir de la estructura de la lección «Basic I/O» de los Java Tutorials y actualizado para Java 21 o superior. «Java» y «Oracle» son marcas registradas de Oracle y/o sus filiales.*
+*Documento elaborado con fines didácticos a partir de la estructura de la lección «Basic I/O» de los Java Tutorials y actualizado para Java 25 o superior. «Java» y «Oracle» son marcas registradas de Oracle y/o sus filiales.*
