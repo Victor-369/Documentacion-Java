@@ -1,5 +1,7 @@
 # Java: Abstract Class vs Interface
 
+> Versión de referencia: **Java 25 (LTS)** o superior. Los conceptos son válidos desde Java 9; la sección [Java moderno](#-java-moderno-hasta-java-25) recoge lo que añaden las versiones recientes.
+
 ## 📑 Índice
 
 1. [Idea principal](#-idea-principal)
@@ -16,10 +18,11 @@
 12. [¿Cuándo usar cada uno?](#-cuándo-usar-cada-uno)
 13. [Acoplamiento](#-acoplamiento)
 14. [Combinar ambas](#-combinar-ambas)
-15. [Errores frecuentes](#️-errores-frecuentes)
-16. [Reglas mentales](#-reglas-mentales)
-17. [Chuleta ultra rápida](#-chuleta-ultra-rápida)
-18. [Resumen final](#-resumen-final)
+15. [Java moderno (hasta Java 25)](#-java-moderno-hasta-java-25)
+16. [Errores frecuentes](#️-errores-frecuentes)
+17. [Reglas mentales](#-reglas-mentales)
+18. [Chuleta ultra rápida](#-chuleta-ultra-rápida)
+19. [Resumen final](#-resumen-final)
 
 ---
 
@@ -430,6 +433,8 @@ interface Animal {
 
 Una interfaz no representa directamente un objeto que haya que inicializar.
 
+> Desde Java 25, el constructor de la subclase puede validar sus argumentos **antes** de llamar a `super(...)`. Ver [Java moderno](#-java-moderno-hasta-java-25).
+
 ---
 
 ## 🔒 Modificadores de acceso
@@ -837,6 +842,59 @@ class Bird extends Animal implements Flyable, Swimmable {
 
 ---
 
+## 🆕 Java moderno (hasta Java 25)
+
+Desde Java 17 hay dos herramientas que cambian la forma de usar clases abstractas e interfaces.
+
+### Tipos sellados (`sealed`, Java 17)
+
+Una clase abstracta o una interfaz `sealed` indica **exactamente** qué clases pueden heredar de ella o implementarla:
+
+```java
+sealed interface Shape permits Circle, Square {}
+
+record Circle(double radius) implements Shape {}
+record Square(double side) implements Shape {}
+
+static double area(Shape shape) {
+    return switch (shape) {               // switch con patrones (Java 21)
+        case Circle c -> Math.PI * c.radius() * c.radius();
+        case Square s -> s.side() * s.side();
+    };                                    // sin default: el compilador sabe que no hay más casos
+}
+```
+
+Lo mismo vale para una clase abstracta: `abstract sealed class Vehicle permits Car, Truck {}`. Las subclases permitidas deben declararse `final`, `sealed` o `non-sealed`.
+
+### *Records* (Java 16)
+
+Un `record` **no puede heredar de ninguna clase** (ya hereda de `java.lang.Record`), pero **sí puede implementar interfaces**. Por eso, en Java moderno, el par «interfaz `sealed` + varios `record`» sustituye a menudo a la jerarquía «clase abstracta + subclases» cuando solo se modelan datos.
+
+### Constructores flexibles (Java 25)
+
+Desde Java 25 (JEP 513) el constructor de una subclase puede ejecutar código **antes** de `super(...)`, siempre que no use el objeto que se está construyendo. Es útil para validar los argumentos antes de llamar al constructor de la clase abstracta:
+
+```java
+class Dog extends Animal {
+
+    public Dog(String name) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("El nombre no puede estar vacío");
+        }
+        super(name.strip());   // antes de Java 25, super(...) tenía que ser la primera sentencia
+    }
+}
+```
+
+| Herramienta | Desde | Cuándo usarla |
+| --- | --- | --- |
+| `sealed` / `permits` | Java 17 | La lista de variantes es fija y conocida |
+| `record` + `implements` | Java 16 | Variantes que solo transportan datos |
+| `switch` con patrones | Java 21 | Tratar cada variante sin cadenas de `instanceof` |
+| Código antes de `super(...)` | Java 25 | Validar o preparar argumentos en el constructor |
+
+---
+
 ## ⚠️ Errores frecuentes
 
 | Error | Por qué falla |
@@ -848,6 +906,7 @@ class Bird extends Animal implements Flyable, Swimmable {
 | Esperar estado de instancia en una interfaz | Sus variables son siempre constantes (`public static final`). |
 | Buscar un constructor en una interfaz | Las interfaces no tienen constructores. |
 | Pensar "interfaz = solo métodos abstractos" | En Java moderno también existen `default`, `static` y `private`. |
+| Intentar que un `record` herede de una clase abstracta | Un `record` no admite `extends`; usa una interfaz. |
 
 Ejemplo de la confusión más habitual:
 
