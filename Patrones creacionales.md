@@ -35,6 +35,7 @@ Un **patrón de diseño** es una **solución ya probada** para uno de esos probl
 - **No reinventas la rueda:** otras personas ya pensaron una buena solución.
 - **Hablas el mismo idioma que tu equipo:** decir «aquí usamos un *Builder*» se entiende al momento, sin explicar todo el código.
 - **Reconoces el código que lees:** muchas librerías de Java usan estos patrones. Si los conoces, entiendes antes cómo funcionan.
+- **Tu código aguanta mejor los cambios:** cada pieza tiene un papel claro, así que añadir algo nuevo no obliga a reescribir lo que ya funciona.
 
 ### Los tres grupos de patrones
 
@@ -45,6 +46,17 @@ Los patrones más conocidos se recogieron en el libro *Design Patterns* (1994), 
 | **Creacionales** (este documento) | **Crear objetos** de forma ordenada y flexible | Singleton, Factory Method, Abstract Factory, Builder, Prototype |
 | **Estructurales** | **Combinar** clases y objetos para formar estructuras más grandes | Adapter, Composite, Decorator, Facade, Proxy |
 | **De comportamiento** | Organizar **cómo se comunican** los objetos y quién hace cada cosa | Strategy, Observer, Command, State, Template Method |
+
+### Patrones y principios SOLID
+
+**SOLID** son cinco principios para escribir código orientado a objetos fácil de mantener. **No necesitas conocerlos para seguir este documento**, pero si ya los conoces verás que muchos patrones son, en la práctica, una forma concreta de aplicarlos. Los tienes explicados en [Principios SOLID](<Principio SOLID.md>).
+
+| Patrón | Principio que refuerza | Por qué |
+|---|---|---|
+| **Factory Method** | Abierto/cerrado (OCP) e inversión de dependencias (DIP) | El código pide un objeto a través de una interfaz y no hace `new` de clases concretas; añadir un tipo nuevo no obliga a tocar a quien lo usa. |
+| **Abstract Factory** | Inversión de dependencias (DIP) | El programa trabaja con familias de objetos a través de interfaces, sin saber qué clases concretas hay detrás. |
+| **Builder** | Responsabilidad única (SRP) | La forma de construir el objeto queda separada del propio objeto. |
+| **Singleton** | ⚠️ Puede ir **en contra** de DIP | Si se abusa, cualquier clase accede a él directamente y se crean dependencias ocultas difíciles de cambiar y de probar. |
 
 ---
 
