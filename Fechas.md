@@ -14,11 +14,11 @@ Guía basada en el tutorial de W3Schools «Java Date and Time», corregida y amp
 
 Para trabajar con fechas y horas se usa el paquete **`java.time`** (la API de fecha y hora, disponible desde Java 8). Contiene muchas clases; las principales según W3Schools son:
 
-| Clase | Descripción |
-|---|---|
-| `LocalDate` | Una fecha (año, mes, día: `yyyy-MM-dd`) |
-| `LocalTime` | Una hora (hora, minuto, segundo y nanosegundos) |
-| `LocalDateTime` | Fecha y hora a la vez |
+| Clase               | Descripción                                                                |
+| ------------------- | -------------------------------------------------------------------------- |
+| `LocalDate`         | Una fecha (año, mes, día: `yyyy-MM-dd`)                                    |
+| `LocalTime`         | Una hora (hora, minuto, segundo y nanosegundos)                            |
+| `LocalDateTime`     | Fecha y hora a la vez                                                      |
 | `DateTimeFormatter` | Formateador para mostrar e interpretar (*parsear*) objetos de fecha y hora |
 
 > **Corrección importante.** W3Schools afirma que «Java no tiene una clase `Date` integrada». Es impreciso: **sí existe `java.util.Date`**, pero es la API antigua (mutable y con un diseño problemático). La documentación de Oracle indica que `java.time.Instant` es el equivalente más cercano a `java.util.Date`, y `ZonedDateTime` el más cercano a `java.util.GregorianCalendar`. En código nuevo se usa únicamente `java.time`.

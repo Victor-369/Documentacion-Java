@@ -4,7 +4,7 @@ Repositorio de documentación, apuntes, ejemplos y guías sobre **Java**, creado
 
 > ☕ **Versión de referencia: Java 25 (LTS) o superior.**
 >
-> Toda la documentación está enfocada en Java 25 en adelante. Cuando una característica apareció en una versión anterior se indica desde cuál está disponible, y lo que solo existe en vista previa (*preview*) o en versiones posteriores (Java 26+) se señala de forma explícita. Los programas de ejemplo completos se han compilado y ejecutado con OpenJDK 25.0.5 (y las guías de pruebas, con JUnit 6.1.3 y AssertJ 3.27.7).
+> Toda la documentación está enfocada en Java 25 en adelante. Cuando una característica apareció en una versión anterior se indica desde cuál está disponible, y lo que solo existe en vista previa (*preview*) o en versiones posteriores (Java 26+) se señala de forma explícita. Los programas de ejemplo completos se han compilado y ejecutado con OpenJDK 25.0.5 (y las guías de pruebas, con JUnit 6.1.3 y AssertJ 3.27.7; la guía de Mockito, con Mockito 5.20.0).
 
 > 🚧 **Proyecto en desarrollo**
 >
@@ -105,6 +105,7 @@ Actualmente, el repositorio cuenta con documentación sobre diferentes conceptos
 | [JUnit: aprende a escribir pruebas paso a paso](https://github.com/Victor-369/Documentacion-Java/blob/main/JUnit%3A%20Aprende%20a%20escribir%20pruebas%20paso%20a%20paso.md) | Guía práctica con JUnit 6.1.3 y Java 25: primera prueba, ciclo de vida, aserciones, excepciones, pruebas parametrizadas, anidadas, repetidas y dinámicas, etiquetas, *timeouts* y buenas prácticas. |
 | [AssertJ: guía para empezar desde cero](https://github.com/Victor-369/Documentacion-Java/blob/main/AssertJ%20-%20Guia%20para%20empezar%20desde%20cero.md) | Aserciones fluidas con `assertThat(...)`: tipos de dato, colecciones, excepciones, mensajes de error, *soft assertions*, comparación recursiva y estilo BDD. |
 | [Test-Driven Development (TDD)](https://github.com/Victor-369/Documentacion-Java/blob/main/Test-Driven%20Development%20%28TDD%29.md) | Guía paso a paso del ciclo Rojo → Verde → Refactor (Maven, JUnit 6 y Java 25), con dos ejemplos completos (factorial y validador de contraseñas), buenas prácticas, errores típicos y ejercicios. |
+| [Mockito: aprende a escribir pruebas paso a paso](https://github.com/Victor-369/Documentacion-Java/blob/main/Mockito%3A%20Aprende%20a%20escribir%20pruebas%20paso%20a%20paso.md) | Tests unitarios con *mocks* usando Mockito 5 y JUnit 6.1.3 en Java 25: dónde obtener la librería y configuración (Maven, Gradle, IntelliJ y agente de Mockito), *stubbing*, *argument matchers*, `verify`, `ArgumentCaptor`, *spies*, métodos estáticos, estilo BDD, errores habituales y chuleta rápida. |
 
 ### 🔐 Seguridad y criptografía
 
@@ -173,7 +174,7 @@ Este repositorio está pensado para **crecer progresivamente**. Actualmente solo
 - [x] Entrada y salida de datos y ficheros
 - [x] Fechas y horas
 - [ ] Concurrencia, hilos y sincronización
-- [ ] Mockito
+- [x] Mockito
 - [ ] Maven y Gradle
 - [x] Bases de datos: tipos de datos MySQL y diagramas Entidad-Relación (incluido PlantUML)
 - [x] Bases de datos NoSQL: diferencias con SQL y MongoDB (modelado de datos y tutoriales)
@@ -242,6 +243,7 @@ Documentacion-Java/
 ├── Log4J: Gestion de Registros.md
 ├── Log4J: Guia.md
 ├── Manejo Eficaz de Errores en Java - Estrategias y Buenas Practicas.md
+├── Mockito: Aprende a escribir pruebas paso a paso.md
 ├── MongoDB: modelado de datos y diseno.md
 ├── MongoDB: tutoriales.md
 ├── Patrones comportamiento.md
@@ -300,7 +302,7 @@ class CalculadoraAssertJTest {
 }
 ```
 
-La documentación del repositorio incluye material más detallado sobre [JUnit](https://github.com/Victor-369/Documentacion-Java/blob/main/JUnit%3A%20Aprende%20a%20escribir%20pruebas%20paso%20a%20paso.md), [AssertJ](https://github.com/Victor-369/Documentacion-Java/blob/main/AssertJ%20-%20Guia%20para%20empezar%20desde%20cero.md) y [TDD](https://github.com/Victor-369/Documentacion-Java/blob/main/Test-Driven%20Development%20%28TDD%29.md).
+La documentación del repositorio incluye material más detallado sobre [JUnit](https://github.com/Victor-369/Documentacion-Java/blob/main/JUnit%3A%20Aprende%20a%20escribir%20pruebas%20paso%20a%20paso.md), [AssertJ](https://github.com/Victor-369/Documentacion-Java/blob/main/AssertJ%20-%20Guia%20para%20empezar%20desde%20cero.md), [Mockito](https://github.com/Victor-369/Documentacion-Java/blob/main/Mockito%3A%20Aprende%20a%20escribir%20pruebas%20paso%20a%20paso.md) y [TDD](https://github.com/Victor-369/Documentacion-Java/blob/main/Test-Driven%20Development%20%28TDD%29.md).
 
 ---
 
@@ -318,10 +320,11 @@ Actualmente, el repositorio contiene documentación relacionada con:
 - 🔐 Seguridad y criptografía en Java (JCA/JCE)
 - 🧪 JUnit 6
 - 🔍 AssertJ
+- 🎭 Mockito 5 (*mocks*, *stubs*, *spies* y verificación de interacciones)
 - 🔄 Test-Driven Development (TDD)
 - 📝 Log4j 2 (2.26.x)
 - 🌿 Git (convención de *commits* con Conventional Commits)
-- 📦 Maven y 🏗️ Gradle (configuración de dependencias dentro de las guías de JUnit, AssertJ, TDD y Log4j)
+- 📦 Maven y 🏗️ Gradle (configuración de dependencias dentro de las guías de JUnit, AssertJ, Mockito, TDD y Log4j)
 
 Esta lista también se irá ampliando a medida que se incorporen nuevos temas.
 
@@ -356,7 +359,7 @@ No es necesario seguir un orden concreto, ya que cada documento está pensado pa
 9. [Fechas](https://github.com/Victor-369/Documentacion-Java/blob/main/Fechas.md): fechas y horas con `java.time`.
 10. [Entrada - Salida básica](https://github.com/Victor-369/Documentacion-Java/blob/main/Entrada%20-%20Salida%20basica.md) y [Rutas relativas](https://github.com/Victor-369/Documentacion-Java/blob/main/Rutas%20relativas.md): trabajo con datos y ficheros.
 11. [Anotaciones](https://github.com/Victor-369/Documentacion-Java/blob/main/Anotaciones.md) y [Reflections](https://github.com/Victor-369/Documentacion-Java/blob/main/Reflections.md): metaprogramación (conviene leerlas en este orden).
-12. [JUnit](https://github.com/Victor-369/Documentacion-Java/blob/main/JUnit%3A%20Vision%20general%20e%20introduccion.md), [AssertJ](https://github.com/Victor-369/Documentacion-Java/blob/main/AssertJ%20-%20Guia%20para%20empezar%20desde%20cero.md) y [TDD](https://github.com/Victor-369/Documentacion-Java/blob/main/Test-Driven%20Development%20%28TDD%29.md): pruebas automatizadas.
+12. [JUnit](https://github.com/Victor-369/Documentacion-Java/blob/main/JUnit%3A%20Vision%20general%20e%20introduccion.md), [AssertJ](https://github.com/Victor-369/Documentacion-Java/blob/main/AssertJ%20-%20Guia%20para%20empezar%20desde%20cero.md), [Mockito](https://github.com/Victor-369/Documentacion-Java/blob/main/Mockito%3A%20Aprende%20a%20escribir%20pruebas%20paso%20a%20paso.md) y [TDD](https://github.com/Victor-369/Documentacion-Java/blob/main/Test-Driven%20Development%20%28TDD%29.md): pruebas automatizadas.
 13. [Log4J](https://github.com/Victor-369/Documentacion-Java/blob/main/Log4J%3A%20Guia.md): registro de información.
 14. [Guía de seguridad](https://github.com/Victor-369/Documentacion-Java/blob/main/Guia%20de%20seguridad.md) y [Arquitectura criptográfica](https://github.com/Victor-369/Documentacion-Java/blob/main/Arquitectura%20criptografica.md): seguridad y criptografía.
 15. [Conventional Commits](https://github.com/Victor-369/Documentacion-Java/blob/main/Conventional%20Commits.md): buenas prácticas con Git.
