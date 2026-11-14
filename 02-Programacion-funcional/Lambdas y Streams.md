@@ -4,6 +4,8 @@ Guía de estudio. Versión de referencia: **Java 25 (LTS)** o superior. Se indic
 
 > Este documento resume y reorganiza el contenido de seis fuentes (listadas al final) y lo amplía con material actual que esas fuentes no recogen: `record`, `Stream.toList()`, `SequencedCollection`, hilos virtuales, *pattern matching*, `Gatherers`, errores típicos y ejercicios. Varias de las fuentes están escritas para Java 8, así que aquí se han actualizado los ejemplos al estilo moderno.
 
+> 💡 Esta guía se centra en **cómo** se usan lambdas y streams. Para los conceptos del paradigma (funciones puras, inmutabilidad, composición, evaluación perezosa, tipos de datos con `sealed` + `record` o errores como valores), consulta [Programación funcional](<Programacion funcional.md>).
+
 ---
 
 ## Índice

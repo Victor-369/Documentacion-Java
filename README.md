@@ -34,17 +34,19 @@ Repositorio de documentación, apuntes, ejemplos y guías sobre **Java**, creado
 
 Actualmente, el repositorio cuenta con documentación sobre diferentes conceptos de Java y herramientas relacionadas con su desarrollo.
 
-### 🧩 Programación orientada a objetos y colecciones
+### 🧩 Fundamentos del lenguaje, POO y colecciones
 
-| Documento | Qué encontrarás                                                                                                                                                                                                                                  |
-| --- | --- |
-| [Abstract Class vs Interface](<01-Fundamentos-del-lenguaje/Abstract Class vs Interface.md>) | Chuleta comparativa: constructores, estado, modificadores de acceso, herencia, métodos `final`, polimorfismo y acoplamiento. Incluye cuándo usar cada una, cómo combinarlas, lo que aporta Java moderno (tipos `sealed`, *records* que implementan interfaces y código antes de `super(...)` en Java 25), errores frecuentes, reglas mentales y una chuleta ultra rápida. |
-| [Colecciones](<01-Fundamentos-del-lenguaje/Colecciones.md>) | Resumen del *Java Collections Framework*: jerarquía de interfaces, `List`, `Set`, `Map`, `Queue` y `Deque`, colecciones inmutables, *Sequenced Collections* (Java 21), la clase `Collections`, genéricos (con `HashMap.newHashMap`), Stream API (`toList()` y *gatherers*) y colecciones concurrentes con hilos virtuales. |
-| [Comparable vs Comparator](<01-Fundamentos-del-lenguaje/Comparable vs Comparator.md>) | Guía de estudio para programadores (Java 25 o superior), con ejemplos compilados y ejecutados en OpenJDK 25, errores típicos, colecciones secuenciadas, `Comparator.min`/`max` (Java 26), ejercicios, chuleta de repaso y autoevaluación. |
-| [Generics](<01-Fundamentos-del-lenguaje/Generics.md>) | Guía de genéricos: clases, interfaces y métodos genéricos, *raw types*, inferencia de tipos, tipos acotados, comodines (*wildcards*), borrado de tipos (*type erasure*), restricciones, uso con características modernas de Java, errores habituales, chuleta y ejercicios. |
-| [Enums](<01-Fundamentos-del-lenguaje/Enums.md>) | Enumeraciones (`enum`): declaración, uso dentro de clases y en `switch`, recorrido de constantes, diferencias con las clases y cuándo usarlas. Ampliación con enums «con cuerpo» (atributos, constructor, interfaces), `EnumMap` y `EnumSet`, y Java moderno (`switch` con patrones, exhaustividad, `case null`, variables sin nombre `_`, constructores flexibles de Java 25 y tipos primitivos en patrones en vista previa). |
-| [Records](<01-Fundamentos-del-lenguaje/Records.md>) | Clases de datos inmutables: declaración, constructor compacto, métodos y miembros estáticos, interfaces, cuándo usarlos y reglas (JEP 395). Ampliación con copia defensiva, records locales, anotaciones, reflexión, interfaces `sealed`, patrones de record (Java 21), variables sin nombre (`_`), constructores flexibles (Java 25) y tipos primitivos en patrones (vista previa). |
-| [Calistenia de objetos](<07-Diseno/Principios/Calistenia de objetos.md>) | Las nueve reglas de *Object Calisthenics* (Jeff Bay) actualizadas a Java 25: un nivel de indentación, sin `else`, encapsular primitivos, colecciones de primera clase, un punto por línea, no abreviar, entidades pequeñas, dos variables de instancia y sin *getters*/*setters*. Cada regla con ejemplos antes/después apoyados en *records*, `sealed`, `switch` con patrones, *gatherers* y ficheros fuente compactos, más un ejemplo completo (carrito de la compra), tabla resumen y cómo aplicarlas en katas y en producción. |
+| Documento                                                                                                         | Qué encontrarás                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| ----------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Fundamentos de Java](<01-Fundamentos-del-lenguaje/Fundamentos de Java.md>)                                       | Bases del lenguaje en Java 25+: JDK y JVM, primer programa (clásico y fichero fuente compacto con `void main()` e `IO`), variables, `var` y constantes, tipos primitivos y literales, `String`, clases envoltorio y conversiones; operadores y precedencia; `if`, `switch` (flechas, expresión con `yield` y patrones) y bucles; arrays uni y multidimensionales y la clase `Arrays`; métodos, paso por valor, sobrecarga, *varargs*, recursividad y ámbito. Incluye un ejemplo completo, errores frecuentes, chuleta, ejercicios con soluciones y glosario.                                                                                                                                                                                 |
+| [Herencia, encapsulación y polimorfismo](<01-Fundamentos-del-lenguaje/Herencia, encapsulacion y polimorfismo.md>) | Los pilares de la POO en Java 25+: repaso de clases y objetos; encapsulación (modificadores de acceso, *getters*/*setters* con criterio, invariantes, inmutabilidad, copias defensivas y *records*); herencia (`extends`, `super`, orden de construcción, constructores flexibles de Java 25, sobrescritura y `@Override`, `toString`/`equals`/`hashCode`, `final`, clases abstractas, interfaces, clases selladas y composición frente a herencia); polimorfismo (tipo declarado y real, enlace dinámico, *upcasting*/*downcasting*, `instanceof` con patrones y `switch` exhaustivo con tipos sellados y patrones de *record*). Incluye un ejemplo completo de nóminas, errores frecuentes, chuleta, ejercicios con soluciones y glosario. |
+| [Abstract Class vs Interface](<01-Fundamentos-del-lenguaje/Abstract Class vs Interface.md>)                       | Chuleta comparativa: constructores, estado, modificadores de acceso, herencia, métodos `final`, polimorfismo y acoplamiento. Incluye cuándo usar cada una, cómo combinarlas, lo que aporta Java moderno (tipos `sealed`, *records* que implementan interfaces y código antes de `super(...)` en Java 25), errores frecuentes, reglas mentales y una chuleta ultra rápida.                                                                                                                                                                                                                                                                                                                                                                    |
+| [Colecciones](<01-Fundamentos-del-lenguaje/Colecciones.md>)                                                       | Resumen del *Java Collections Framework*: jerarquía de interfaces, `List`, `Set`, `Map`, `Queue` y `Deque`, colecciones inmutables, *Sequenced Collections* (Java 21), la clase `Collections`, genéricos (con `HashMap.newHashMap`), Stream API (`toList()` y *gatherers*) y colecciones concurrentes con hilos virtuales.                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| [Comparable vs Comparator](<01-Fundamentos-del-lenguaje/Comparable vs Comparator.md>)                             | Guía de estudio para programadores (Java 25 o superior), con ejemplos compilados y ejecutados en OpenJDK 25, errores típicos, colecciones secuenciadas, `Comparator.min`/`max` (Java 26), ejercicios, chuleta de repaso y autoevaluación.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| [Generics](<01-Fundamentos-del-lenguaje/Generics.md>)                                                             | Guía de genéricos: clases, interfaces y métodos genéricos, *raw types*, inferencia de tipos, tipos acotados, comodines (*wildcards*), borrado de tipos (*type erasure*), restricciones, uso con características modernas de Java, errores habituales, chuleta y ejercicios.                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| [Enums](<01-Fundamentos-del-lenguaje/Enums.md>)                                                                   | Enumeraciones (`enum`): declaración, uso dentro de clases y en `switch`, recorrido de constantes, diferencias con las clases y cuándo usarlas. Ampliación con enums «con cuerpo» (atributos, constructor, interfaces), `EnumMap` y `EnumSet`, y Java moderno (`switch` con patrones, exhaustividad, `case null`, variables sin nombre `_`, constructores flexibles de Java 25 y tipos primitivos en patrones en vista previa).                                                                                                                                                                                                                                                                                                               |
+| [Records](<01-Fundamentos-del-lenguaje/Records.md>)                                                               | Clases de datos inmutables: declaración, constructor compacto, métodos y miembros estáticos, interfaces, cuándo usarlos y reglas (JEP 395). Ampliación con copia defensiva, records locales, anotaciones, reflexión, interfaces `sealed`, patrones de record (Java 21), variables sin nombre (`_`), constructores flexibles (Java 25) y tipos primitivos en patrones (vista previa).                                                                                                                                                                                                                                                                                                                                                         |
+| [Calistenia de objetos](<07-Diseno/Principios/Calistenia de objetos.md>)                                          | Las nueve reglas de *Object Calisthenics* (Jeff Bay) actualizadas a Java 25: un nivel de indentación, sin `else`, encapsular primitivos, colecciones de primera clase, un punto por línea, no abreviar, entidades pequeñas, dos variables de instancia y sin *getters*/*setters*. Cada regla con ejemplos antes/después apoyados en *records*, `sealed`, `switch` con patrones, *gatherers* y ficheros fuente compactos, más un ejemplo completo (carrito de la compra), tabla resumen y cómo aplicarlas en katas y en producción.                                                                                                                                                                                                           |
 
 ### 🏛️ Principios de diseño
 
@@ -64,10 +66,11 @@ Actualmente, el repositorio cuenta con documentación sobre diferentes conceptos
 | [Patrones estructurales](<07-Diseno/Patrones/Patrones estructurales.md>) | La idea común de envolver objetos (composición frente a herencia) y los patrones Adapter (sensor en Fahrenheit), Composite (carpetas y ficheros), Decorator (café con extras), Facade (proceso de compra) y Proxy (caché), cada uno con analogía, problema, solución paso a paso y programa completo ejecutable. Incluye una tabla para distinguir los patrones que se parecen, errores frecuentes, ejercicios con soluciones y glosario |
 | [Patrones de comportamiento](<07-Diseno/Patrones/Patrones comportamiento.md>) | Introducción a las *lambdas* y los patrones Strategy (gastos de envío), Observer (suscripciones), Command (editor con deshacer), State (ciclo de vida de un pedido con `enum`), Template Method (preparar bebidas) e Iterator (`Iterable` y *for-each*), cada uno con analogía, problema, solución paso a paso y programa completo ejecutable. Incluye cómo elegir, errores frecuentes, ejercicios con soluciones y glosario |
 
-### λ Programación funcional: lambdas y streams
+### λ Programación funcional
 
 | Documento | Qué encontrarás |
 | --- | --- |
+| [Programación funcional](<02-Programacion-funcional/Programacion funcional.md>) | El paradigma funcional en Java 25+: imperativo frente a declarativo, funciones puras y efectos secundarios (núcleo funcional y capa imperativa), inmutabilidad y métodos «with» en *records*, transparencia referencial, funciones de primera clase y de orden superior, composición (`andThen`, `compose`, `Predicate`, `Comparator`), clausuras, currificación, evaluación perezosa, memoización, límites de la recursividad, tipos de datos algebraicos con `sealed` + `record` y *pattern matching*, `Optional`, errores como valores (tipo `Resultado`), streams sin efectos secundarios, *gatherers* y paralelismo. Incluye un ejemplo completo de pedidos, errores frecuentes, chuleta, ejercicios con soluciones y glosario. |
 | [Lambdas y Streams](<02-Programacion-funcional/Lambdas y Streams.md>) | Guía de estudio de Java 25+: sintaxis de lambdas, interfaces funcionales, inferencia de tipos, captura de variables y referencias a métodos; *pipelines* de `Stream` (operaciones intermedias y terminales), `Collectors`, streams de primitivos, `Optional`, streams paralelos y rendimiento. Incluye Java moderno de la 16 a la 25 (`record`, `Stream.toList()`, *pattern matching*, hilos virtuales, `Gatherers`, ficheros fuente compactos con `void main()` e `import module`), errores típicos, ejercicios con soluciones y chuleta final. |
 
 ### 🧬 Anotaciones y reflexión
@@ -158,19 +161,19 @@ Este repositorio está pensado para **crecer progresivamente**. Actualmente solo
 - [x] Seguridad y criptografía (JCA)
 - [x] Anotaciones
 - [x] Reflexión (*Reflection*)
-- [ ] Fundamentos de Java
-- [ ] Variables y tipos de datos
-- [ ] Operadores
-- [ ] Estructuras de control
-- [ ] Arrays
-- [ ] Métodos
-- [ ] Herencia, encapsulación y polimorfismo
+- [x] Fundamentos de Java
+- [x] Variables y tipos de datos
+- [x] Operadores
+- [x] Estructuras de control
+- [x] Arrays
+- [x] Métodos
+- [x] Herencia, encapsulación y polimorfismo
 - [x] Enumeraciones (`enum`)
 - [x] Records
 - [x] Genéricos
 - [x] Streams y expresiones lambda
 - [x] `Optional`
-- [ ] Programación funcional
+- [x] Programación funcional
 - [x] Entrada y salida de datos y ficheros
 - [x] Fechas y horas
 - [ ] Concurrencia, hilos y sincronización
@@ -222,10 +225,13 @@ Documentacion-Java/
 │   ├── Colecciones.md
 │   ├── Comparable vs Comparator.md
 │   ├── Enums.md
+│   ├── Fundamentos de Java.md
 │   ├── Generics.md
+│   ├── Herencia, encapsulacion y polimorfismo.md
 │   └── Records.md
 ├── 02-Programacion-funcional/
-│   └── Lambdas y Streams.md
+│   ├── Lambdas y Streams.md
+│   └── Programacion funcional.md
 ├── 03-Anotaciones-y-reflexion/
 │   ├── Anotaciones.md
 │   └── Reflections.md
@@ -364,23 +370,26 @@ Puedes utilizar esta documentación como material de consulta e ir avanzando pro
 
 No es necesario seguir un orden concreto, ya que cada documento está pensado para poder consultarse de manera independiente. Aun así, si no sabes por dónde empezar, esta ruta puede servirte de orientación:
 
-1. [Abstract Class vs Interface](<01-Fundamentos-del-lenguaje/Abstract Class vs Interface.md>) y [Colecciones](<01-Fundamentos-del-lenguaje/Colecciones.md>): base del lenguaje.
-2. [Enums](<01-Fundamentos-del-lenguaje/Enums.md>) y [Records](<01-Fundamentos-del-lenguaje/Records.md>): tipos de datos propios.
-3. [Generics](<01-Fundamentos-del-lenguaje/Generics.md>) y [Comparable vs Comparator](<01-Fundamentos-del-lenguaje/Comparable vs Comparator.md>): tipos genéricos y ordenación de objetos.
-4. [Lambdas y Streams](<02-Programacion-funcional/Lambdas y Streams.md>): programación funcional y procesamiento de datos.
-5. [Calistenia de objetos](<07-Diseno/Principios/Calistenia de objetos.md>): reglas para practicar un diseño orientado a objetos más limpio (se apoya en *records*, `sealed` y *streams*).
-6. [Cohesión y acoplamiento](<07-Diseno/Principios/Cohesion y acoplamiento.md>), [Principios SOLID](<07-Diseno/Principios/Principio SOLID.md>), [DRY](<07-Diseno/Principios/Principio DRY.md>), [KISS](<07-Diseno/Principios/Principio KISS.md>) y [Tell, Don't Ask](<07-Diseno/Principios/Tell dont ask.md>): principios de diseño para escribir código mantenible.
-7. [Patrones creacionales](<07-Diseno/Patrones/Patrones creacionales.md>), [Patrones estructurales](<07-Diseno/Patrones/Patrones estructurales.md>) y [Patrones de comportamiento](<07-Diseno/Patrones/Patrones comportamiento.md>): soluciones reutilizables a problemas de diseño habituales (conviene leerlas en este orden; no hace falta conocer SOLID previamente).
-8. [Excepciones checked y unchecked](<06-Excepciones/Excepciones checked y unchecked.md>) y [Manejo eficaz de errores](<06-Excepciones/Manejo Eficaz de Errores en Java - Estrategias y Buenas Practicas.md>): gestión de errores.
-9. [Fechas](<05-Fechas-y-horas/Fechas.md>): fechas y horas con `java.time`.
-10. [Entrada - Salida básica](<04-Entrada-salida-y-ficheros/Entrada - Salida basica.md>) y [Rutas relativas](<04-Entrada-salida-y-ficheros/Rutas relativas.md>): trabajo con datos y ficheros.
-11. [Anotaciones](<03-Anotaciones-y-reflexion/Anotaciones.md>) y [Reflections](<03-Anotaciones-y-reflexion/Reflections.md>): metaprogramación (conviene leerlas en este orden).
-12. [JUnit](<08-Testing/JUnit - Vision general e introduccion.md>), [AssertJ](<08-Testing/AssertJ - Guia para empezar desde cero.md>), [Mockito](<08-Testing/Mockito - Aprende a escribir pruebas paso a paso.md>) y [TDD](<08-Testing/Test-Driven Development (TDD).md>): pruebas automatizadas.
-13. [Log4J](<09-Logging/Log4J - Guia.md>): registro de información.
-14. [Guía de seguridad](<11-Seguridad/Guia de seguridad.md>) y [Arquitectura criptográfica](<11-Seguridad/Arquitectura criptografica.md>): seguridad y criptografía.
-15. [Conventional Commits](<12-Herramientas/Conventional Commits.md>): buenas prácticas con Git.
-16. [BBDD: tipos de datos](<10-Bases-de-datos/SQL/BBDD - Tipos de datos.md>), [Entidad-Relación: diagrama](<10-Bases-de-datos/SQL/Entidad - Relacion - Diagrama.md>) y [Entidad-Relación: PlantUML](<10-Bases-de-datos/SQL/Entidad - Relacion - PlantUML.md>): diseño y modelado de bases de datos relacionales.
-17. [NoSQL y diferencias con SQL](<10-Bases-de-datos/NoSQL/Diferencias entre nosql y sql.md>), [MongoDB: modelado de datos y diseño](<10-Bases-de-datos/NoSQL/MongoDB - modelado de datos y diseno.md>) y [MongoDB: tutoriales](<10-Bases-de-datos/NoSQL/MongoDB - tutoriales.md>): bases de datos NoSQL con MongoDB (conviene leerlas en este orden).
+1. [Fundamentos de Java](<01-Fundamentos-del-lenguaje/Fundamentos de Java.md>): variables, operadores, estructuras de control, arrays y métodos.
+2. [Herencia, encapsulación y polimorfismo](<01-Fundamentos-del-lenguaje/Herencia, encapsulacion y polimorfismo.md>): clases, objetos y los pilares de la programación orientada a objetos.
+3. [Abstract Class vs Interface](<01-Fundamentos-del-lenguaje/Abstract Class vs Interface.md>) y [Colecciones](<01-Fundamentos-del-lenguaje/Colecciones.md>): base del lenguaje.
+4. [Enums](<01-Fundamentos-del-lenguaje/Enums.md>) y [Records](<01-Fundamentos-del-lenguaje/Records.md>): tipos de datos propios.
+5. [Generics](<01-Fundamentos-del-lenguaje/Generics.md>) y [Comparable vs Comparator](<01-Fundamentos-del-lenguaje/Comparable vs Comparator.md>): tipos genéricos y ordenación de objetos.
+6. [Lambdas y Streams](<02-Programacion-funcional/Lambdas y Streams.md>): programación funcional y procesamiento de datos.
+7. [Programación funcional](<02-Programacion-funcional/Programacion funcional.md>): el paradigma funcional (funciones puras, inmutabilidad, composición y tipos de datos con `sealed` + `record`).
+8. [Calistenia de objetos](<07-Diseno/Principios/Calistenia de objetos.md>): reglas para practicar un diseño orientado a objetos más limpio (se apoya en *records*, `sealed` y *streams*).
+9. [Cohesión y acoplamiento](<07-Diseno/Principios/Cohesion y acoplamiento.md>), [Principios SOLID](<07-Diseno/Principios/Principio SOLID.md>), [DRY](<07-Diseno/Principios/Principio DRY.md>), [KISS](<07-Diseno/Principios/Principio KISS.md>) y [Tell, Don't Ask](<07-Diseno/Principios/Tell dont ask.md>): principios de diseño para escribir código mantenible.
+10. [Patrones creacionales](<07-Diseno/Patrones/Patrones creacionales.md>), [Patrones estructurales](<07-Diseno/Patrones/Patrones estructurales.md>) y [Patrones de comportamiento](<07-Diseno/Patrones/Patrones comportamiento.md>): soluciones reutilizables a problemas de diseño habituales (conviene leerlas en este orden; no hace falta conocer SOLID previamente).
+11. [Excepciones checked y unchecked](<06-Excepciones/Excepciones checked y unchecked.md>) y [Manejo eficaz de errores](<06-Excepciones/Manejo Eficaz de Errores en Java - Estrategias y Buenas Practicas.md>): gestión de errores.
+12. [Fechas](<05-Fechas-y-horas/Fechas.md>): fechas y horas con `java.time`.
+13. [Entrada - Salida básica](<04-Entrada-salida-y-ficheros/Entrada - Salida basica.md>) y [Rutas relativas](<04-Entrada-salida-y-ficheros/Rutas relativas.md>): trabajo con datos y ficheros.
+14. [Anotaciones](<03-Anotaciones-y-reflexion/Anotaciones.md>) y [Reflections](<03-Anotaciones-y-reflexion/Reflections.md>): metaprogramación (conviene leerlas en este orden).
+15. [JUnit](<08-Testing/JUnit - Vision general e introduccion.md>), [AssertJ](<08-Testing/AssertJ - Guia para empezar desde cero.md>), [Mockito](<08-Testing/Mockito - Aprende a escribir pruebas paso a paso.md>) y [TDD](<08-Testing/Test-Driven Development (TDD).md>): pruebas automatizadas.
+16. [Log4J](<09-Logging/Log4J - Guia.md>): registro de información.
+17. [Guía de seguridad](<11-Seguridad/Guia de seguridad.md>) y [Arquitectura criptográfica](<11-Seguridad/Arquitectura criptografica.md>): seguridad y criptografía.
+18. [Conventional Commits](<12-Herramientas/Conventional Commits.md>): buenas prácticas con Git.
+19. [BBDD: tipos de datos](<10-Bases-de-datos/SQL/BBDD - Tipos de datos.md>), [Entidad-Relación: diagrama](<10-Bases-de-datos/SQL/Entidad - Relacion - Diagrama.md>) y [Entidad-Relación: PlantUML](<10-Bases-de-datos/SQL/Entidad - Relacion - PlantUML.md>): diseño y modelado de bases de datos relacionales.
+20. [NoSQL y diferencias con SQL](<10-Bases-de-datos/NoSQL/Diferencias entre nosql y sql.md>), [MongoDB: modelado de datos y diseño](<10-Bases-de-datos/NoSQL/MongoDB - modelado de datos y diseno.md>) y [MongoDB: tutoriales](<10-Bases-de-datos/NoSQL/MongoDB - tutoriales.md>): bases de datos NoSQL con MongoDB (conviene leerlas en este orden).
 
 A medida que se incorporen nuevos temas, se irá organizando la documentación para facilitar un recorrido de aprendizaje más estructurado.
 
