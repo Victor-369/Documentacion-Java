@@ -47,7 +47,7 @@ Los patrones clásicos se recogieron en el libro *Design Patterns* (1994), de cu
 
 ### Patrones y principios SOLID
 
-**SOLID** son cinco principios para escribir código orientado a objetos fácil de mantener. **No necesitas conocerlos para seguir este documento**, pero si ya los conoces verás que muchos patrones son, en la práctica, una forma concreta de aplicarlos. Los tienes explicados en [Principios SOLID](<Principio SOLID.md>).
+**SOLID** son cinco principios para escribir código orientado a objetos fácil de mantener. **No necesitas conocerlos para seguir este documento**, pero si ya los conoces verás que muchos patrones son, en la práctica, una forma concreta de aplicarlos. Los tienes explicados en [Principios SOLID](<../Principios/Principio SOLID.md>).
 
 | Patrón | Principio que refuerza | Por qué |
 |---|---|---|
@@ -850,7 +850,7 @@ Sonando: Canción C
 
 - Al implementar `Iterable`, `ListaReproduccion` se puede usar en un *for-each* como cualquier lista.
 - Quien la recorre **no sabe** que por dentro hay un `ArrayList`. Si mañana se guarda de otra forma, el bucle sigue funcionando.
-- Para recorridos más complejos (filtrar, transformar, contar…) Java ofrece la API **Stream**, que se explica en [Lambdas y Streams](<Lambdas y Streams.md>).
+- Para recorridos más complejos (filtrar, transformar, contar…) Java ofrece la API **Stream**, que se explica en [Lambdas y Streams](<../../02-Programacion-funcional/Lambdas y Streams.md>).
 
 ---
 

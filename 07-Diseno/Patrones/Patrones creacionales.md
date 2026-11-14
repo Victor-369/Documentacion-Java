@@ -49,7 +49,7 @@ Los patrones más conocidos se recogieron en el libro *Design Patterns* (1994), 
 
 ### Patrones y principios SOLID
 
-**SOLID** son cinco principios para escribir código orientado a objetos fácil de mantener. **No necesitas conocerlos para seguir este documento**, pero si ya los conoces verás que muchos patrones son, en la práctica, una forma concreta de aplicarlos. Los tienes explicados en [Principios SOLID](<Principio SOLID.md>).
+**SOLID** son cinco principios para escribir código orientado a objetos fácil de mantener. **No necesitas conocerlos para seguir este documento**, pero si ya los conoces verás que muchos patrones son, en la práctica, una forma concreta de aplicarlos. Los tienes explicados en [Principios SOLID](<../Principios/Principio SOLID.md>).
 
 | Patrón | Principio que refuerza | Por qué |
 |---|---|---|

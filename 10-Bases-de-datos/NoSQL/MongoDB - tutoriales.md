@@ -765,7 +765,7 @@ db.articulos.find(
 | [Árbol con rutas materializadas](https://www.mongodb.com/es/docs/manual/tutorial/model-tree-structures-with-materialized-paths/) | Cada nodo guarda la ruta completa como cadena (`",Libros,Informática,"`). |
 | [Árbol con conjuntos anidados](https://www.mongodb.com/es/docs/manual/tutorial/model-tree-structures-with-nested-sets/) | Valores `left`/`right`; lecturas rápidas, escrituras costosas. |
 
-> El manual incluye además el modelo de **array de ancestros**. El detalle completo del modelado está en el fichero [MongoDB: modelado de datos y diseno](<MongoDB: modelado de datos y diseno.md>).
+> El manual incluye además el modelo de **array de ancestros**. El detalle completo del modelado está en el fichero [MongoDB: modelado de datos y diseno](<MongoDB - modelado de datos y diseno.md>).
 
 ---
 

@@ -45,7 +45,7 @@ Los patrones clásicos se recogieron en el libro *Design Patterns* (1994), de cu
 
 ### Patrones y principios SOLID
 
-**SOLID** son cinco principios para escribir código orientado a objetos fácil de mantener. **No necesitas conocerlos para seguir este documento**, pero si ya los conoces verás que muchos patrones son, en la práctica, una forma concreta de aplicarlos. Los tienes explicados en [Principios SOLID](<Principio SOLID.md>).
+**SOLID** son cinco principios para escribir código orientado a objetos fácil de mantener. **No necesitas conocerlos para seguir este documento**, pero si ya los conoces verás que muchos patrones son, en la práctica, una forma concreta de aplicarlos. Los tienes explicados en [Principios SOLID](<../Principios/Principio SOLID.md>).
 
 | Patrón | Principio que refuerza | Por qué |
 |---|---|---|
@@ -654,7 +654,7 @@ Soleado en Madrid
 
 ### Dónde lo verás
 
-Los *frameworks* como Spring usan proxies constantemente: por ejemplo, para abrir y cerrar transacciones de base de datos alrededor de un método sin que tú escribas ese código. Java incluso permite crear proxies mientras el programa se ejecuta, con la clase `java.lang.reflect.Proxy` (se explica en la guía de [Reflections](<Reflections.md>)).
+Los *frameworks* como Spring usan proxies constantemente: por ejemplo, para abrir y cerrar transacciones de base de datos alrededor de un método sin que tú escribas ese código. Java incluso permite crear proxies mientras el programa se ejecuta, con la clase `java.lang.reflect.Proxy` (se explica en la guía de [Reflections](<../../03-Anotaciones-y-reflexion/Reflections.md>)).
 
 ### Cuándo usarlo
 

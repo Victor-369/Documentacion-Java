@@ -1,6 +1,6 @@
 # Resumen: Gestión de registros con Log4J
 
-> Este resumen se refiere a **Log4j 2** (la rama 1.x está abandonada desde 2015 y no debe usarse). Para la configuración práctica con Java 25 y la versión actual de la librería, consulta la [guía de Log4j](<Log4J: Guia.md>).
+> Este resumen se refiere a **Log4j 2** (la rama 1.x está abandonada desde 2015 y no debe usarse). Para la configuración práctica con Java 25 y la versión actual de la librería, consulta la [guía de Log4j](<Log4J - Guia.md>).
 
 ## ¿Qué es Log4J?
 Log4J es una biblioteca de Java utilizada para implementar un sistema de **logging**, permitiendo registrar eventos, mensajes y errores que ocurren durante la ejecución de una aplicación.

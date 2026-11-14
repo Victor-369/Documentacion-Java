@@ -793,7 +793,7 @@ Al principio te parecerá lento y antinatural. Es completamente normal. Practica
 
 ### Para seguir aprendiendo
 
-- Documentación oficial de JUnit: <https://docs.junit.org/6.1.3/overview.html> (y, en este repositorio, las guías de [JUnit](<JUnit: Aprende a escribir pruebas paso a paso.md>) y [AssertJ](<AssertJ - Guia para empezar desde cero.md>)).
+- Documentación oficial de JUnit: <https://docs.junit.org/6.1.3/overview.html> (y, en este repositorio, las guías de [JUnit](<JUnit - Aprende a escribir pruebas paso a paso.md>) y [AssertJ](<AssertJ - Guia para empezar desde cero.md>)).
 - Cuando domines lo básico, investiga **Mockito** (para simular dependencias en los tests) y **AssertJ** (aserciones más expresivas).
 - Libro recomendado: *Test-Driven Development: By Example*, de Kent Beck, quien popularizó esta técnica.
 

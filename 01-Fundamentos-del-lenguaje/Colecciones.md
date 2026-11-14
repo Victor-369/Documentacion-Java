@@ -435,7 +435,7 @@ List<String> modificable = nombres.stream()
         .collect(Collectors.toCollection(ArrayList::new));
 ```
 
-> `Collectors.toList()` sigue existiendo, pero no garantiza si la lista resultante es modificable; en código nuevo usa `toList()` o `Collectors.toCollection(...)` para dejar clara la intención. Desde Java 24 también existen los *gatherers* (`Stream.gather`) para operaciones intermedias a medida, como agrupar en ventanas: ver [Lambdas y Streams](<Lambdas y Streams.md>).
+> `Collectors.toList()` sigue existiendo, pero no garantiza si la lista resultante es modificable; en código nuevo usa `toList()` o `Collectors.toCollection(...)` para dejar clara la intención. Desde Java 24 también existen los *gatherers* (`Stream.gather`) para operaciones intermedias a medida, como agrupar en ventanas: ver [Lambdas y Streams](<../02-Programacion-funcional/Lambdas y Streams.md>).
 
 ---
 

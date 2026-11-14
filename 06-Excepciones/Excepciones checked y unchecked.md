@@ -43,7 +43,7 @@ private static void checkedExceptionWithTryCatch() {
 }
 ```
 
-> En una aplicación real, en lugar de `System.err` o `e.printStackTrace()` se usa un sistema de *logging* (ver [Log4j](<Log4J: Guia.md>)). Y en código nuevo se suele preferir la API NIO.2 (`Files.newInputStream(Path.of(...))`), que lanza `NoSuchFileException`, también comprobada.
+> En una aplicación real, en lugar de `System.err` o `e.printStackTrace()` se usa un sistema de *logging* (ver [Log4j](<../09-Logging/Log4J - Guia.md>)). Y en código nuevo se suele preferir la API NIO.2 (`Files.newInputStream(Path.of(...))`), que lanza `NoSuchFileException`, también comprobada.
 
 Algunos ejemplos habituales de checked exceptions en Java son:
 
@@ -190,7 +190,7 @@ Al convertir una checked exception en unchecked (por ejemplo, `IOException` en `
 
 ### 6.5. Checked exceptions y lambdas
 
-Las interfaces funcionales estándar (`Function`, `Consumer`, `Supplier`…) no declaran `throws`, así que una lambda que llama a un método con checked exceptions no compila sin tratarlas dentro. Lo habitual es capturarla dentro de la lambda y envolverla en una unchecked exception (como en 6.2). La guía [Lambdas y Streams](<Lambdas y Streams.md>) lo explica con detalle.
+Las interfaces funcionales estándar (`Function`, `Consumer`, `Supplier`…) no declaran `throws`, así que una lambda que llama a un método con checked exceptions no compila sin tratarlas dentro. Lo habitual es capturarla dentro de la lambda y envolverla en una unchecked exception (como en 6.2). La guía [Lambdas y Streams](<../02-Programacion-funcional/Lambdas y Streams.md>) lo explica con detalle.
 
 ### 6.6. `Error`: la tercera rama
 
