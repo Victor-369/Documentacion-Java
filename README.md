@@ -34,6 +34,8 @@ Repositorio de documentación, apuntes, ejemplos y guías sobre **Java**, creado
 
 Actualmente, el repositorio cuenta con documentación sobre diferentes conceptos de Java y herramientas relacionadas con su desarrollo.
 
+> 📖 **[Glosario general](<Glosario.md>)**: definiciones breves de los términos que aparecen en la documentación (HTTP y REST, Spring Boot, persistencia, arquitectura, Docker…), ordenadas alfabéticamente. Puedes consultarlo en cualquier momento.
+
 ### 🧩 Fundamentos del lenguaje, POO y colecciones
 
 | Documento                                                                                                         | Qué encontrarás                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
@@ -140,12 +142,43 @@ Actualmente, el repositorio cuenta con documentación sobre diferentes conceptos
 | Documento | Qué encontrarás |
 | --- | --- |
 | [Conventional Commits](<12-Herramientas/Conventional Commits.md>) | Convención para escribir mensajes de *commit* claros: formato, tipos habituales (`feat`, `fix`, `docs`…), ejemplos, buenas prácticas y flujo básico. |
+| [Docker y *multi-stage build*](<12-Herramientas/Docker.md>) | Qué problema resuelve Docker, conceptos básicos (imagen, contenedor, capa, volumen) y comandos esenciales; de un primer `Dockerfile` mejorable a un *multi-stage build* para Spring Boot (caché de dependencias, extracción de capas y usuario sin privilegios), configuración con variables de entorno, Docker Compose con aplicación y base de datos, alternativa con *Buildpacks* y buenas prácticas. |
+
+### 🌐 Web, HTTP y APIs REST
+
+| Documento | Qué encontrarás |
+| --- | --- |
+| [Protocolo HTTP](<13-Web-y-APIs/Protocolo http.md>) | Qué es HTTP y dónde se sitúa, anatomía de la URL, de la petición y de la respuesta, métodos (seguros e idempotentes), códigos de estado, cabeceras importantes, pruebas desde la terminal con `curl` y peticiones HTTP desde Java. |
+| [API REST](<13-Web-y-APIs/Api rest.md>) | Qué es una API y el estilo REST: recursos y representaciones, diseño de URIs, filtrado, ordenación y paginación, uso correcto de los códigos de estado, versionado, modelo de madurez de Richardson, buenas prácticas y un ejemplo completo de diseño. |
+| [Jackson y JSON](<13-Web-y-APIs/Jackson y json.md>) | El formato JSON y la librería Jackson 3: serializar y deserializar con `JsonMapper`, modelo de árbol con `JsonNode`, anotaciones de Jackson, fechas y horas, errores al procesar JSON y configuración de Jackson dentro de Spring Boot. |
+
+### 🌱 Spring y Spring Boot
+
+| Documento | Qué encontrarás |
+| --- | --- |
+| [Spring y Spring Boot](<14-Spring-Boot/Fundamentos/Spring y Spring-Boot.md>) | Qué son Spring Framework y Spring Boot (Spring Boot 4), crear un proyecto con Spring Initializr, estructura del proyecto, clase principal, primer *endpoint*, ejecución y empaquetado como `.jar`, `application.properties`, hilos virtuales y herramientas útiles (Actuator, DevTools…). |
+| [IoC e inyección de dependencias](<14-Spring-Boot/Fundamentos/IoC e inyeccion de dependencias.md>) | El concepto central de Spring: el problema de las clases que crean sus dependencias, inyección de dependencias e Inversión de Control, el contenedor IoC y los *beans*, cómo declararlos e inyectarlos, varias implementaciones de una interfaz, ámbitos (*scopes*), ciclo de vida y dependencias circulares. |
+| [DTOs y validación](<14-Spring-Boot/APIs-REST/DTOs y validacion.md>) | El patrón DTO y por qué no exponer entidades, diseño de DTO con `record`, conversión entidad ↔ DTO (*mapping*), respuestas paginadas; validación con Bean Validation, restricciones personalizadas, grupos de validación, validación de negocio en el servicio y buenas prácticas de diseño de entrada/salida. |
+| [Gestión profesional de errores](<14-Spring-Boot/APIs-REST/Gestion de errores.md>) | Formato estándar *Problem Details* (RFC 9457) y `ProblemDetail`, herramientas de Spring (`@RestControllerAdvice`, `@ExceptionHandler`…), diseño recomendado, qué código de estado usar, errores de la base de datos, *logging* de errores y buenas prácticas. |
+| [Spring Data](<14-Spring-Boot/Persistencia/Spring data.md>) | Spring Data como motor para unificar el acceso a datos: repositorios declarados como interfaces, jerarquía de interfaces, métodos CRUD, consultas derivadas del nombre del método, tipos de retorno, paginación y ordenación, proyecciones y mención a Spring Data REST. |
+| [Spring Data JPA](<14-Spring-Boot/Persistencia/Spring data jpa.md>) | Persistencia relacional: conceptos previos (ORM, JPA, Hibernate), dependencias, conexión a PostgreSQL con Docker, primera entidad, creación del esquema, repositorios, `@Query`, transacciones, auditoría, concurrencia optimista con `@Version`, paginación y buenas prácticas. |
+| [Relaciones y modelado](<14-Spring-Boot/Persistencia/Relaciones y modelado.md>) | Relaciones en JPA (`@ManyToOne`, `@OneToMany`, `@OneToOne`, `@ManyToMany`), carga `EAGER` y `LAZY`, el problema N+1, `cascade`, `equals`/`hashCode` en entidades y por qué usar DTOs; documentos embebidos en MongoDB y comparativa JPA frente a MongoDB. |
+| [Spring Data MongoDB](<14-Spring-Boot/Persistencia/Spring data mongodb.md>) | Persistencia NoSQL con MongoDB desde Spring Boot: levantar MongoDB con Docker, dependencias y configuración, documentos, repositorios, `MongoTemplate`, modelado de datos, referencias y transacciones. |
+| [Testing con Spring Boot y TDD](<14-Spring-Boot/Testing/Testing y TDD.md>) | La pirámide de pruebas, anatomía de una buena prueba, pruebas unitarias con Mockito, capa web con `@WebMvcTest` y `MockMvcTester`, persistencia con `@DataJpaTest` y `@DataMongoTest`, pruebas de integración con Testcontainers, TDD aplicado a Spring y buenas prácticas. |
+
+### 🏗️ Arquitectura de aplicaciones
+
+| Documento | Qué encontrarás |
+| --- | --- |
+| [Arquitectura por capas](<15-Arquitectura/Arquitectura por capas.md>) | Controller – Service – Repository: por qué organizar en capas, responsabilidad de cada capa, reglas de dependencia, entidades y DTOs, un recorrido completo paso a paso, gestión de errores entre capas, organización de paquetes, ventajas y errores frecuentes. |
+| [Arquitectura avanzada en Spring Boot](<15-Arquitectura/Arquitectura avanzada.md>) | Qué es la arquitectura de software, patrones de arquitectura, capas en profundidad, arquitectura limpia y hexagonal (puertos y adaptadores) con un ejemplo en Spring Boot, *package by feature* y los principios de diseño que lo sustentan. |
+| [Microservicios](<15-Arquitectura/Microservicios.md>) | Del monolito a los microservicios: características, principios de diseño, beneficios, inconvenientes y retos, comparativa monolito frente a microservicios, piezas habituales (API Gateway, descubrimiento de servicios, *circuit breaker*…) y su relación con Spring. |
 
 ---
 
 ## 🚧 Documentación en desarrollo
 
-Este repositorio está pensado para **crecer progresivamente**. Actualmente solo se han añadido algunos temas de Java y bases de datos, pero el objetivo es continuar ampliando la documentación con nuevos contenidos, ejemplos y explicaciones.
+Este repositorio está pensado para **crecer progresivamente**. Actualmente se han añadido temas de Java, bases de datos, Spring Boot, arquitectura y Docker, pero el objetivo es continuar ampliando la documentación con nuevos contenidos, ejemplos y explicaciones.
 
 **Estado de los temas previstos:**
 
@@ -188,8 +221,15 @@ Este repositorio está pensado para **crecer progresivamente**. Actualmente solo
 - [x] Principios DRY y KISS
 - [x] Cohesión y acoplamiento
 - [x] *Tell, Don't Ask* y Ley de Deméter
-- [ ] Arquitectura de aplicaciones
-- [ ] Spring y Spring Boot
+- [x] Protocolo HTTP y diseño de APIs REST
+- [x] JSON con Jackson
+- [x] Spring y Spring Boot (IoC e inyección de dependencias)
+- [x] DTOs, validación y gestión de errores en APIs REST
+- [x] Persistencia con Spring Data (JPA y MongoDB) y relaciones entre entidades
+- [x] Testing con Spring Boot (Mockito, *test slices* y Testcontainers)
+- [x] Arquitectura de aplicaciones (por capas, limpia y hexagonal, microservicios)
+- [x] Docker y Docker Compose
+- [ ] Spring Security
 - [ ] Otros conceptos relacionados con el ecosistema Java
 
 > 💡 **La lista anterior es orientativa y se irá ampliando a medida que avance el proyecto.**
@@ -277,7 +317,31 @@ Documentacion-Java/
 │   ├── Arquitectura criptografica.md
 │   └── Guia de seguridad.md
 ├── 12-Herramientas/
-│   └── Conventional Commits.md
+│   ├── Conventional Commits.md
+│   └── Docker.md
+├── 13-Web-y-APIs/
+│   ├── Api rest.md
+│   ├── Jackson y json.md
+│   └── Protocolo http.md
+├── 14-Spring-Boot/
+│   ├── APIs-REST/
+│   │   ├── DTOs y validacion.md
+│   │   └── Gestion de errores.md
+│   ├── Fundamentos/
+│   │   ├── IoC e inyeccion de dependencias.md
+│   │   └── Spring y Spring-Boot.md
+│   ├── Persistencia/
+│   │   ├── Relaciones y modelado.md
+│   │   ├── Spring data jpa.md
+│   │   ├── Spring data mongodb.md
+│   │   └── Spring data.md
+│   └── Testing/
+│       └── Testing y TDD.md
+├── 15-Arquitectura/
+│   ├── Arquitectura avanzada.md
+│   ├── Arquitectura por capas.md
+│   └── Microservicios.md
+├── Glosario.md
 ├── LICENSE
 └── README.md
 ```
@@ -347,6 +411,12 @@ Actualmente, el repositorio contiene documentación relacionada con:
 - 📝 Log4j 2 (2.26.x)
 - 🌿 Git (convención de *commits* con Conventional Commits)
 - 📦 Maven y 🏗️ Gradle (configuración de dependencias dentro de las guías de JUnit, AssertJ, Mockito, TDD y Log4j)
+- 🌐 HTTP, APIs REST y JSON con Jackson 3
+- 🌱 Spring Framework 7 y Spring Boot 4 (IoC, inyección de dependencias, Bean Validation y *Problem Details*)
+- 🗃️ Spring Data JPA (Hibernate, PostgreSQL) y Spring Data MongoDB
+- 🧫 Testing en Spring Boot (`@WebMvcTest`, `@DataJpaTest`, `@DataMongoTest` y Testcontainers)
+- 🏗️ Arquitectura de aplicaciones (por capas, limpia, hexagonal y microservicios)
+- 🐳 Docker, *multi-stage build* y Docker Compose
 
 Esta lista también se irá ampliando a medida que se incorporen nuevos temas.
 
@@ -390,6 +460,15 @@ No es necesario seguir un orden concreto, ya que cada documento está pensado pa
 18. [Conventional Commits](<12-Herramientas/Conventional Commits.md>): buenas prácticas con Git.
 19. [BBDD: tipos de datos](<10-Bases-de-datos/SQL/BBDD - Tipos de datos.md>), [Entidad-Relación: diagrama](<10-Bases-de-datos/SQL/Entidad - Relacion - Diagrama.md>) y [Entidad-Relación: PlantUML](<10-Bases-de-datos/SQL/Entidad - Relacion - PlantUML.md>): diseño y modelado de bases de datos relacionales.
 20. [NoSQL y diferencias con SQL](<10-Bases-de-datos/NoSQL/Diferencias entre nosql y sql.md>), [MongoDB: modelado de datos y diseño](<10-Bases-de-datos/NoSQL/MongoDB - modelado de datos y diseno.md>) y [MongoDB: tutoriales](<10-Bases-de-datos/NoSQL/MongoDB - tutoriales.md>): bases de datos NoSQL con MongoDB (conviene leerlas en este orden).
+21. [Protocolo HTTP](<13-Web-y-APIs/Protocolo http.md>), [API REST](<13-Web-y-APIs/Api rest.md>) y [Jackson y JSON](<13-Web-y-APIs/Jackson y json.md>): fundamentos de la web y de las APIs antes de entrar en Spring.
+22. [Spring y Spring Boot](<14-Spring-Boot/Fundamentos/Spring y Spring-Boot.md>) e [IoC e inyección de dependencias](<14-Spring-Boot/Fundamentos/IoC e inyeccion de dependencias.md>): primeros pasos con el *framework* y su concepto central.
+23. [Arquitectura por capas](<15-Arquitectura/Arquitectura por capas.md>), [DTOs y validación](<14-Spring-Boot/APIs-REST/DTOs y validacion.md>) y [Gestión profesional de errores](<14-Spring-Boot/APIs-REST/Gestion de errores.md>): construir una API REST bien organizada.
+24. [Spring Data](<14-Spring-Boot/Persistencia/Spring data.md>), [Spring Data JPA](<14-Spring-Boot/Persistencia/Spring data jpa.md>), [Relaciones y modelado](<14-Spring-Boot/Persistencia/Relaciones y modelado.md>) y [Spring Data MongoDB](<14-Spring-Boot/Persistencia/Spring data mongodb.md>): persistencia relacional y NoSQL.
+25. [Testing con Spring Boot y TDD](<14-Spring-Boot/Testing/Testing y TDD.md>): probar cada capa de la aplicación.
+26. [Docker](<12-Herramientas/Docker.md>): empaquetar y ejecutar la aplicación junto con su base de datos.
+27. [Arquitectura avanzada](<15-Arquitectura/Arquitectura avanzada.md>) y [Microservicios](<15-Arquitectura/Microservicios.md>): arquitectura limpia, hexagonal y sistemas distribuidos.
+
+> 📖 Si te encuentras con un término desconocido, consulta el [Glosario general](<Glosario.md>).
 
 A medida que se incorporen nuevos temas, se irá organizando la documentación para facilitar un recorrido de aprendizaje más estructurado.
 

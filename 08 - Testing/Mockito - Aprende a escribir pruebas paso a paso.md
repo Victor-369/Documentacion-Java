@@ -2,6 +2,8 @@
 
 Guía práctica para escribir tests unitarios con **Mockito** y **JUnit 6** en proyectos con **Java 25 o superior**.
 
+> 🌱 **En Spring Boot:** para aplicar estas pruebas en una aplicación Spring Boot (`@WebMvcTest`, `@DataJpaTest`, `@DataMongoTest` y Testcontainers), consulta [Testing con Spring Boot y TDD](<../14-Spring-Boot/Testing/Testing y TDD.md>).
+
 ---
 
 ## Índice

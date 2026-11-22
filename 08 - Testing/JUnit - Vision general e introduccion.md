@@ -9,6 +9,8 @@
 > - **Parte 1** es la traducción fiel de la página oficial.
 > - **Parte 2** es un complemento práctico: conceptos básicos, puesta en marcha y buenas prácticas. **No forma parte de la documentación oficial**; está basado en el modelo de programación de JUnit Jupiter, y para cualquier detalle conviene consultar siempre la guía oficial enlazada en cada apartado.
 
+> 🌱 **En Spring Boot:** para aplicar estas pruebas en una aplicación Spring Boot (`@WebMvcTest`, `@DataJpaTest`, `@DataMongoTest` y Testcontainers), consulta [Testing con Spring Boot y TDD](<../14-Spring-Boot/Testing/Testing y TDD.md>).
+
 ---
 
 ## Índice
