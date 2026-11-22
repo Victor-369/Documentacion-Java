@@ -17,6 +17,22 @@ Repositorio de documentación, apuntes, ejemplos y guías sobre **Java**, creado
 ## 📑 Índice
 
 - [Contenido disponible](#-contenido-disponible)
+  - [Fundamentos del lenguaje, POO y colecciones](#-fundamentos-del-lenguaje-poo-y-colecciones)
+  - [Programación funcional](#λ-programación-funcional)
+  - [Anotaciones y reflexión](#-anotaciones-y-reflexión)
+  - [Entrada/salida y ficheros](#-entradasalida-y-ficheros)
+  - [Fechas y horas](#-fechas-y-horas)
+  - [Excepciones y gestión de errores](#️-excepciones-y-gestión-de-errores)
+  - [Principios de diseño](#️-principios-de-diseño)
+  - [Patrones de diseño](#-patrones-de-diseño)
+  - [Testing y pruebas automatizadas](#-testing-y-pruebas-automatizadas)
+  - [Logging y registro de información](#-logging-y-registro-de-información)
+  - [Bases de datos](#️-bases-de-datos)
+  - [Seguridad y criptografía](#-seguridad-y-criptografía)
+  - [Herramientas y buenas prácticas](#-herramientas-y-buenas-prácticas)
+  - [Web, HTTP y APIs REST](#-web-http-y-apis-rest)
+  - [Spring y Spring Boot](#-spring-y-spring-boot)
+  - [Arquitectura de aplicaciones](#️-arquitectura-de-aplicaciones)
 - [Documentación en desarrollo](#-documentación-en-desarrollo)
 - [Objetivos del proyecto](#-objetivos-del-proyecto)
 - [Estructura actual](#️-estructura-actual)
@@ -27,6 +43,7 @@ Repositorio de documentación, apuntes, ejemplos y guías sobre **Java**, creado
 - [Contribuciones](#-contribuciones)
 - [Estado del proyecto](#-estado-del-proyecto)
 - [Licencia](#-licencia)
+- [Repositorio](#-repositorio)
 
 ---
 
@@ -38,35 +55,16 @@ Actualmente, el repositorio cuenta con documentación sobre diferentes conceptos
 
 ### 🧩 Fundamentos del lenguaje, POO y colecciones
 
-| Documento                                                                                                         | Qué encontrarás                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| ----------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Fundamentos de Java](<01 - Fundamentos del lenguaje/Fundamentos de Java.md>)                                       | Bases del lenguaje en Java 25+: JDK y JVM, primer programa (clásico y fichero fuente compacto con `void main()` e `IO`), variables, `var` y constantes, tipos primitivos y literales, `String`, clases envoltorio y conversiones; operadores y precedencia; `if`, `switch` (flechas, expresión con `yield` y patrones) y bucles; arrays uni y multidimensionales y la clase `Arrays`; métodos, paso por valor, sobrecarga, *varargs*, recursividad y ámbito. Incluye un ejemplo completo, errores frecuentes, chuleta, ejercicios con soluciones y glosario.                                                                                                                                                                                 |
+| Documento | Qué encontrarás |
+| --- | --- |
+| [Fundamentos de Java](<01 - Fundamentos del lenguaje/Fundamentos de Java.md>) | Bases del lenguaje en Java 25+: JDK y JVM, primer programa (clásico y fichero fuente compacto con `void main()` e `IO`), variables, `var` y constantes, tipos primitivos y literales, `String`, clases envoltorio y conversiones; operadores y precedencia; `if`, `switch` (flechas, expresión con `yield` y patrones) y bucles; arrays uni y multidimensionales y la clase `Arrays`; métodos, paso por valor, sobrecarga, *varargs*, recursividad y ámbito. Incluye un ejemplo completo, errores frecuentes, chuleta, ejercicios con soluciones y glosario. |
 | [Herencia, encapsulación y polimorfismo](<01 - Fundamentos del lenguaje/Herencia, encapsulacion y polimorfismo.md>) | Los pilares de la POO en Java 25+: repaso de clases y objetos; encapsulación (modificadores de acceso, *getters*/*setters* con criterio, invariantes, inmutabilidad, copias defensivas y *records*); herencia (`extends`, `super`, orden de construcción, constructores flexibles de Java 25, sobrescritura y `@Override`, `toString`/`equals`/`hashCode`, `final`, clases abstractas, interfaces, clases selladas y composición frente a herencia); polimorfismo (tipo declarado y real, enlace dinámico, *upcasting*/*downcasting*, `instanceof` con patrones y `switch` exhaustivo con tipos sellados y patrones de *record*). Incluye un ejemplo completo de nóminas, errores frecuentes, chuleta, ejercicios con soluciones y glosario. |
-| [Abstract Class vs Interface](<01 - Fundamentos del lenguaje/Abstract Class vs Interface.md>)                       | Chuleta comparativa: constructores, estado, modificadores de acceso, herencia, métodos `final`, polimorfismo y acoplamiento. Incluye cuándo usar cada una, cómo combinarlas, lo que aporta Java moderno (tipos `sealed`, *records* que implementan interfaces y código antes de `super(...)` en Java 25), errores frecuentes, reglas mentales y una chuleta ultra rápida.                                                                                                                                                                                                                                                                                                                                                                    |
-| [Colecciones](<01 - Fundamentos del lenguaje/Colecciones.md>)                                                       | Resumen del *Java Collections Framework*: jerarquía de interfaces, `List`, `Set`, `Map`, `Queue` y `Deque`, colecciones inmutables, *Sequenced Collections* (Java 21), la clase `Collections`, genéricos (con `HashMap.newHashMap`), Stream API (`toList()` y *gatherers*) y colecciones concurrentes con hilos virtuales.                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| [Comparable vs Comparator](<01 - Fundamentos del lenguaje/Comparable vs Comparator.md>)                             | Guía de estudio para programadores (Java 25 o superior), con ejemplos compilados y ejecutados en OpenJDK 25, errores típicos, colecciones secuenciadas, `Comparator.min`/`max` (Java 26), ejercicios, chuleta de repaso y autoevaluación.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| [Generics](<01 - Fundamentos del lenguaje/Generics.md>)                                                             | Guía de genéricos: clases, interfaces y métodos genéricos, *raw types*, inferencia de tipos, tipos acotados, comodines (*wildcards*), borrado de tipos (*type erasure*), restricciones, uso con características modernas de Java, errores habituales, chuleta y ejercicios.                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| [Enums](<01 - Fundamentos del lenguaje/Enums.md>)                                                                   | Enumeraciones (`enum`): declaración, uso dentro de clases y en `switch`, recorrido de constantes, diferencias con las clases y cuándo usarlas. Ampliación con enums «con cuerpo» (atributos, constructor, interfaces), `EnumMap` y `EnumSet`, y Java moderno (`switch` con patrones, exhaustividad, `case null`, variables sin nombre `_`, constructores flexibles de Java 25 y tipos primitivos en patrones en vista previa).                                                                                                                                                                                                                                                                                                               |
-| [Records](<01 - Fundamentos del lenguaje/Records.md>)                                                               | Clases de datos inmutables: declaración, constructor compacto, métodos y miembros estáticos, interfaces, cuándo usarlos y reglas (JEP 395). Ampliación con copia defensiva, records locales, anotaciones, reflexión, interfaces `sealed`, patrones de record (Java 21), variables sin nombre (`_`), constructores flexibles (Java 25) y tipos primitivos en patrones (vista previa).                                                                                                                                                                                                                                                                                                                                                         |
-| [Calistenia de objetos](<07 - Diseno/Principios/Calistenia de objetos.md>)                                          | Las nueve reglas de *Object Calisthenics* (Jeff Bay) actualizadas a Java 25: un nivel de indentación, sin `else`, encapsular primitivos, colecciones de primera clase, un punto por línea, no abreviar, entidades pequeñas, dos variables de instancia y sin *getters*/*setters*. Cada regla con ejemplos antes/después apoyados en *records*, `sealed`, `switch` con patrones, *gatherers* y ficheros fuente compactos, más un ejemplo completo (carrito de la compra), tabla resumen y cómo aplicarlas en katas y en producción.                                                                                                                                                                                                           |
-
-### 🏛️ Principios de diseño
-
-| Documento | Qué encontrarás |
-| --- | --- |
-| [Cohesión y acoplamiento](<07 - Diseno/Principios/Cohesion y acoplamiento.md>) | Las dos medidas clásicas de la calidad del diseño (Java 25): tipos de acoplamiento (contenido, común, externo, control, sello, datos y mensajes), ejemplos de acoplamiento fuerte a débil (`Coche` y `Motor`, servicio de notificaciones), técnicas para reducirlo y cómo detectarlo; tipos de cohesión, ejemplos de cohesión baja y alta, cómo comprobarla, relación entre ambas, nivel de paquete y módulo, analogía de la casa y lista de comprobación. |
-| [Principios SOLID](<07 - Diseno/Principios/Principio SOLID.md>) | Los cinco principios (SRP, OCP, LSP, ISP y DIP) con ejemplos de incumplimiento y solución en Java 25: el clásico cuadrado-rectángulo, ISP en la biblioteca estándar, por qué se llama «inversión», cómo encajan entre sí, SOLID y Java moderno, errores frecuentes, tabla resumen y lista de comprobación. |
-| [Principio DRY](<07 - Diseno/Principios/Principio DRY.md>) | *Don't Repeat Yourself*: origen, duplicar código frente a duplicar conocimiento, ejemplo de validación de correos, técnicas para eliminar la duplicación y herramientas de Java moderno (`record`, `enum` con comportamiento, lambdas, constructores flexibles de Java 25), violaciones habituales, relación con SRP y cuándo **no** aplicarlo. |
-| [Principio KISS](<07 - Diseno/Principios/Principio KISS.md>) | *Keep It Simple, Stupid*: origen, por qué simple no significa fácil ni corto, estrategias, ejemplo de conversor de temperaturas y herramientas de Java moderno que simplifican el código (ficheros fuente compactos, importación de módulos, `record`, `switch` con patrones y `sealed`, `_`, *guard clauses*, `var`), señales de complejidad y relación con otros principios. |
-| [Tell, Don't Ask](<07 - Diseno/Principios/Tell dont ask.md>) | «Ordena, no preguntes»: *getters*/*setters* frente a campos públicos y cómo pueden perjudicar, el principio con un ejemplo de cuenta bancaria, la Ley de Deméter, aplicación en Java moderno (métodos de acceso de los `record`, inmutabilidad, polimorfismo en lugar de preguntar por el tipo), cuándo está bien preguntar y relación con otros principios. |
-
-### 🧱 Patrones de diseño
-
-| Documento | Qué encontrarás |
-| --- | --- |
-| [Patrones creacionales](<07 - Diseno/Patrones/Patrones creacionales.md>) | Qué es un patrón de diseño (con analogías), cómo probar los ejemplos con Java 25 y vocabulario mínimo. Patrones para crear objetos: Singleton (con `enum`), Factory Method, Abstract Factory, Builder (con `record`) y Prototype (copia superficial y profunda). Cada patrón con analogía de la vida real, problema, solución paso a paso, programa completo ejecutable con su salida, cuándo usarlo y cuándo no. Incluye cómo elegir, errores frecuentes, ejercicios con soluciones y glosario |
-| [Patrones estructurales](<07 - Diseno/Patrones/Patrones estructurales.md>) | La idea común de envolver objetos (composición frente a herencia) y los patrones Adapter (sensor en Fahrenheit), Composite (carpetas y ficheros), Decorator (café con extras), Facade (proceso de compra) y Proxy (caché), cada uno con analogía, problema, solución paso a paso y programa completo ejecutable. Incluye una tabla para distinguir los patrones que se parecen, errores frecuentes, ejercicios con soluciones y glosario |
-| [Patrones de comportamiento](<07 - Diseno/Patrones/Patrones comportamiento.md>) | Introducción a las *lambdas* y los patrones Strategy (gastos de envío), Observer (suscripciones), Command (editor con deshacer), State (ciclo de vida de un pedido con `enum`), Template Method (preparar bebidas) e Iterator (`Iterable` y *for-each*), cada uno con analogía, problema, solución paso a paso y programa completo ejecutable. Incluye cómo elegir, errores frecuentes, ejercicios con soluciones y glosario |
+| [Abstract Class vs Interface](<01 - Fundamentos del lenguaje/Abstract Class vs Interface.md>) | Chuleta comparativa: constructores, estado, modificadores de acceso, herencia, métodos `final`, polimorfismo y acoplamiento. Incluye cuándo usar cada una, cómo combinarlas, lo que aporta Java moderno (tipos `sealed`, *records* que implementan interfaces y código antes de `super(...)` en Java 25), errores frecuentes, reglas mentales y una chuleta ultra rápida. |
+| [Colecciones](<01 - Fundamentos del lenguaje/Colecciones.md>) | Resumen del *Java Collections Framework*: jerarquía de interfaces, `List`, `Set`, `Map`, `Queue` y `Deque`, colecciones inmutables, *Sequenced Collections* (Java 21), la clase `Collections`, genéricos (con `HashMap.newHashMap`), Stream API (`toList()` y *gatherers*) y colecciones concurrentes con hilos virtuales. |
+| [Comparable vs Comparator](<01 - Fundamentos del lenguaje/Comparable vs Comparator.md>) | Guía de estudio para programadores (Java 25 o superior), con ejemplos compilados y ejecutados en OpenJDK 25, errores típicos, colecciones secuenciadas, `Comparator.min`/`max` (Java 26), ejercicios, chuleta de repaso y autoevaluación. |
+| [Generics](<01 - Fundamentos del lenguaje/Generics.md>) | Guía de genéricos: clases, interfaces y métodos genéricos, *raw types*, inferencia de tipos, tipos acotados, comodines (*wildcards*), borrado de tipos (*type erasure*), restricciones, uso con características modernas de Java, errores habituales, chuleta y ejercicios. |
+| [Enums](<01 - Fundamentos del lenguaje/Enums.md>) | Enumeraciones (`enum`): declaración, uso dentro de clases y en `switch`, recorrido de constantes, diferencias con las clases y cuándo usarlas. Ampliación con enums «con cuerpo» (atributos, constructor, interfaces), `EnumMap` y `EnumSet`, y Java moderno (`switch` con patrones, exhaustividad, `case null`, variables sin nombre `_`, constructores flexibles de Java 25 y tipos primitivos en patrones en vista previa). |
+| [Records](<01 - Fundamentos del lenguaje/Records.md>) | Clases de datos inmutables: declaración, constructor compacto, métodos y miembros estáticos, interfaces, cuándo usarlos y reglas (JEP 395). Ampliación con copia defensiva, records locales, anotaciones, reflexión, interfaces `sealed`, patrones de record (Java 21), variables sin nombre (`_`), constructores flexibles (Java 25) y tipos primitivos en patrones (vista previa). |
 
 ### λ Programación funcional
 
@@ -102,6 +100,25 @@ Actualmente, el repositorio cuenta con documentación sobre diferentes conceptos
 | [Excepciones checked y unchecked](<06 - Excepciones/Excepciones checked y unchecked.md>) | Diferencias entre excepciones comprobadas y no comprobadas, ejemplos con `throws`, `try-catch` y `try-with-resources`, excepciones personalizadas, cuándo usar cada tipo y Java moderno (*multi-catch*, `catch (X _)`, encadenamiento, excepciones en lambdas y la rama `Error`). |
 | [Manejo eficaz de errores en Java: estrategias y buenas prácticas](<06 - Excepciones/Manejo Eficaz de Errores en Java - Estrategias y Buenas Practicas.md>) | Resumen de un artículo sobre buenas prácticas, técnicas de manejo (`try-catch-finally`, *multi-catch*, `try-with-resources`), diseño de excepciones personalizadas y registro de errores, con un complemento sobre Java 25 (mensajes de `NullPointerException`, excepciones suprimidas, `_` en `catch` y resultados con tipos `sealed`). |
 
+### 🏛️ Principios de diseño
+
+| Documento | Qué encontrarás |
+| --- | --- |
+| [Calistenia de objetos](<07 - Diseno/Principios/Calistenia de objetos.md>) | Las nueve reglas de *Object Calisthenics* (Jeff Bay) actualizadas a Java 25: un nivel de indentación, sin `else`, encapsular primitivos, colecciones de primera clase, un punto por línea, no abreviar, entidades pequeñas, dos variables de instancia y sin *getters*/*setters*. Cada regla con ejemplos antes/después apoyados en *records*, `sealed`, `switch` con patrones, *gatherers* y ficheros fuente compactos, más un ejemplo completo (carrito de la compra), tabla resumen y cómo aplicarlas en katas y en producción. |
+| [Cohesión y acoplamiento](<07 - Diseno/Principios/Cohesion y acoplamiento.md>) | Las dos medidas clásicas de la calidad del diseño (Java 25): tipos de acoplamiento (contenido, común, externo, control, sello, datos y mensajes), ejemplos de acoplamiento fuerte a débil (`Coche` y `Motor`, servicio de notificaciones), técnicas para reducirlo y cómo detectarlo; tipos de cohesión, ejemplos de cohesión baja y alta, cómo comprobarla, relación entre ambas, nivel de paquete y módulo, analogía de la casa y lista de comprobación. |
+| [Principios SOLID](<07 - Diseno/Principios/Principio SOLID.md>) | Los cinco principios (SRP, OCP, LSP, ISP y DIP) con ejemplos de incumplimiento y solución en Java 25: el clásico cuadrado-rectángulo, ISP en la biblioteca estándar, por qué se llama «inversión», cómo encajan entre sí, SOLID y Java moderno, errores frecuentes, tabla resumen y lista de comprobación. |
+| [Principio DRY](<07 - Diseno/Principios/Principio DRY.md>) | *Don't Repeat Yourself*: origen, duplicar código frente a duplicar conocimiento, ejemplo de validación de correos, técnicas para eliminar la duplicación y herramientas de Java moderno (`record`, `enum` con comportamiento, lambdas, constructores flexibles de Java 25), violaciones habituales, relación con SRP y cuándo **no** aplicarlo. |
+| [Principio KISS](<07 - Diseno/Principios/Principio KISS.md>) | *Keep It Simple, Stupid*: origen, por qué simple no significa fácil ni corto, estrategias, ejemplo de conversor de temperaturas y herramientas de Java moderno que simplifican el código (ficheros fuente compactos, importación de módulos, `record`, `switch` con patrones y `sealed`, `_`, *guard clauses*, `var`), señales de complejidad y relación con otros principios. |
+| [Tell, Don't Ask](<07 - Diseno/Principios/Tell dont ask.md>) | «Ordena, no preguntes»: *getters*/*setters* frente a campos públicos y cómo pueden perjudicar, el principio con un ejemplo de cuenta bancaria, la Ley de Deméter, aplicación en Java moderno (métodos de acceso de los `record`, inmutabilidad, polimorfismo en lugar de preguntar por el tipo), cuándo está bien preguntar y relación con otros principios. |
+
+### 🧱 Patrones de diseño
+
+| Documento | Qué encontrarás |
+| --- | --- |
+| [Patrones creacionales](<07 - Diseno/Patrones/Patrones creacionales.md>) | Qué es un patrón de diseño (con analogías), cómo probar los ejemplos con Java 25 y vocabulario mínimo. Patrones para crear objetos: Singleton (con `enum`), Factory Method, Abstract Factory, Builder (con `record`) y Prototype (copia superficial y profunda). Cada patrón con analogía de la vida real, problema, solución paso a paso, programa completo ejecutable con su salida, cuándo usarlo y cuándo no. Incluye cómo elegir, errores frecuentes, ejercicios con soluciones y glosario. |
+| [Patrones estructurales](<07 - Diseno/Patrones/Patrones estructurales.md>) | La idea común de envolver objetos (composición frente a herencia) y los patrones Adapter (sensor en Fahrenheit), Composite (carpetas y ficheros), Decorator (café con extras), Facade (proceso de compra) y Proxy (caché), cada uno con analogía, problema, solución paso a paso y programa completo ejecutable. Incluye una tabla para distinguir los patrones que se parecen, errores frecuentes, ejercicios con soluciones y glosario. |
+| [Patrones de comportamiento](<07 - Diseno/Patrones/Patrones comportamiento.md>) | Introducción a las *lambdas* y los patrones Strategy (gastos de envío), Observer (suscripciones), Command (editor con deshacer), State (ciclo de vida de un pedido con `enum`), Template Method (preparar bebidas) e Iterator (`Iterable` y *for-each*), cada uno con analogía, problema, solución paso a paso y programa completo ejecutable. Incluye cómo elegir, errores frecuentes, ejercicios con soluciones y glosario. |
+
 ### 🧪 Testing y pruebas automatizadas
 
 | Documento | Qué encontrarás |
@@ -112,12 +129,12 @@ Actualmente, el repositorio cuenta con documentación sobre diferentes conceptos
 | [Test-Driven Development (TDD)](<08 - Testing/Test-Driven Development (TDD).md>) | Guía paso a paso del ciclo Rojo → Verde → Refactor (Maven, JUnit 6 y Java 25), con dos ejemplos completos (factorial y validador de contraseñas), buenas prácticas, errores típicos y ejercicios. |
 | [Mockito: aprende a escribir pruebas paso a paso](<08 - Testing/Mockito - Aprende a escribir pruebas paso a paso.md>) | Tests unitarios con *mocks* usando Mockito 5 y JUnit 6.1.3 en Java 25: dónde obtener la librería y configuración (Maven, Gradle, IntelliJ y agente de Mockito), *stubbing*, *argument matchers*, `verify`, `ArgumentCaptor`, *spies*, métodos estáticos, estilo BDD, errores habituales y chuleta rápida. |
 
-### 🔐 Seguridad y criptografía
+### 📝 Logging y registro de información
 
 | Documento | Qué encontrarás |
 | --- | --- |
-| [Guía de seguridad](<11 - Seguridad/Guia de seguridad.md>) | Introducción a la *Security Developer's Guide* de Java SE (Java 25+): mapa de la seguridad en Java (JCA/JCE, PKI, JSSE, JAAS, SASL, firma de código, serialización segura), cambios de Java 17 a Java 25 (fin del *Security Manager*, ML-KEM, ML-DSA y API `KDF`), herramientas de línea de comandos (`keytool`, `jarsigner`), buenas prácticas y un ejemplo mínimo de hash SHA-256. |
-| [Arquitectura criptográfica](<11 - Seguridad/Arquitectura criptografica.md>) | Guía de referencia de la JCA (Java 25+): principios de diseño, proveedores, clase `Security`, clases *engine*, `SecureRandom`, `MessageDigest`, `Signature`, `Cipher`, `Mac`, claves, `KEM` con ML-KEM post-cuántico, derivación de claves con `KDF`/HKDF, `KeyStore`, certificados, excepciones habituales, buenas prácticas y glosario. |
+| [Log4J: gestión de registros](<09 - Logging/Log4J - Gestion de Registros.md>) | Resumen conceptual: niveles de *logging* y cuándo usar cada uno, configuración, *appenders* y *layouts*. |
+| [Log4J: guía](<09 - Logging/Log4J - Guia.md>) | Guía práctica de Log4j 2 (2.26.1, Java 25): instalación con Maven y Gradle, `log4j2.xml`, mensajes parametrizados, escritura en ficheros (`RollingFile`), `ThreadContext`, integración con SLF4J y problemas frecuentes. |
 
 ### 🗄️ Bases de datos
 
@@ -130,12 +147,12 @@ Actualmente, el repositorio cuenta con documentación sobre diferentes conceptos
 | [MongoDB: modelado de datos y diseño](<10 - Bases de datos/NoSQL/MongoDB - modelado de datos y diseno.md>) | Modelado de datos en MongoDB: vocabulario básico (embeber, referenciar, cardinalidad…), diferencias con el diseño relacional con ejemplos SQL ↔ MongoDB, proceso de diseño del esquema en 4 pasos, relaciones (1:1, 1:pocos, 1:N, N:M y `$lookup`), embeber o referenciar, duplicación y coherencia, validación de esquemas, índices, atomicidad y *sharding*, patrones de diseño explicados como problema → solución (*Computed*, *Bucket*, *Outlier*, *Subset*, *Extended Reference*, versionado…), antipatrones, estructuras de árbol, ejemplo de tienda en línea y lista de comprobación. |
 | [MongoDB: tutoriales](<10 - Bases de datos/NoSQL/MongoDB - tutoriales.md>) | Índice organizado de los tutoriales oficiales del manual (MongoDB 9.0) con guía rápida en `mongosh` y explicación de cada comando (equivalencias SQL, respuestas esperadas y errores típicos): CRUD, índices y `explain()`, agregación y transacciones; conjuntos de réplicas, *sharding*, administración y copias de seguridad, seguridad, patrones de desarrollo y de búsqueda de texto, novedades de la 9.0 y ruta de aprendizaje recomendada. |
 
-### 📝 Logging y registro de información
+### 🔐 Seguridad y criptografía
 
 | Documento | Qué encontrarás |
 | --- | --- |
-| [Log4J: gestión de registros](<09 - Logging/Log4J - Gestion de Registros.md>) | Resumen conceptual: niveles de *logging* y cuándo usar cada uno, configuración, *appenders* y *layouts*. |
-| [Log4J: guía](<09 - Logging/Log4J - Guia.md>) | Guía práctica de Log4j 2 (2.26.1, Java 25): instalación con Maven y Gradle, `log4j2.xml`, mensajes parametrizados, escritura en ficheros (`RollingFile`), `ThreadContext`, integración con SLF4J y problemas frecuentes. |
+| [Guía de seguridad](<11 - Seguridad/Guia de seguridad.md>) | Introducción a la *Security Developer's Guide* de Java SE (Java 25+): mapa de la seguridad en Java (JCA/JCE, PKI, JSSE, JAAS, SASL, firma de código, serialización segura), cambios de Java 17 a Java 25 (fin del *Security Manager*, ML-KEM, ML-DSA y API `KDF`), herramientas de línea de comandos (`keytool`, `jarsigner`), buenas prácticas y un ejemplo mínimo de hash SHA-256. |
+| [Arquitectura criptográfica](<11 - Seguridad/Arquitectura criptografica.md>) | Guía de referencia de la JCA (Java 25+): principios de diseño, proveedores, clase `Security`, clases *engine*, `SecureRandom`, `MessageDigest`, `Signature`, `Cipher`, `Mac`, claves, `KEM` con ML-KEM post-cuántico, derivación de claves con `KDF`/HKDF, `KeyStore`, certificados, excepciones habituales, buenas prácticas y glosario. |
 
 ### 🔧 Herramientas y buenas prácticas
 
@@ -352,7 +369,18 @@ Esta estructura **no es definitiva** y se irá ampliando junto con la documentac
 
 ## 🧪 Ejemplo
 
-Un ejemplo sencillo de una prueba utilizando JUnit:
+Dada una clase sencilla:
+
+```java
+class Calculadora {
+
+    int sumar(int a, int b) {
+        return a + b;
+    }
+}
+```
+
+Así se probaría con JUnit:
 
 ```java
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -361,9 +389,11 @@ import org.junit.jupiter.api.Test;
 
 class CalculadoraTest {
 
+    private final Calculadora calculadora = new Calculadora();
+
     @Test
     void sumarDosNumeros() {
-        int resultado = 2 + 3;
+        int resultado = calculadora.sumar(2, 3);
 
         assertEquals(5, resultado);
     }
@@ -379,9 +409,11 @@ import org.junit.jupiter.api.Test;
 
 class CalculadoraAssertJTest {
 
+    private final Calculadora calculadora = new Calculadora();
+
     @Test
     void sumarDosNumeros() {
-        int resultado = 2 + 3;
+        int resultado = calculadora.sumar(2, 3);
 
         assertThat(resultado).isEqualTo(5);
     }
@@ -396,13 +428,13 @@ La documentación del repositorio incluye material más detallado sobre [JUnit](
 
 Actualmente, el repositorio contiene documentación relacionada con:
 
-- ☕ Java 25 LTS como versión de referencia (colecciones, genéricos, lambdas y streams, excepciones, clases abstractas e interfaces, ordenación, enums, records, fechas y horas, entrada/salida y rutas de ficheros)
+- ☕ Java 25 LTS como versión de referencia (fundamentos del lenguaje y POO, colecciones, genéricos, lambdas y streams, excepciones, clases abstractas e interfaces, ordenación, enums, records, fechas y horas, entrada/salida y rutas de ficheros)
 - 🏋️ Diseño orientado a objetos (calistenia de objetos, principios SOLID, DRY, KISS y *Tell, Don't Ask*, cohesión y acoplamiento con Java 25)
 - 🧱 Patrones de diseño GoF (creacionales, estructurales y de comportamiento con Java 25+)
 - 🧬 Anotaciones y *Reflection* (metaprogramación en Java)
 - 🗄️ Bases de datos relacionales (tipos de datos de MySQL y diagramas Entidad-Relación)
 - 🍃 Bases de datos NoSQL y MongoDB (diferencias con SQL, modelado de datos, `mongosh`, CRUD, índices y agregación)
-- 🌱 PlantUML (diagramas Entidad-Relación como código)
+- 📐 PlantUML (diagramas Entidad-Relación como código)
 - 🔐 Seguridad y criptografía en Java (JCA/JCE)
 - 🧪 JUnit 6
 - 🔍 AssertJ
@@ -410,7 +442,7 @@ Actualmente, el repositorio contiene documentación relacionada con:
 - 🔄 Test-Driven Development (TDD)
 - 📝 Log4j 2 (2.26.x)
 - 🌿 Git (convención de *commits* con Conventional Commits)
-- 📦 Maven y 🏗️ Gradle (configuración de dependencias dentro de las guías de JUnit, AssertJ, Mockito, TDD y Log4j)
+- 📦 Maven y 🐘 Gradle (configuración de dependencias dentro de las guías de JUnit, AssertJ, Mockito, TDD y Log4j)
 - 🌐 HTTP, APIs REST y JSON con Jackson 3
 - 🌱 Spring Framework 7 y Spring Boot 4 (IoC, inyección de dependencias, Bean Validation y *Problem Details*)
 - 🗃️ Spring Data JPA (Hibernate, PostgreSQL) y Spring Data MongoDB
@@ -509,7 +541,7 @@ Se están añadiendo nuevos temas y contenidos relacionados con Java de forma pr
 
 Este proyecto se distribuye bajo la licencia **MIT**.
 
-Consulta el archivo [LICENSE](https://github.com/Victor-369/Documentacion-Java/blob/main/LICENSE) para obtener más información sobre los términos de la licencia.
+Consulta el archivo [LICENSE](LICENSE) para obtener más información sobre los términos de la licencia.
 
 ---
 
