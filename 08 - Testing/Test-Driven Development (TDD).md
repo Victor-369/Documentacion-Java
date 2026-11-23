@@ -4,7 +4,7 @@
 >
 > Inspirada en el artículo [*Test-Driven Development (TDD) in Java: A Comprehensive Guide with Examples*](https://medium.com/@berrachdim/test-driven-development-tdd-in-java-a-comprehensive-guide-with-examples-c66a77afe036), de Berrachdi Mohamed, ampliada con más explicaciones y ejemplos completos.
 
-> 🌱 **En Spring Boot:** para aplicar estas pruebas en una aplicación Spring Boot (`@WebMvcTest`, `@DataJpaTest`, `@DataMongoTest` y Testcontainers), consulta [Testing con Spring Boot y TDD](<../14-Spring-Boot/Testing/Testing y TDD.md>).
+> 🌱 **En Spring Boot:** para aplicar estas pruebas en una aplicación Spring Boot (`@WebMvcTest`, `@DataJpaTest`, `@DataMongoTest` y Testcontainers), consulta [Testing con Spring Boot y TDD](<../14 - Spring-Boot/Testing/Testing y TDD.md>).
 
 ---
 

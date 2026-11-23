@@ -3,7 +3,7 @@
 > **Nota sobre la fuente:** la URL original (`/docs/manual/applications/data-models/`) ya no existe. Su contenido se ha reorganizado en la sección **[Modelado de datos](https://www.mongodb.com/es/docs/manual/data-modeling/)** del manual y sus subpáginas (buenas prácticas, proceso de diseño, patrones y antipatrones).
 > **Revisado:** octubre de 2026 · **Versión del manual:** 9.0 (actual).
 
-> 🌱 **En Spring Boot:** para usar MongoDB desde una aplicación Java con Spring Data MongoDB (documentos, repositorios, `MongoTemplate` y transacciones), consulta [Spring Data MongoDB](<../../14-Spring-Boot/Persistencia/Spring data mongodb.md>).
+> 🌱 **En Spring Boot:** para usar MongoDB desde una aplicación Java con Spring Data MongoDB (documentos, repositorios, `MongoTemplate` y transacciones), consulta [Spring Data MongoDB](<../../14 - Spring-Boot/Persistencia/Spring data mongodb.md>).
 
 ---
 

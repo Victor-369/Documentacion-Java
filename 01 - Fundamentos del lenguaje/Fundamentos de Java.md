@@ -690,7 +690,7 @@ public class Entrada {
 
 > ⚠️ **Trampa clásica:** `nextInt()` lee el número pero deja el **salto de línea** en el búfer, y el siguiente `nextLine()` devuelve una cadena vacía. Solución: llamar a `nextLine()` una vez más (como en el ejemplo) o leer siempre líneas completas y convertirlas con `Integer.parseInt`.
 
-> 💡 Para más detalle sobre entrada y salida, consulta la guía [Entrada - Salida básica](<../04-Entrada-salida-y-ficheros/Entrada - Salida basica.md>).
+> 💡 Para más detalle sobre entrada y salida, consulta la guía [Entrada - Salida básica](<../04 - Entrada-salida y ficheros/Entrada - Salida basica.md>).
 
 ---
 
@@ -1418,7 +1418,7 @@ for (int d : datos) {
 }
 ```
 
-Las mismas operaciones con *streams* ocupan una línea cada una (se explican en la guía [Lambdas y Streams](<../02-Programacion-funcional/Lambdas y Streams.md>)):
+Las mismas operaciones con *streams* ocupan una línea cada una (se explican en la guía [Lambdas y Streams](<../02 - Programacion funcional/Lambdas y Streams.md>)):
 
 ```java
 int max = Arrays.stream(datos).max().orElseThrow();
@@ -1854,7 +1854,7 @@ double aplicarDescuento(double precio, int descuento) {
 }
 ```
 
-Las guías de [Principios DRY](<../07-Diseno/Principios/Principio DRY.md>), [KISS](<../07-Diseno/Principios/Principio KISS.md>) y [Calistenia de objetos](<../07-Diseno/Principios/Calistenia de objetos.md>) profundizan en estas ideas.
+Las guías de [Principios DRY](<../07 - Diseno/Principios/Principio DRY.md>), [KISS](<../07 - Diseno/Principios/Principio KISS.md>) y [Calistenia de objetos](<../07 - Diseno/Principios/Calistenia de objetos.md>) profundizan en estas ideas.
 
 ---
 

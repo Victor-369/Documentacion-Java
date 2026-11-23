@@ -144,7 +144,7 @@ Spring Boot es una de las opciones más utilizadas para construir microservicios
 - ofrece **Spring Boot Actuator** para exponer información de salud y métricas de cada servicio,
 - y el proyecto **Spring Cloud** aporta piezas para sistemas distribuidos (configuración centralizada, *gateway*, descubrimiento de servicios, *circuit breakers*…).
 
-En los siguientes documentos aprenderás a construir **un servicio**, que es la pieza básica de cualquier arquitectura de microservicios.
+En los documentos de Spring Boot ([Spring y Spring Boot](<../14 - Spring-Boot/Fundamentos/Spring y Spring-Boot.md>), [Arquitectura por capas](<Arquitectura por capas.md>), [Spring Data](<../14 - Spring-Boot/Persistencia/Spring data.md>), [Testing y TDD](<../14 - Spring-Boot/Testing/Testing y TDD.md>) y [Docker](<../12 - Herramientas/Docker.md>)) has aprendido a construir y empaquetar **un servicio**, que es la pieza básica de cualquier arquitectura de microservicios.
 
 ## Resumen
 

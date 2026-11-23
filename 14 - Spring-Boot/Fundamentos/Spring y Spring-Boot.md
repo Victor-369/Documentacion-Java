@@ -267,7 +267,7 @@ Content-Type: application/json
 {"mensaje":"¡Hola, mundo!","fecha":"2026-11-22T10:30:00.123456"}
 ```
 
-Cómo funciona esta conversión se explica en el documento [Jackson y JSON](<../../13-Web-y-APIs/Jackson y json.md>).
+Cómo funciona esta conversión se explica en el documento [Jackson y JSON](<../../13 - Web y APIs/Jackson y json.md>).
 
 ## Empaquetar y ejecutar como `.jar`
 

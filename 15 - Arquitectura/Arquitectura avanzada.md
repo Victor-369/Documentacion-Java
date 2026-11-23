@@ -429,6 +429,6 @@ Juntos se conocen como **SOLID**.
 
 - Mark Richards — Software Architecture Patterns (O'Reilly): <https://www.oreilly.com/library/view/software-architecture-patterns/9781491971437/>
 - Baeldung — Clean Architecture with Spring Boot: <https://www.baeldung.com/spring-boot-clean-architecture>
-- Martin Fowler — Package by Feature: <https://martinfowler.com/bliki/PackageByFeature.html>
+- Philipp Hauer — Package by Feature: <https://phauer.com/2020/package-by-feature/>
 - Alistair Cockburn — Hexagonal Architecture: <https://alistair.cockburn.us/hexagonal-architecture/>
 - Spring Modulith: <https://spring.io/projects/spring-modulith>

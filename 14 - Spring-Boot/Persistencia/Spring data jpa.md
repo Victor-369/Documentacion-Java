@@ -85,7 +85,7 @@ services:
 docker compose up -d
 ```
 
-Si añades la dependencia `spring-boot-docker-compose` (en Initializr: **Docker Compose Support**), Spring Boot **arranca el `compose.yaml` automáticamente** al ejecutar la aplicación y configura la conexión por ti, sin necesidad de escribir las propiedades `spring.datasource.*`. Docker se explica en el documento [Docker y *multi-stage build*](<../../12-Herramientas/Docker.md>).
+Si añades la dependencia `spring-boot-docker-compose` (en Initializr: **Docker Compose Support**), Spring Boot **arranca el `compose.yaml` automáticamente** al ejecutar la aplicación y configura la conexión por ti, sin necesidad de escribir las propiedades `spring.datasource.*`. Docker se explica en el documento [Docker y *multi-stage build*](<../../12 - Herramientas/Docker.md>).
 
 ## Tu primera entidad
 
@@ -439,7 +439,7 @@ Spring Data genera dos consultas: una para la página (`LIMIT`/`OFFSET`) y otra 
 ## Referencias
 
 - Spring Data JPA — Reference Documentation: <https://docs.spring.io/spring-data/jpa/reference/>
-- Spring — Accessing Data with JPA: <https://spring.io/guides/gs/accessing-data-jpa>
+- Spring — Accessing Data with JPA: <https://spring.io/guides/gs/accessing-data-jpa/>
 - Baeldung — Spring Data JPA tutorial: <https://www.baeldung.com/spring-data-jpa-tutorial>
 - Spring Boot — SQL Databases: <https://docs.spring.io/spring-boot/reference/data/sql.html>
 - Spring Boot — Database initialization (Flyway/Liquibase): <https://docs.spring.io/spring-boot/how-to/data-initialization.html>

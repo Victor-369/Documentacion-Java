@@ -296,7 +296,7 @@ Genera una imagen por capas, con un usuario sin privilegios y una JVM configurad
 
 - Documentación de Docker: <https://docs.docker.com/>
 - Docker — Multi-stage builds: <https://docs.docker.com/build/building/multi-stage/>
-- Spring — Spring Boot with Docker: <https://spring.io/guides/gs/spring-boot-docker>
+- Spring — Spring Boot with Docker: <https://spring.io/guides/gs/spring-boot-docker/>
 - Spring Boot — Dockerfiles: <https://docs.spring.io/spring-boot/reference/packaging/container-images/dockerfiles.html>
 - Spring Boot — Docker Compose support: <https://docs.spring.io/spring-boot/reference/features/dev-services.html>
 - Eclipse Temurin (imágenes oficiales): <https://hub.docker.com/_/eclipse-temurin>

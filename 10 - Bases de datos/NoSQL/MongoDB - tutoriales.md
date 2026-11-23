@@ -5,7 +5,7 @@
 
 La página oficial es un **índice de tutoriales** del manual. Este documento la reproduce organizada, añade una guía rápida de uso (CRUD, índices, agregación) y señala qué está obsoleto o ha cambiado en la versión 9.0.
 
-> 🌱 **En Spring Boot:** para usar MongoDB desde una aplicación Java con Spring Data MongoDB (documentos, repositorios, `MongoTemplate` y transacciones), consulta [Spring Data MongoDB](<../../14-Spring-Boot/Persistencia/Spring data mongodb.md>).
+> 🌱 **En Spring Boot:** para usar MongoDB desde una aplicación Java con Spring Data MongoDB (documentos, repositorios, `MongoTemplate` y transacciones), consulta [Spring Data MongoDB](<../../14 - Spring-Boot/Persistencia/Spring data mongodb.md>).
 
 ---
 

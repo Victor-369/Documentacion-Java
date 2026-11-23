@@ -259,4 +259,4 @@ Es muy útil para prototipos y herramientas internas. En APIs con lógica de neg
 - Baeldung — Spring Data Repositories: <https://www.baeldung.com/spring-data-repositories>
 - Spring Data JPA — Query Methods: <https://docs.spring.io/spring-data/jpa/reference/repositories/query-methods-details.html>
 - Spring Data JPA — Projections: <https://docs.spring.io/spring-data/jpa/reference/repositories/projections.html>
-- Accessing MongoDB Data with REST: <https://spring.io/guides/gs/accessing-mongodb-data-rest>
+- Spring — Accessing JPA Data with REST (Spring Data REST): <https://spring.io/guides/gs/accessing-data-rest/>

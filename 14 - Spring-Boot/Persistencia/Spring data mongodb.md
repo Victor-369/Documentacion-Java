@@ -1,6 +1,6 @@
 # Persistencia NoSQL con MongoDB
 
-> 📚 **Documentación relacionada en este repositorio:** este documento se centra en usar MongoDB desde Spring Boot. Para conocer el motor en profundidad, consulta [NoSQL y diferencias con SQL](<../../10-Bases-de-datos/NoSQL/Diferencias entre nosql y sql.md>), [MongoDB: modelado de datos y diseño](<../../10-Bases-de-datos/NoSQL/MongoDB - modelado de datos y diseno.md>) y [MongoDB: tutoriales](<../../10-Bases-de-datos/NoSQL/MongoDB - tutoriales.md>) (uso de `mongosh`, CRUD, índices y agregación).
+> 📚 **Documentación relacionada en este repositorio:** este documento se centra en usar MongoDB desde Spring Boot. Para conocer el motor en profundidad, consulta [NoSQL y diferencias con SQL](<../../10 - Bases de datos/NoSQL/Diferencias entre nosql y sql.md>), [MongoDB: modelado de datos y diseño](<../../10 - Bases de datos/NoSQL/MongoDB - modelado de datos y diseno.md>) y [MongoDB: tutoriales](<../../10 - Bases de datos/NoSQL/MongoDB - tutoriales.md>) (uso de `mongosh`, CRUD, índices y agregación).
 
 ## ¿Qué es NoSQL?
 
@@ -272,7 +272,7 @@ List<VentasPorEstado> resultado = mongo
 
 ## Modelado de datos en MongoDB
 
-> 💡 Aquí se resume lo imprescindible. Los patrones de diseño de esquemas, los antipatrones y un ejemplo completo están en [MongoDB: modelado de datos y diseño](<../../10-Bases-de-datos/NoSQL/MongoDB - modelado de datos y diseno.md>).
+> 💡 Aquí se resume lo imprescindible. Los patrones de diseño de esquemas, los antipatrones y un ejemplo completo están en [MongoDB: modelado de datos y diseño](<../../10 - Bases de datos/NoSQL/MongoDB - modelado de datos y diseno.md>).
 
 En una base de datos relacional se **normaliza**: cada dato en un único sitio y relaciones mediante claves. En MongoDB la pregunta clave es otra: **¿cómo va a usar la aplicación estos datos?** La propia documentación de MongoDB recomienda diseñar el esquema pensando en los patrones de acceso de la aplicación.
 
@@ -359,6 +359,6 @@ MongoDB admite transacciones de varios documentos, pero **solo en un *replica se
 ## Referencias
 
 - Spring Data MongoDB — Reference Documentation: <https://docs.spring.io/spring-data/mongodb/reference/>
-- Spring — Accessing MongoDB Data with REST: <https://spring.io/guides/gs/accessing-mongodb-data-rest>
+- Spring — Accessing Data with MongoDB: <https://spring.io/guides/gs/accessing-data-mongodb/>
 - MongoDB — Data Modeling: <https://www.mongodb.com/docs/manual/data-modeling/>
 - Spring Boot — Working with NoSQL Technologies (MongoDB): <https://docs.spring.io/spring-boot/reference/data/nosql.html>

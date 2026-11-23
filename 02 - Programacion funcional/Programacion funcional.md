@@ -61,7 +61,7 @@ java Ejemplo.java
 
 Los fragmentos cortos se pueden probar en **JShell** (`jshell`). En JShell, las interfaces de `java.util.function` hay que importarlas: `import java.util.function.*;`.
 
-> 💡 Si necesitas repasar *records*, interfaces o clases selladas, consulta antes [Herencia, encapsulación y polimorfismo](<../01-Fundamentos-del-lenguaje/Herencia, encapsulacion y polimorfismo.md>).
+> 💡 Si necesitas repasar *records*, interfaces o clases selladas, consulta antes [Herencia, encapsulación y polimorfismo](<../01 - Fundamentos del lenguaje/Herencia, encapsulacion y polimorfismo.md>).
 
 ---
 
@@ -428,7 +428,7 @@ void main() {
 8 max 3 = 8
 ```
 
-Este `Map` sustituye a un `switch` sobre el operador: añadir una operación nueva es añadir una entrada, sin tocar la lógica. Es el patrón **Strategy** expresado con funciones (ver [Patrones de comportamiento](<../07-Diseno/Patrones/Patrones comportamiento.md>)).
+Este `Map` sustituye a un `switch` sobre el operador: añadir una operación nueva es añadir una entrada, sin tocar la lógica. Es el patrón **Strategy** expresado con funciones (ver [Patrones de comportamiento](<../07 - Diseno/Patrones/Patrones comportamiento.md>)).
 
 ---
 
@@ -587,7 +587,7 @@ Comparator<Persona> orden = Comparator
     .thenComparing(Persona::edad, Comparator.reverseOrder());
 ```
 
-Más en la guía [Comparable vs Comparator](<../01-Fundamentos-del-lenguaje/Comparable vs Comparator.md>).
+Más en la guía [Comparable vs Comparator](<../01 - Fundamentos del lenguaje/Comparable vs Comparator.md>).
 
 ### 10.4. Otras composiciones útiles
 
@@ -894,7 +894,7 @@ void main() {
 1.0 * (--5.0 + 0.0)  →  5.0
 ```
 
-Observa los **patrones anidados** (`Mult(Num(double v), Expr x)`), las **guardas** (`when v == 1`) y `_` para lo que no interesa. Más sobre `switch` con patrones en [Fundamentos de Java](<../01-Fundamentos-del-lenguaje/Fundamentos de Java.md>) y sobre tipos sellados en [Herencia, encapsulación y polimorfismo](<../01-Fundamentos-del-lenguaje/Herencia, encapsulacion y polimorfismo.md>).
+Observa los **patrones anidados** (`Mult(Num(double v), Expr x)`), las **guardas** (`when v == 1`) y `_` para lo que no interesa. Más sobre `switch` con patrones en [Fundamentos de Java](<../01 - Fundamentos del lenguaje/Fundamentos de Java.md>) y sobre tipos sellados en [Herencia, encapsulación y polimorfismo](<../01 - Fundamentos del lenguaje/Herencia, encapsulacion y polimorfismo.md>).
 
 ---
 
@@ -1022,7 +1022,7 @@ Ventajas:
 | Errores **excepcionales** o de programación (fichero corrupto, `null` inesperado, red caída) | Excepciones |
 | Código que se integra con frameworks que esperan excepciones | Excepciones |
 
-Más sobre excepciones en [Manejo eficaz de errores en Java](<../06-Excepciones/Manejo Eficaz de Errores en Java - Estrategias y Buenas Practicas.md>).
+Más sobre excepciones en [Manejo eficaz de errores en Java](<../06 - Excepciones/Manejo Eficaz de Errores en Java - Estrategias y Buenas Practicas.md>).
 
 ---
 
@@ -1168,7 +1168,7 @@ Señales de que el estilo funcional **se está forzando**:
 - `Function<A, Function<B, Function<C, D>>>`: probablemente un método normal sea más legible.
 - Un `reduce` complicado que nadie entiende: un bucle puede ser más claro.
 
-> 💡 La legibilidad manda. El objetivo no es «usar programación funcional», sino escribir código **correcto, claro y fácil de cambiar**. El estilo funcional es una herramienta excelente para conseguirlo, no un fin en sí mismo. Ver también [Principio KISS](<../07-Diseno/Principios/Principio KISS.md>).
+> 💡 La legibilidad manda. El objetivo no es «usar programación funcional», sino escribir código **correcto, claro y fácil de cambiar**. El estilo funcional es una herramienta excelente para conseguirlo, no un fin en sí mismo. Ver también [Principio KISS](<../07 - Diseno/Principios/Principio KISS.md>).
 
 ---
 
@@ -1314,7 +1314,7 @@ Total facturado: 1420,32 €
 
 - Añade un descuento `DosPorUno(String producto)`. ¿Qué te dice el compilador? (Que `aplicar` no cubre todos los casos; además, este descuento necesitaría las líneas, no solo el importe: ¿cómo cambiarías la firma?).
 - Añade una regla nueva («el pedido supera 5 000 €»). Solo hay que añadir un elemento a `reglas`.
-- `total`, `bruto`, `validar` y `ventasPorCategoria` son puras: escribe una prueba con JUnit para cada una (ver [JUnit: aprende a escribir pruebas paso a paso](<../08-Testing/JUnit - Aprende a escribir pruebas paso a paso.md>)).
+- `total`, `bruto`, `validar` y `ventasPorCategoria` son puras: escribe una prueba con JUnit para cada una (ver [JUnit: aprende a escribir pruebas paso a paso](<../08 - Testing/JUnit - Aprende a escribir pruebas paso a paso.md>)).
 
 ---
 

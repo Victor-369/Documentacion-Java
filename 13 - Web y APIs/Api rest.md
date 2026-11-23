@@ -300,6 +300,379 @@ API de una biblioteca:
 | `GET` | `/v1/socios/{id}/prestamos` | Préstamos de un socio | `200` | `404` |
 | `POST` | `/v1/socios/{id}/prestamos` | Presta un libro a un socio | `201` | `404`, `409` (libro ya prestado) |
 
+## De la teoría al código: tu primera API REST en Java
+
+Todo lo anterior es independiente del lenguaje. Ahora veremos cómo se convierte en código Java con **Spring Boot**, el *framework* más utilizado para crear APIs REST en Java.
+
+> Para ejecutar el ejemplo necesitas un proyecto Spring Boot con la dependencia **Spring Web**. Cómo crearlo y arrancarlo se explica paso a paso en [Spring y Spring Boot](<../14 - Spring-Boot/Fundamentos/Spring y Spring-Boot.md>). Si todavía no lo has leído, puedes quedarte por ahora con la idea general del código.
+
+### ¿Qué es un *endpoint*?
+
+Un ***endpoint*** es la combinación de **método HTTP + URI** que atiende la API. Por ejemplo, `GET /productos` y `POST /productos` son dos *endpoints* distintos, aunque compartan la URI.
+
+En Spring, cada *endpoint* es un **método Java** marcado con una anotación que indica el método HTTP y la ruta:
+
+| Anotación | Para qué sirve |
+|---|---|
+| `@RestController` | Marca la clase como un controlador REST: lo que devuelven sus métodos se escribe en el cuerpo de la respuesta (como JSON si es un objeto). |
+| `@RequestMapping("/productos")` | Ruta base común a todos los *endpoints* de la clase. |
+| `@GetMapping`, `@PostMapping`, `@PutMapping`, `@PatchMapping`, `@DeleteMapping` | Asocian el método Java al método HTTP correspondiente. |
+| `@PathVariable` | Lee una parte variable de la ruta: el `42` de `/productos/42`. |
+| `@RequestParam` | Lee un parámetro de la consulta: el `30` de `/productos?precioMax=30`. |
+| `@RequestBody` | Convierte el JSON del cuerpo de la petición en un objeto Java. |
+| `ResponseEntity<T>` | Permite elegir el **código de estado**, las **cabeceras** y el **cuerpo** de la respuesta. |
+
+### Cómo funciona un controlador
+
+Antes de escribir código, una idea clave: **tú no creas el controlador ni llamas a sus métodos**. Lo hace Spring:
+
+1. Al arrancar la aplicación, Spring crea **una única instancia** de cada clase marcada con `@RestController`.
+2. Cuando llega una petición (por ejemplo, `GET /productos/1`), Spring busca el método cuya anotación coincide con ese método HTTP y esa ruta.
+3. Lee de la petición los datos que pide el método (`@PathVariable`, `@RequestParam`, `@RequestBody`) y lo llama.
+4. Convierte lo que devuelve el método en la respuesta HTTP. Si es un objeto, lo transforma en JSON con la librería Jackson (ver [Jackson y JSON](<Jackson y json.md>)).
+
+Tu trabajo es, por tanto, escribir **un método por cada *endpoint*** y decidir qué devuelve.
+
+Vamos a construir, paso a paso, una API para gestionar productos con las operaciones de la tabla del apartado *Métodos sobre una colección y un elemento*. Para centrarnos en los *endpoints*, los productos se guardan **en memoria** (en un `Map`), sin base de datos. Al reiniciar la aplicación se pierden.
+
+> **Sobre los `import`:** en cada paso solo se muestra el código nuevo. Tu IDE añade los `import` automáticamente (en IntelliJ, `Alt + Enter` sobre la clase en rojo). Al final del apartado tienes el controlador completo con todos ellos.
+
+### Paso 1: el controlador y los datos
+
+Crea el fichero `src/main/java/com/ejemplo/tienda/ProductoController.java`:
+
+```java
+package com.ejemplo.tienda;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/productos")
+public class ProductoController {
+
+    // Lo que devuelve la API: un producto con su id.
+    record Producto(long id, String nombre, double precio) {}
+
+    // Lo que envía el cliente para crear o modificar: sin id, porque lo asigna el servidor.
+    record DatosProducto(String nombre, double precio) {}
+
+    // Nuestra "base de datos": id → producto.
+    private final Map<Long, Producto> productos = new ConcurrentHashMap<>();
+
+    // Contador para generar ids: 1, 2, 3...
+    private final AtomicLong siguienteId = new AtomicLong(1);
+
+    // Al crearse el controlador, guardamos dos productos para tener datos con los que probar.
+    public ProductoController() {
+        guardarNuevo("Teclado", 29.99);
+        guardarNuevo("Ratón", 15.00);
+    }
+
+    private Producto guardarNuevo(String nombre, double precio) {
+        long id = siguienteId.getAndIncrement();   // devuelve el valor actual y lo incrementa
+        Producto producto = new Producto(id, nombre, precio);
+        productos.put(id, producto);
+        return producto;
+    }
+}
+```
+
+- `@RequestMapping("/productos")` hace que todos los *endpoints* de esta clase empiecen por `/productos`.
+- Los datos se modelan con [*records*](<../01 - Fundamentos del lenguaje/Records.md>). Hay dos porque **lo que entra no es igual que lo que sale**: el cliente nunca envía el `id`.
+- **¿Por qué `ConcurrentHashMap` y `AtomicLong` en lugar de `HashMap` y `long`?** Como Spring usa **una sola instancia** del controlador para todas las peticiones, si llegan dos a la vez se ejecutan en paralelo sobre el mismo `Map`. `HashMap` y `long` no están preparados para eso y podrían perder datos o repetir ids. Sus versiones *concurrentes* se usan exactamente igual, pero son seguras. Cuando uses una base de datos real, este problema lo resolverá ella.
+- El precio es `double` para simplificar. En una aplicación real, las cantidades de dinero se representan con `BigDecimal`, porque `double` comete pequeños errores de redondeo (`0.1 + 0.2` da `0.30000000000000004`).
+
+Todavía no hay ningún *endpoint*. Vamos a añadirlos.
+
+### Paso 2: leer productos (`GET`)
+
+#### Listar todos
+
+Añade este método dentro de la clase:
+
+```java
+    // GET /productos → 200 OK + lista de productos
+    @GetMapping
+    public List<Producto> listar() {
+        return List.copyOf(productos.values());
+    }
+```
+
+`@GetMapping` sin ruta atiende la ruta base de la clase: `GET /productos`. El método devuelve una lista y Spring la convierte en un array JSON con código `200 OK`.
+
+Arranca la aplicación y pruébalo desde otra terminal (la opción `-i` muestra el código de estado y las cabeceras; ver [Protocolo HTTP](<Protocolo http.md>)):
+
+```bash
+curl -i http://localhost:8080/productos
+```
+
+```http
+HTTP/1.1 200
+Content-Type: application/json
+
+[{"id":1,"nombre":"Teclado","precio":29.99},{"id":2,"nombre":"Ratón","precio":15.0}]
+```
+
+> El orden de los productos puede variar: un `Map` no garantiza ningún orden.
+
+#### Filtrar con un parámetro de consulta
+
+Ahora queremos poder pedir `GET /productos?precioMax=20`. Sustituye el método `listar` por este:
+
+```java
+    // GET /productos             → todos
+    // GET /productos?precioMax=20 → solo los que cuestan 20 o menos
+    @GetMapping
+    public List<Producto> listar(@RequestParam(required = false) Double precioMax) {
+        if (precioMax == null) {
+            return List.copyOf(productos.values());
+        }
+        return productos.values().stream()
+                .filter(p -> p.precio() <= precioMax)
+                .toList();
+    }
+```
+
+- `@RequestParam` lee el parámetro `precioMax` de la URL y lo convierte a número.
+- `required = false` indica que es opcional. Si no llega, Spring pasa `null`.
+- Por eso el tipo es **`Double`** (la clase) y no `double` (el primitivo): un `double` no puede valer `null`.
+- El filtrado usa un *stream* (ver [Lambdas y Streams](<../02 - Programacion funcional/Lambdas y Streams.md>)).
+
+```bash
+curl "http://localhost:8080/productos?precioMax=20"
+# [{"id":2,"nombre":"Ratón","precio":15.0}]
+```
+
+#### Obtener uno por su id
+
+```java
+    // GET /productos/1 → 200 OK + producto,  o 404 Not Found si no existe
+    @GetMapping("/{id}")
+    public ResponseEntity<Producto> obtener(@PathVariable long id) {
+        Producto producto = productos.get(id);
+        if (producto == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(producto);
+    }
+```
+
+- `"/{id}"` es una ruta con una parte **variable**. `@PathVariable long id` recoge su valor: para `/productos/1`, `id` vale `1`.
+- Aquí aparece **`ResponseEntity`**. En `listar` no hacía falta porque la respuesta siempre es `200 OK`. Pero este método tiene **dos respuestas posibles** (`200` o `404`), y `ResponseEntity` representa la respuesta HTTP completa: código de estado, cabeceras y cuerpo. El tipo entre `< >` es el del cuerpo.
+
+`ResponseEntity` se crea con métodos estáticos. Algunos devuelven la respuesta ya terminada; otros devuelven un objeto a medio construir que se completa con `.body(...)` (si lleva cuerpo) o `.build()` (si no lo lleva). Estas son las formas que usaremos:
+
+| Respuesta | Código |
+|---|---|
+| `200 OK` con cuerpo | `ResponseEntity.ok(producto)` |
+| `201 Created` con cabecera `Location` y cuerpo | `ResponseEntity.created(uri).body(producto)` |
+| `204 No Content` sin cuerpo | `ResponseEntity.noContent().build()` |
+| `404 Not Found` sin cuerpo | `ResponseEntity.notFound().build()` |
+
+```bash
+curl -i http://localhost:8080/productos/1     # HTTP/1.1 200 + {"id":1,"nombre":"Teclado","precio":29.99}
+curl -i http://localhost:8080/productos/999   # HTTP/1.1 404
+```
+
+### Paso 3: crear un producto (`POST`)
+
+```java
+    // POST /productos → 201 Created + cabecera Location + producto creado
+    @PostMapping
+    public ResponseEntity<Producto> crear(@RequestBody DatosProducto datos) {
+        Producto producto = guardarNuevo(datos.nombre(), datos.precio());
+        URI ubicacion = URI.create("/productos/" + producto.id());
+        return ResponseEntity.created(ubicacion).body(producto);
+    }
+```
+
+- `@RequestBody` le pide a Spring que convierta el JSON del cuerpo de la petición en un objeto `DatosProducto`. Los nombres de los campos del JSON deben coincidir con los del *record*.
+- Como dice la teoría, al crear se responde **`201 Created`** con la cabecera **`Location`**, que indica la URI del nuevo recurso.
+
+```bash
+curl -i -X POST http://localhost:8080/productos \
+     -H "Content-Type: application/json" \
+     -d '{"nombre": "Monitor", "precio": 149.90}'
+```
+
+```http
+HTTP/1.1 201
+Location: /productos/3
+Content-Type: application/json
+
+{"id":3,"nombre":"Monitor","precio":149.9}
+```
+
+La cabecera `Content-Type: application/json` es necesaria: sin ella, Spring no sabe que el cuerpo es JSON y responde `415 Unsupported Media Type`.
+
+> En Windows (PowerShell o CMD), las comillas simples de `-d '...'` pueden dar problemas. Si ocurre, usa comillas dobles y escapa las interiores: `-d "{\"nombre\": \"Monitor\", \"precio\": 149.90}"`. También puedes probar la API con herramientas gráficas como **Postman**, **Bruno** o el cliente HTTP de IntelliJ.
+
+### Paso 4: reemplazar y borrar (`PUT` y `DELETE`)
+
+Estos dos métodos combinan lo que ya has visto.
+
+```java
+    // PUT /productos/1 → 200 OK + producto reemplazado,  o 404 Not Found
+    @PutMapping("/{id}")
+    public ResponseEntity<Producto> reemplazar(@PathVariable long id,
+                                               @RequestBody DatosProducto datos) {
+        if (!productos.containsKey(id)) {
+            return ResponseEntity.notFound().build();
+        }
+        Producto producto = new Producto(id, datos.nombre(), datos.precio());
+        productos.put(id, producto);
+        return ResponseEntity.ok(producto);
+    }
+
+    // DELETE /productos/1 → 204 No Content,  o 404 Not Found
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> borrar(@PathVariable long id) {
+        Producto borrado = productos.remove(id);   // devuelve null si no existía
+        if (borrado == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.noContent().build();
+    }
+```
+
+- `reemplazar` usa a la vez `@PathVariable` (qué producto) y `@RequestBody` (sus nuevos datos).
+- `borrar` no devuelve cuerpo en ningún caso. Por eso el tipo es **`ResponseEntity<Void>`**: `Void` significa "sin cuerpo".
+
+```bash
+curl -i -X PUT http://localhost:8080/productos/1 \
+     -H "Content-Type: application/json" \
+     -d '{"nombre": "Teclado mecánico", "precio": 59.90}'
+# HTTP/1.1 200 + {"id":1,"nombre":"Teclado mecánico","precio":59.9}
+
+curl -i -X DELETE http://localhost:8080/productos/1   # HTTP/1.1 204
+curl -i -X DELETE http://localhost:8080/productos/1   # HTTP/1.1 404 (ya no existe)
+```
+
+### El controlador completo
+
+Este es el resultado de todos los pasos, con todos los `import`:
+
+```java
+package com.ejemplo.tienda;
+
+import java.net.URI;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/productos")
+public class ProductoController {
+
+    record Producto(long id, String nombre, double precio) {}
+
+    record DatosProducto(String nombre, double precio) {}
+
+    private final Map<Long, Producto> productos = new ConcurrentHashMap<>();
+    private final AtomicLong siguienteId = new AtomicLong(1);
+
+    public ProductoController() {
+        guardarNuevo("Teclado", 29.99);
+        guardarNuevo("Ratón", 15.00);
+    }
+
+    // GET /productos  y  GET /productos?precioMax=20
+    @GetMapping
+    public List<Producto> listar(@RequestParam(required = false) Double precioMax) {
+        if (precioMax == null) {
+            return List.copyOf(productos.values());
+        }
+        return productos.values().stream()
+                .filter(p -> p.precio() <= precioMax)
+                .toList();
+    }
+
+    // GET /productos/1
+    @GetMapping("/{id}")
+    public ResponseEntity<Producto> obtener(@PathVariable long id) {
+        Producto producto = productos.get(id);
+        if (producto == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(producto);
+    }
+
+    // POST /productos
+    @PostMapping
+    public ResponseEntity<Producto> crear(@RequestBody DatosProducto datos) {
+        Producto producto = guardarNuevo(datos.nombre(), datos.precio());
+        URI ubicacion = URI.create("/productos/" + producto.id());
+        return ResponseEntity.created(ubicacion).body(producto);
+    }
+
+    // PUT /productos/1
+    @PutMapping("/{id}")
+    public ResponseEntity<Producto> reemplazar(@PathVariable long id,
+                                               @RequestBody DatosProducto datos) {
+        if (!productos.containsKey(id)) {
+            return ResponseEntity.notFound().build();
+        }
+        Producto producto = new Producto(id, datos.nombre(), datos.precio());
+        productos.put(id, producto);
+        return ResponseEntity.ok(producto);
+    }
+
+    // DELETE /productos/1
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> borrar(@PathVariable long id) {
+        Producto borrado = productos.remove(id);
+        if (borrado == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.noContent().build();
+    }
+
+    private Producto guardarNuevo(String nombre, double precio) {
+        long id = siguienteId.getAndIncrement();
+        Producto producto = new Producto(id, nombre, precio);
+        productos.put(id, producto);
+        return producto;
+    }
+}
+```
+
+### Qué reglas de diseño se han aplicado
+
+- Las URIs usan un **sustantivo en plural** (`/productos`), y la acción la decide el **método HTTP**, no el nombre de la ruta.
+- Cada operación devuelve el **código de estado** adecuado: `201` al crear, `204` al borrar y `404` si el producto no existe. Nunca un `200` con un error dentro.
+- Al crear, la cabecera **`Location`** indica la URI del nuevo recurso.
+- El **filtrado** se hace con un parámetro de consulta (`?precioMax=`), no con una ruta nueva.
+- El cliente **no envía el `id`**: lo asigna el servidor.
+
+### Qué le falta a este ejemplo
+
+Este controlador es intencionadamente mínimo para centrarse en los *endpoints*. En una aplicación real se añade:
+
+| Mejora | Dónde se explica |
+|---|---|
+| Separar el código en controlador, servicio y repositorio | [Arquitectura por capas](<../15 - Arquitectura/Arquitectura por capas.md>) |
+| Validar los datos de entrada (nombre obligatorio, precio positivo…) | [DTOs y validación](<../14 - Spring-Boot/APIs-REST/DTOs y validacion.md>) |
+| Devolver errores con formato *Problem Details* (`ProblemDetail`) | [Gestión de errores](<../14 - Spring-Boot/APIs-REST/Gestion de errores.md>) |
+| Guardar los datos en una base de datos | [Spring Data JPA](<../14 - Spring-Boot/Persistencia/Spring data jpa.md>) |
+| Probar los *endpoints* automáticamente | [Testing y TDD](<../14 - Spring-Boot/Testing/Testing y TDD.md>) |
+
 ## Referencias
 
 - REST API Tutorial: <https://www.restapitutorial.com/>

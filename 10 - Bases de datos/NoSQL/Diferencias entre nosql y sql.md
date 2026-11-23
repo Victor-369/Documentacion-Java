@@ -3,7 +3,7 @@
 > **Fuente principal:** [¿Qué es NoSQL? — MongoDB](https://www.mongodb.com/es/resources/basics/databases/nosql-explained)
 > **Revisado:** octubre de 2026 · **Versión actual de MongoDB:** 9.0 (la página original todavía anuncia la 8.0 en su cabecera; la 9.0 se publicó el 29 de septiembre de 2026).
 
-> 🌱 **En Spring Boot:** para usar MongoDB desde una aplicación Java con Spring Data MongoDB (documentos, repositorios, `MongoTemplate` y transacciones), consulta [Spring Data MongoDB](<../../14-Spring-Boot/Persistencia/Spring data mongodb.md>).
+> 🌱 **En Spring Boot:** para usar MongoDB desde una aplicación Java con Spring Data MongoDB (documentos, repositorios, `MongoTemplate` y transacciones), consulta [Spring Data MongoDB](<../../14 - Spring-Boot/Persistencia/Spring data mongodb.md>).
 
 ---
 

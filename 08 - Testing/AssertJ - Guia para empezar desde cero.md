@@ -3,7 +3,7 @@
 > Documentación introductoria sobre **AssertJ**, la librería de aserciones fluidas para Java y la JVM.
 > Basada en la documentación oficial (<https://assertj.github.io/doc/>) y en el repositorio del proyecto (<https://github.com/assertj/assertj>). Las versiones de los ejemplos corresponden a AssertJ Core **3.27.7**, la que figuraba en la documentación oficial en el momento de escribir esta guía.
 
-> 🌱 **En Spring Boot:** para aplicar estas pruebas en una aplicación Spring Boot (`@WebMvcTest`, `@DataJpaTest`, `@DataMongoTest` y Testcontainers), consulta [Testing con Spring Boot y TDD](<../14-Spring-Boot/Testing/Testing y TDD.md>).
+> 🌱 **En Spring Boot:** para aplicar estas pruebas en una aplicación Spring Boot (`@WebMvcTest`, `@DataJpaTest`, `@DataMongoTest` y Testcontainers), consulta [Testing con Spring Boot y TDD](<../14 - Spring-Boot/Testing/Testing y TDD.md>).
 
 ---
 

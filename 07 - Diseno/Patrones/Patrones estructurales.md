@@ -654,7 +654,7 @@ Soleado en Madrid
 
 ### Dónde lo verás
 
-Los *frameworks* como Spring usan proxies constantemente: por ejemplo, para abrir y cerrar transacciones de base de datos alrededor de un método sin que tú escribas ese código. Java incluso permite crear proxies mientras el programa se ejecuta, con la clase `java.lang.reflect.Proxy` (se explica en la guía de [Reflections](<../../03-Anotaciones-y-reflexion/Reflections.md>)).
+Los *frameworks* como Spring usan proxies constantemente: por ejemplo, para abrir y cerrar transacciones de base de datos alrededor de un método sin que tú escribas ese código. Java incluso permite crear proxies mientras el programa se ejecuta, con la clase `java.lang.reflect.Proxy` (se explica en la guía de [Reflections](<../../03 - Anotaciones y reflexion/Reflections.md>)).
 
 ### Cuándo usarlo
 

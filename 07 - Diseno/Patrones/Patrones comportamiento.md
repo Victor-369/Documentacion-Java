@@ -850,7 +850,7 @@ Sonando: Canción C
 
 - Al implementar `Iterable`, `ListaReproduccion` se puede usar en un *for-each* como cualquier lista.
 - Quien la recorre **no sabe** que por dentro hay un `ArrayList`. Si mañana se guarda de otra forma, el bucle sigue funcionando.
-- Para recorridos más complejos (filtrar, transformar, contar…) Java ofrece la API **Stream**, que se explica en [Lambdas y Streams](<../../02-Programacion-funcional/Lambdas y Streams.md>).
+- Para recorridos más complejos (filtrar, transformar, contar…) Java ofrece la API **Stream**, que se explica en [Lambdas y Streams](<../../02 - Programacion funcional/Lambdas y Streams.md>).
 
 ---
 

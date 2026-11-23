@@ -190,7 +190,7 @@ public class ManejadorErrores {
 }
 ```
 
-`ProblemDetail` es la clase de Spring que representa el formato estándar de errores *Problem Details* (RFC 9457) visto en el documento [API REST](<../13-Web-y-APIs/Api rest.md>). La respuesta queda así:
+`ProblemDetail` es la clase de Spring que representa el formato estándar de errores *Problem Details* (RFC 9457) visto en el documento [API REST](<../13 - Web y APIs/Api rest.md>). La respuesta queda así:
 
 ```json
 {

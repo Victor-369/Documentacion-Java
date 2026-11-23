@@ -3,7 +3,7 @@
 > Guía para personas que empiezan con las pruebas unitarias en Java.
 > Basada en la documentación oficial de **JUnit 6.1.3**: <https://docs.junit.org/6.1.3/overview.html>
 
-> 🌱 **En Spring Boot:** para aplicar estas pruebas en una aplicación Spring Boot (`@WebMvcTest`, `@DataJpaTest`, `@DataMongoTest` y Testcontainers), consulta [Testing con Spring Boot y TDD](<../14-Spring-Boot/Testing/Testing y TDD.md>).
+> 🌱 **En Spring Boot:** para aplicar estas pruebas en una aplicación Spring Boot (`@WebMvcTest`, `@DataJpaTest`, `@DataMongoTest` y Testcontainers), consulta [Testing con Spring Boot y TDD](<../14 - Spring-Boot/Testing/Testing y TDD.md>).
 
 ---
 

@@ -1,6 +1,6 @@
 # Testing con Spring Boot y TDD
 
-> 📚 **Documentación relacionada en este repositorio:** este documento aplica las pruebas a una aplicación Spring Boot. Si quieres repasar primero las herramientas por separado, consulta las guías de [JUnit](<../../08-Testing/JUnit - Aprende a escribir pruebas paso a paso.md>), [AssertJ](<../../08-Testing/AssertJ - Guia para empezar desde cero.md>), [Mockito](<../../08-Testing/Mockito - Aprende a escribir pruebas paso a paso.md>) y [TDD](<../../08-Testing/Test-Driven Development (TDD).md>).
+> 📚 **Documentación relacionada en este repositorio:** este documento aplica las pruebas a una aplicación Spring Boot. Si quieres repasar primero las herramientas por separado, consulta las guías de [JUnit](<../../08 - Testing/JUnit - Aprende a escribir pruebas paso a paso.md>), [AssertJ](<../../08 - Testing/AssertJ - Guia para empezar desde cero.md>), [Mockito](<../../08 - Testing/Mockito - Aprende a escribir pruebas paso a paso.md>) y [TDD](<../../08 - Testing/Test-Driven Development (TDD).md>).
 
 ## ¿Por qué escribir pruebas automatizadas?
 
@@ -94,7 +94,7 @@ Pautas:
 
 ## Pruebas unitarias con Mockito
 
-> 💡 Los fundamentos de Mockito (*stubbing*, *matchers*, `verify`, `ArgumentCaptor`, *spies*…) se explican en detalle en [Mockito: aprende a escribir pruebas paso a paso](<../../08-Testing/Mockito - Aprende a escribir pruebas paso a paso.md>).
+> 💡 Los fundamentos de Mockito (*stubbing*, *matchers*, `verify`, `ArgumentCaptor`, *spies*…) se explican en detalle en [Mockito: aprende a escribir pruebas paso a paso](<../../08 - Testing/Mockito - Aprende a escribir pruebas paso a paso.md>).
 
 Un servicio que depende de un repositorio:
 
@@ -499,7 +499,7 @@ Necesita `spring-boot-starter-data-mongodb-test` y `org.testcontainers:testconta
 
 ## TDD: desarrollo guiado por pruebas
 
-> 💡 Para una explicación más detallada del ciclo, con ejemplos completos fuera de Spring, consulta [Test-Driven Development (TDD)](<../../08-Testing/Test-Driven Development (TDD).md>).
+> 💡 Para una explicación más detallada del ciclo, con ejemplos completos fuera de Spring, consulta [Test-Driven Development (TDD)](<../../08 - Testing/Test-Driven Development (TDD).md>).
 
 **TDD** (*Test-Driven Development*) es una forma de desarrollar en la que **la prueba se escribe antes que el código**. Se trabaja en ciclos muy cortos de tres pasos:
 
@@ -628,7 +628,7 @@ Un flujo habitual para una funcionalidad nueva:
 ## Referencias
 
 - Spring Boot — Testing: <https://docs.spring.io/spring-boot/reference/testing/index.html#testing>
-- Spring — Testing the Web Layer: <https://spring.io/guides/gs/testing-web>
+- Spring — Testing the Web Layer: <https://spring.io/guides/gs/testing-web/>
 - Baeldung — Testing in Spring Boot: <https://www.baeldung.com/spring-boot-testing>
 - Spring Boot — Testcontainers: <https://docs.spring.io/spring-boot/reference/testing/testcontainers.html>
 - JUnit: <https://junit.org/>

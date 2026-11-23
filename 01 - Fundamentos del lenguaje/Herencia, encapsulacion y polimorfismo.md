@@ -336,7 +336,7 @@ Buenas prácticas:
 - Prefiere **métodos con significado de negocio** (`retirar`, `aplicarDescuento`, `marcarComoEnviado`) en lugar de setters genéricos.
 - **No devuelvas colecciones internas modificables** desde un getter (ver sección 7.2).
 
-Este enfoque se desarrolla en la guía [Tell, Don't Ask](<../07-Diseno/Principios/Tell dont ask.md>).
+Este enfoque se desarrolla en la guía [Tell, Don't Ask](<../07 - Diseno/Principios/Tell dont ask.md>).
 
 ---
 
@@ -377,7 +377,7 @@ this.nombre = Objects.requireNonNull(nombre, "El nombre es obligatorio");
 
 Lanza `NullPointerException` con ese mensaje si `nombre` es `null`.
 
-> 💡 **Fallar pronto:** es mejor lanzar una excepción en el momento en que llega un dato incorrecto que descubrir el problema mucho después, en otra parte del programa. Más información en [Excepciones checked y unchecked](<../06-Excepciones/Excepciones checked y unchecked.md>).
+> 💡 **Fallar pronto:** es mejor lanzar una excepción en el momento en que llega un dato incorrecto que descubrir el problema mucho después, en otra parte del programa. Más información en [Excepciones checked y unchecked](<../06 - Excepciones/Excepciones checked y unchecked.md>).
 
 ---
 
@@ -990,7 +990,7 @@ IO.println(c.describir());              // Círculo con área 3,14
 
 Si una subclase no implementa todos los métodos abstractos, también tiene que declararse `abstract`.
 
-El método `describir()` es un ejemplo del patrón **Template Method**: la superclase define los pasos generales y las subclases rellenan los detalles. Se explica en [Patrones de comportamiento](<../07-Diseno/Patrones/Patrones comportamiento.md>).
+El método `describir()` es un ejemplo del patrón **Template Method**: la superclase define los pasos generales y las subclases rellenan los detalles. Se explica en [Patrones de comportamiento](<../07 - Diseno/Patrones/Patrones comportamiento.md>).
 
 ---
 
@@ -1030,7 +1030,7 @@ Características:
 - Los atributos de una interfaz son implícitamente `public static final` (constantes).
 - Puede tener métodos `default` (con implementación), `static` y `private` (Java 9+, auxiliares internos).
 - Una interfaz puede **heredar** de otras con `extends`: `interface Anfibio extends Volador, Nadador`.
-- Una interfaz con **un solo método abstracto** es una **interfaz funcional** y se puede implementar con una *lambda*, como en `gratis()` (ver [Lambdas y Streams](<../02-Programacion-funcional/Lambdas y Streams.md>)).
+- Una interfaz con **un solo método abstracto** es una **interfaz funcional** y se puede implementar con una *lambda*, como en `gratis()` (ver [Lambdas y Streams](<../02 - Programacion funcional/Lambdas y Streams.md>)).
 
 ### 15.1. ¿Clase abstracta o interfaz?
 
@@ -1140,7 +1140,7 @@ class Pila<T> {
 **Usa herencia cuando:**
 
 - La relación «es un» es real y estable.
-- La subclase puede usarse **en cualquier sitio** donde se use la superclase sin sorpresas (**principio de sustitución de Liskov**, explicado en [Principios SOLID](<../07-Diseno/Principios/Principio SOLID.md>)).
+- La subclase puede usarse **en cualquier sitio** donde se use la superclase sin sorpresas (**principio de sustitución de Liskov**, explicado en [Principios SOLID](<../07 - Diseno/Principios/Principio SOLID.md>)).
 - La superclase está diseñada para ser extendida.
 
 **Prefiere composición cuando:**
@@ -1452,7 +1452,7 @@ Novedades que aparecen en el ejemplo:
 
 Ambas formas son polimorfismo y se pueden combinar. Con jerarquías **abiertas** (no selladas), prefiere los métodos sobrescritos: un `switch` sobre un tipo abierto necesita `default` y no detecta los casos nuevos.
 
-El enfoque orientado a datos se desarrolla en [Programación funcional](<../02-Programacion-funcional/Programacion funcional.md>), sección 15.
+El enfoque orientado a datos se desarrolla en [Programación funcional](<../02 - Programacion funcional/Programacion funcional.md>), sección 15.
 
 ---
 

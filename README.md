@@ -166,7 +166,7 @@ Actualmente, el repositorio cuenta con documentación sobre diferentes conceptos
 | Documento | Qué encontrarás |
 | --- | --- |
 | [Protocolo HTTP](<13 - Web y APIs/Protocolo http.md>) | Qué es HTTP y dónde se sitúa, anatomía de la URL, de la petición y de la respuesta, métodos (seguros e idempotentes), códigos de estado, cabeceras importantes, pruebas desde la terminal con `curl` y peticiones HTTP desde Java. |
-| [API REST](<13 - Web y APIs/Api rest.md>) | Qué es una API y el estilo REST: recursos y representaciones, diseño de URIs, filtrado, ordenación y paginación, uso correcto de los códigos de estado, versionado, modelo de madurez de Richardson, buenas prácticas y un ejemplo completo de diseño. |
+| [API REST](<13 - Web y APIs/Api rest.md>) | Qué es una API y el estilo REST: recursos y representaciones, diseño de URIs, filtrado, ordenación y paginación, uso correcto de los códigos de estado, versionado, modelo de madurez de Richardson, buenas prácticas, un ejemplo completo de diseño y un primer CRUD de *endpoints* en Java con Spring Boot, construido paso a paso y probado con `curl`. |
 | [Jackson y JSON](<13 - Web y APIs/Jackson y json.md>) | El formato JSON y la librería Jackson 3: serializar y deserializar con `JsonMapper`, modelo de árbol con `JsonNode`, anotaciones de Jackson, fechas y horas, errores al procesar JSON y configuración de Jackson dentro de Spring Boot. |
 
 ### 🌱 Spring y Spring Boot
@@ -486,8 +486,8 @@ No es necesario seguir un orden concreto, ya que cada documento está pensado pa
 12. [Fechas](<05 - Fechas y horas/Fechas.md>): fechas y horas con `java.time`.
 13. [Entrada - Salida básica](<04 - Entrada-salida y ficheros/Entrada - Salida basica.md>) y [Rutas relativas](<04 - Entrada-salida y ficheros/Rutas relativas.md>): trabajo con datos y ficheros.
 14. [Anotaciones](<03 - Anotaciones y reflexion/Anotaciones.md>) y [Reflections](<03 - Anotaciones y reflexion/Reflections.md>): metaprogramación (conviene leerlas en este orden).
-15. [JUnit](<08 - Testing/JUnit - Vision general e introduccion.md>), [AssertJ](<08 - Testing/AssertJ - Guia para empezar desde cero.md>), [Mockito](<08 - Testing/Mockito - Aprende a escribir pruebas paso a paso.md>) y [TDD](<08 - Testing/Test-Driven Development (TDD).md>): pruebas automatizadas.
-16. [Log4J](<09 - Logging/Log4J - Guia.md>): registro de información.
+15. [JUnit: visión general](<08 - Testing/JUnit - Vision general e introduccion.md>), [JUnit paso a paso](<08 - Testing/JUnit - Aprende a escribir pruebas paso a paso.md>), [AssertJ](<08 - Testing/AssertJ - Guia para empezar desde cero.md>), [Mockito](<08 - Testing/Mockito - Aprende a escribir pruebas paso a paso.md>) y [TDD](<08 - Testing/Test-Driven Development (TDD).md>): pruebas automatizadas.
+16. [Log4J: gestión de registros](<09 - Logging/Log4J - Gestion de Registros.md>) y [Log4J: guía](<09 - Logging/Log4J - Guia.md>): registro de información (primero los conceptos y después la práctica).
 17. [Guía de seguridad](<11 - Seguridad/Guia de seguridad.md>) y [Arquitectura criptográfica](<11 - Seguridad/Arquitectura criptografica.md>): seguridad y criptografía.
 18. [Conventional Commits](<12 - Herramientas/Conventional Commits.md>): buenas prácticas con Git.
 19. [BBDD: tipos de datos](<10 - Bases de datos/SQL/BBDD - Tipos de datos.md>), [Entidad-Relación: diagrama](<10 - Bases de datos/SQL/Entidad - Relacion - Diagrama.md>) y [Entidad-Relación: PlantUML](<10 - Bases de datos/SQL/Entidad - Relacion - PlantUML.md>): diseño y modelado de bases de datos relacionales.

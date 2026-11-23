@@ -307,7 +307,7 @@ record Usuario(String email, @JsonIgnore String passwordHash) {}
 
 `passwordHash` no aparecerá en el JSON generado.
 
-> Aunque `@JsonIgnore` funciona, la forma más segura de no exponer datos sensibles es **no incluirlos en el DTO de respuesta** (ver el documento [Arquitectura por capas (Controller – Service – Repository)](<../15-Arquitectura/Arquitectura por capas.md>)).
+> Aunque `@JsonIgnore` funciona, la forma más segura de no exponer datos sensibles es **no incluirlos en el DTO de respuesta** (ver el documento [Arquitectura por capas (Controller – Service – Repository)](<../15 - Arquitectura/Arquitectura por capas.md>)).
 
 ### `@JsonInclude`: omitir valores vacíos o nulos
 
