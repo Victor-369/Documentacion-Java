@@ -159,6 +159,7 @@ Actualmente, el repositorio cuenta con documentación sobre diferentes conceptos
 | Documento | Qué encontrarás |
 | --- | --- |
 | [Conventional Commits](<12 - Herramientas/Conventional Commits.md>) | Convención para escribir mensajes de *commit* claros: formato, tipos habituales (`feat`, `fix`, `docs`…), ejemplos, buenas prácticas y flujo básico. |
+| [Conventional Branch](<12 - Herramientas/Conventional Branch.md>) | Convención para nombrar ramas de Git: formato `<tipo>/<descripción>`, tipos (`feature`, `bugfix`, `hotfix`, `release`, `chore`), reglas de nomenclatura, ejemplos válidos e inválidos, prefijos para agentes de IA, relación con Conventional Commits y flujo básico. |
 | [Docker y *multi-stage build*](<12 - Herramientas/Docker.md>) | Qué problema resuelve Docker, conceptos básicos (imagen, contenedor, capa, volumen) y comandos esenciales; de un primer `Dockerfile` mejorable a un *multi-stage build* para Spring Boot (caché de dependencias, extracción de capas y usuario sin privilegios), configuración con variables de entorno, Docker Compose con aplicación y base de datos, alternativa con *Buildpacks* y buenas prácticas. |
 
 ### 🌐 Web, HTTP y APIs REST
@@ -171,17 +172,17 @@ Actualmente, el repositorio cuenta con documentación sobre diferentes conceptos
 
 ### 🌱 Spring y Spring Boot
 
-| Documento | Qué encontrarás |
-| --- | --- |
-| [Spring y Spring Boot](<14 - Spring-Boot/Fundamentos/Spring y Spring-Boot.md>) | Qué son Spring Framework y Spring Boot (Spring Boot 4), crear un proyecto con Spring Initializr, estructura del proyecto, clase principal, primer *endpoint*, ejecución y empaquetado como `.jar`, `application.properties`, hilos virtuales y herramientas útiles (Actuator, DevTools…). |
-| [IoC e inyección de dependencias](<14 - Spring-Boot/Fundamentos/IoC e inyeccion de dependencias.md>) | El concepto central de Spring: el problema de las clases que crean sus dependencias, inyección de dependencias e Inversión de Control, el contenedor IoC y los *beans*, cómo declararlos e inyectarlos, varias implementaciones de una interfaz, ámbitos (*scopes*), ciclo de vida y dependencias circulares. |
-| [DTOs y validación](<14 - Spring-Boot/APIs-REST/DTOs y validacion.md>) | El patrón DTO y por qué no exponer entidades, diseño de DTO con `record`, conversión entidad ↔ DTO (*mapping*), respuestas paginadas; validación con Bean Validation, restricciones personalizadas, grupos de validación, validación de negocio en el servicio y buenas prácticas de diseño de entrada/salida. |
-| [Gestión profesional de errores](<14 - Spring-Boot/APIs-REST/Gestion de errores.md>) | Formato estándar *Problem Details* (RFC 9457) y `ProblemDetail`, herramientas de Spring (`@RestControllerAdvice`, `@ExceptionHandler`…), diseño recomendado, qué código de estado usar, errores de la base de datos, *logging* de errores y buenas prácticas. |
-| [Spring Data](<14 - Spring-Boot/Persistencia/Spring data.md>) | Spring Data como motor para unificar el acceso a datos: repositorios declarados como interfaces, jerarquía de interfaces, métodos CRUD, consultas derivadas del nombre del método, tipos de retorno, paginación y ordenación, proyecciones y mención a Spring Data REST. |
-| [Spring Data JPA](<14 - Spring-Boot/Persistencia/Spring data jpa.md>) | Persistencia relacional: conceptos previos (ORM, JPA, Hibernate), dependencias, conexión a PostgreSQL con Docker, primera entidad, creación del esquema, repositorios, `@Query`, transacciones, auditoría, concurrencia optimista con `@Version`, paginación y buenas prácticas. |
-| [Relaciones y modelado](<14 - Spring-Boot/Persistencia/Relaciones y modelado.md>) | Relaciones en JPA (`@ManyToOne`, `@OneToMany`, `@OneToOne`, `@ManyToMany`), carga `EAGER` y `LAZY`, el problema N+1, `cascade`, `equals`/`hashCode` en entidades y por qué usar DTOs; documentos embebidos en MongoDB y comparativa JPA frente a MongoDB. |
-| [Spring Data MongoDB](<14 - Spring-Boot/Persistencia/Spring data mongodb.md>) | Persistencia NoSQL con MongoDB desde Spring Boot: levantar MongoDB con Docker, dependencias y configuración, documentos, repositorios, `MongoTemplate`, modelado de datos, referencias y transacciones. |
-| [Testing con Spring Boot y TDD](<14 - Spring-Boot/Testing/Testing y TDD.md>) | La pirámide de pruebas, anatomía de una buena prueba, pruebas unitarias con Mockito, capa web con `@WebMvcTest` y `MockMvcTester`, persistencia con `@DataJpaTest` y `@DataMongoTest`, pruebas de integración con Testcontainers, TDD aplicado a Spring y buenas prácticas. |
+| Documento                                                                                            | Qué encontrarás                                                                                                                                                                                                                                                                                                |
+| ---------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Spring y Spring Boot](<14 - Spring-Boot/Fundamentos/Spring y Spring-Boot.md>)                       | Qué son Spring Framework y Spring Boot (Spring Boot 4), crear un proyecto con Spring Initializr, estructura del proyecto, clase principal, primer *endpoint*, ejecución y empaquetado como `.jar`, `application.properties`, hilos virtuales y herramientas útiles (Actuator, DevTools…).                      |
+| [IoC e inyección de dependencias](<14 - Spring-Boot/Fundamentos/IoC e inyeccion de dependencias.md>) | El concepto central de Spring: el problema de las clases que crean sus dependencias, inyección de dependencias e Inversión de Control, el contenedor IoC y los *beans*, cómo declararlos e inyectarlos, varias implementaciones de una interfaz, ámbitos (*scopes*), ciclo de vida y dependencias circulares.  |
+| [DTOs y validación](<14 - Spring-Boot/APIs-REST/DTOs y validacion.md>)                               | El patrón DTO y por qué no exponer entidades, diseño de DTO con `record`, conversión entidad ↔ DTO (*mapping*), respuestas paginadas; validación con Bean Validation, restricciones personalizadas, grupos de validación, validación de negocio en el servicio y buenas prácticas de diseño de entrada/salida. |
+| [Gestión profesional de errores](<14 - Spring-Boot/APIs-REST/Gestion de errores.md>)                 | Formato estándar *Problem Details* (RFC 9457) y `ProblemDetail`, herramientas de Spring (`@RestControllerAdvice`, `@ExceptionHandler`…), diseño recomendado, qué código de estado usar, errores de la base de datos, *logging* de errores y buenas prácticas.                                                  |
+| [Spring Data](<14 - Spring-Boot/Persistencia/Spring data.md>)                                        | Spring Data como motor para unificar el acceso a datos: repositorios declarados como interfaces, jerarquía de interfaces, métodos CRUD, consultas derivadas del nombre del método, tipos de retorno, paginación y ordenación, proyecciones y mención a Spring Data REST.                                       |
+| [Spring Data JPA](<14 - Spring-Boot/Persistencia/Spring data jpa.md>)                                | Persistencia relacional: conceptos previos (ORM, JPA, Hibernate), dependencias, conexión a PostgreSQL con Docker, primera entidad, creación del esquema, repositorios, `@Query`, transacciones, auditoría, concurrencia optimista con `@Version`, paginación y buenas prácticas.                               |
+| [Relaciones y modelado](<14 - Spring-Boot/Persistencia/Relaciones y modelado.md>)                    | Relaciones en JPA (`@ManyToOne`, `@OneToMany`, `@OneToOne`, `@ManyToMany`), carga `EAGER` y `LAZY`, el problema N+1, `cascade`, `equals`/`hashCode` en entidades y por qué usar DTOs; documentos embebidos en MongoDB y comparativa JPA frente a MongoDB.                                                      |
+| [Spring Data MongoDB](<14 - Spring-Boot/Persistencia/Spring data mongodb.md>)                        | Persistencia NoSQL con MongoDB desde Spring Boot: levantar MongoDB con Docker, dependencias y configuración, documentos, repositorios, `MongoTemplate`, modelado de datos, referencias y transacciones.                                                                                                        |
+| [Testing con Spring Boot y TDD](<14 - Spring-Boot/Testing/Testing y TDD.md>)                         | La pirámide de pruebas, anatomía de una buena prueba, pruebas unitarias con Mockito, capa web con `@WebMvcTest` y `MockMvcTester`, persistencia con `@DataJpaTest` y `@DataMongoTest`, pruebas de integración con Testcontainers, TDD aplicado a Spring y buenas prácticas.                                    |
 
 ### 🏗️ Arquitectura de aplicaciones
 
@@ -208,6 +209,7 @@ Este repositorio está pensado para **crecer progresivamente**. Actualmente se h
 - [x] TDD
 - [x] Logging con Log4j
 - [x] Conventional Commits
+- [x] Conventional Branch
 - [x] Seguridad y criptografía (JCA)
 - [x] Anotaciones
 - [x] Reflexión (*Reflection*)
@@ -334,6 +336,7 @@ Documentacion-Java/
 │   ├── Arquitectura criptografica.md
 │   └── Guia de seguridad.md
 ├── 12 - Herramientas/
+│   ├── Conventional Branch.md
 │   ├── Conventional Commits.md
 │   └── Docker.md
 ├── 13 - Web y APIs/
@@ -441,7 +444,7 @@ Actualmente, el repositorio contiene documentación relacionada con:
 - 🎭 Mockito 5 (*mocks*, *stubs*, *spies* y verificación de interacciones)
 - 🔄 Test-Driven Development (TDD)
 - 📝 Log4j 2 (2.26.x)
-- 🌿 Git (convención de *commits* con Conventional Commits)
+- 🌿 Git (convención de *commits* con Conventional Commits y de nombres de ramas con Conventional Branch)
 - 📦 Maven y 🐘 Gradle (configuración de dependencias dentro de las guías de JUnit, AssertJ, Mockito, TDD y Log4j)
 - 🌐 HTTP, APIs REST y JSON con Jackson 3
 - 🌱 Spring Framework 7 y Spring Boot 4 (IoC, inyección de dependencias, Bean Validation y *Problem Details*)
@@ -489,7 +492,7 @@ No es necesario seguir un orden concreto, ya que cada documento está pensado pa
 15. [JUnit: visión general](<08 - Testing/JUnit - Vision general e introduccion.md>), [JUnit paso a paso](<08 - Testing/JUnit - Aprende a escribir pruebas paso a paso.md>), [AssertJ](<08 - Testing/AssertJ - Guia para empezar desde cero.md>), [Mockito](<08 - Testing/Mockito - Aprende a escribir pruebas paso a paso.md>) y [TDD](<08 - Testing/Test-Driven Development (TDD).md>): pruebas automatizadas.
 16. [Log4J: gestión de registros](<09 - Logging/Log4J - Gestion de Registros.md>) y [Log4J: guía](<09 - Logging/Log4J - Guia.md>): registro de información (primero los conceptos y después la práctica).
 17. [Guía de seguridad](<11 - Seguridad/Guia de seguridad.md>) y [Arquitectura criptográfica](<11 - Seguridad/Arquitectura criptografica.md>): seguridad y criptografía.
-18. [Conventional Commits](<12 - Herramientas/Conventional Commits.md>): buenas prácticas con Git.
+18. [Conventional Commits](<12 - Herramientas/Conventional Commits.md>) y [Conventional Branch](<12 - Herramientas/Conventional Branch.md>): buenas prácticas con Git (mensajes de *commit* y nombres de ramas).
 19. [BBDD: tipos de datos](<10 - Bases de datos/SQL/BBDD - Tipos de datos.md>), [Entidad-Relación: diagrama](<10 - Bases de datos/SQL/Entidad - Relacion - Diagrama.md>) y [Entidad-Relación: PlantUML](<10 - Bases de datos/SQL/Entidad - Relacion - PlantUML.md>): diseño y modelado de bases de datos relacionales.
 20. [NoSQL y diferencias con SQL](<10 - Bases de datos/NoSQL/Diferencias entre nosql y sql.md>), [MongoDB: modelado de datos y diseño](<10 - Bases de datos/NoSQL/MongoDB - modelado de datos y diseno.md>) y [MongoDB: tutoriales](<10 - Bases de datos/NoSQL/MongoDB - tutoriales.md>): bases de datos NoSQL con MongoDB (conviene leerlas en este orden).
 21. [Protocolo HTTP](<13 - Web y APIs/Protocolo http.md>), [API REST](<13 - Web y APIs/Api rest.md>) y [Jackson y JSON](<13 - Web y APIs/Jackson y json.md>): fundamentos de la web y de las APIs antes de entrar en Spring.
@@ -515,7 +518,7 @@ Si encuentras un error, detectas información que pueda mejorarse o quieres prop
 ### Proceso recomendado
 
 1. Haz un *fork* del repositorio.
-2. Crea una nueva rama para tus cambios.
+2. Crea una nueva rama para tus cambios, nombrada según [Conventional Branch](<12 - Herramientas/Conventional Branch.md>) (por ejemplo, `feature/add-git-guide`).
 3. Realiza las modificaciones.
 4. Comprueba que la documentación sea clara y correcta.
 5. Realiza un *commit* descriptivo.

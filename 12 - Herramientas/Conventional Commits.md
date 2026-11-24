@@ -204,3 +204,6 @@ Ejemplo:
 
 Un buen commit debe ser **claro, específico, pequeño y relacionado con un único cambio**.
 
+## Ver también
+
+- [Conventional Branch](<Conventional Branch.md>): convención equivalente para nombrar las ramas de Git (`feature/add-login`, `fix/header-bug`…).
